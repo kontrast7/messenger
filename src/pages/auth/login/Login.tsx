@@ -1,15 +1,17 @@
 import React, { useState } from "react";
-import { authApi } from "../../../api/api";
+import { useDispatch } from "react-redux";
+import { setLoginUserTC } from "../../../bll/redcuer/loginReducer";
 
 export const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const onSendHandler = () => {
-    authApi
-      .loginUser({ email: email, password: password })
-      .then((res) => console.log(res));
-  };
+  const dispatch = useDispatch();
 
+  const onSendHandler = () => {
+    dispatch(setLoginUserTC({ email, password }));
+  };
+  const currentUser = localStorage.getItem("user");
+  console.log(currentUser && JSON.parse(currentUser));
   return (
     <section>
       <div>
