@@ -1,18 +1,16 @@
 import React, { useState } from "react";
-import { authApi } from "../../../api/api";
+import { registerTC } from "../../../bll/redcuer/registerReducer";
+import { useDispatch } from "react-redux";
 
 export const Register = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [username, setUsername] = useState("");
+
+  const dispatch = useDispatch();
+
   const onSendHandler = () => {
-    authApi
-      .registerUser({
-        username: username,
-        email: email,
-        password: password,
-      })
-      .then((res) => console.log(res));
+    dispatch(registerTC({ username, email, password }));
   };
 
   return (
