@@ -4,10 +4,10 @@ import { usersApi } from "./api/api";
 import { Header } from "./components/header/Header";
 import { Routes } from "react-router-dom";
 import { PageHolder } from "./components/pageholder/PageHolder";
-import { useState } from "react"
+import { useState } from "react";
 
 function App() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false)
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   useEffect(() => {
     usersApi

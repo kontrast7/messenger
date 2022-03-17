@@ -10,7 +10,6 @@ export const Login = () => {
       .then((res) => console.log(res));
   };
 
-
   return (
     <section>
       <div>
