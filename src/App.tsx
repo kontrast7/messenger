@@ -2,9 +2,9 @@ import React, { useEffect } from "react";
 import "./App.css";
 import { usersApi } from "./api/api";
 import { Header } from "./components/header/Header";
-import { Routes } from "react-router-dom";
 import { PageHolder } from "./components/pageholder/PageHolder";
 import { useState } from "react";
+import { Register } from "./pages/auth/register/Register";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -16,12 +16,11 @@ function App() {
   }, []);
 
   return (
-    <Routes>
-      <div className="App">
-        {!isLoggedIn && <Header />}
-        <PageHolder />
-      </div>
-    </Routes>
+    <div className="App">
+      {!isLoggedIn && <Header />}
+      <PageHolder />
+      <Register />
+    </div>
   );
 }
 
