@@ -1,17 +1,17 @@
-import React, { useEffect } from "react";
+import React from "react";
 import "./App.css";
-import { usersApi } from "./api/api";
+import { Login } from "./pages/auth/login/Login";
+import { Register } from "./pages/auth/register/Register";
 
 function App() {
-  useEffect(() => {
-    usersApi
-      .getAllUsers("62332a59d327af0023f7dfcf")
-      .then((res) => console.log(JSON.stringify(res)));
-  }, []);
-//f
   return (
     <div className="App">
-      <header className="App-header">123</header>
+      <header className="App-header">
+        <div>Login</div>
+        <Login />
+        <div>Register</div>
+        <Register />
+      </header>
     </div>
   );
 }
