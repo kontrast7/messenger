@@ -6,10 +6,8 @@ import {
   setCurrentProfileTC,
 } from "../../bll/reducer/usersReducer";
 import { selectUsersAll } from "../../bll/selector/selectors";
-import { changeInitialized } from "../../bll/reducer/appReducer";
 import { Spinner } from "../../components/spinner/spinner";
-import { createChatRoomTC } from "../../bll/reducer/roomsReducer";
-import { Link } from "react-router-dom";
+import { ErrorSnackbar } from "../../components/errorSnackbar/ErrorSnackbar";
 
 export const ProfilePage = () => {
   const { id } = useParams();
@@ -24,6 +22,7 @@ export const ProfilePage = () => {
   };
 
   if (!user) return <Spinner />;
+
 
   return (
     <section>
@@ -46,6 +45,7 @@ export const ProfilePage = () => {
           follow
         </button>
       )}
+      <ErrorSnackbar />
     </section>
   );
-};
+}

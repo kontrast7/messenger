@@ -9,6 +9,7 @@ import { Contact } from "./contact/Contact";
 import { selectUsersAll } from "../../bll/selector/selectors";
 import { Spinner } from "../../components/spinner/spinner";
 import { selectStatus } from "../../bll/selector/selectors";
+import { ErrorSnackbar } from "../../components/errorSnackbar/ErrorSnackbar";
 
 export const ContactsPage = () => {
   const [input, setInput] = useState("");
@@ -43,6 +44,7 @@ export const ContactsPage = () => {
         usersAll.map((c) => {
           return <Contact key={c._id} contact={c} />;
         })}
+      <ErrorSnackbar />
     </div>
   );
 };
