@@ -10,6 +10,7 @@ export const PageHolder = () => {
   return (
     <section>
       <Routes>
+        <Route path={routes.home} element={<h1>Home page</h1>} />
         <Route path={routes.login} element={<Login />} />
         <Route path={routes.register} element={<Register />} />
         <Route path={routes.contacts} element={<ContactsPage />} />
