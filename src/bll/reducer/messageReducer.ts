@@ -6,14 +6,14 @@ const initState: Array<initStatePropsTypeMessage> = [];
 export const messageReducer = (state = initState, action: ActionType) => {
   switch (action.type) {
     case "APP/CHAT/ADDED_MESSAGE":
-      return [action.data];
+      return [...action.data];
     default:
       return state;
   }
 };
 
 //AC
-export const addedMessageAC = (data: initStatePropsTypeMessage) => {
+export const addedMessageAC = (data: initStatePropsTypeMessage[]) => {
   return {
     type: "APP/CHAT/ADDED_MESSAGE",
     data,

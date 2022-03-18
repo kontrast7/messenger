@@ -33,14 +33,13 @@ export const ChatPage = () => {
     dispatch(getMessagesByChatId(chatRoomId[0]._id));
     setInput("");
   };
-
   if (!messages) return <Spinner />;
   return (
     <div>
       <input value={input} onChange={(e) => setInput(e.target.value)} />
       <button onClick={sendMessageHandler}>send</button>
       {messages.map((m) => {
-        return <div key={Math.random()}>{JSON.stringify(m.text)}</div>
+        return <div key={Math.random()}>{JSON.stringify(m.text)}</div>;
       })}
     </div>
   );
