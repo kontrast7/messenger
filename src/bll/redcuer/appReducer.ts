@@ -27,9 +27,6 @@ export const appReducer = (
 export const setIsLoggedInAC = (value: boolean) =>
   ({ type: "AUTH/LOGIN/SET-IS-LOGGED-IN", value } as const);
 
-
-
-
 export const setIsRegisteredInAC = (value: boolean) =>
   ({ type: "AUTH/REGISTERED/SET-IS-REGISTERED-IN", value } as const);
 
@@ -56,6 +53,10 @@ export type changeStatusType = ReturnType<typeof changeStatus>;
 export type errorMessageType = ReturnType<typeof errorMessageAC>;
 
 export type PendingStatusType = "idle" | "failed" | "completed" | "loading";
+
+
+
+
 
 type InitStateTypes = {
   isLoggedIn: boolean;
