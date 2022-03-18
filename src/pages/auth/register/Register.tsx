@@ -4,6 +4,7 @@ import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { selectStatus } from "../../../bll/selector/selectors";
 import { Spinner } from "../../../components/spinner/spinner";
+import { ErrorSnackbar } from "../../../components/errorSnackbar/ErrorSnackbar";
 
 export const Register = () => {
   const [email, setEmail] = useState("");
@@ -39,6 +40,7 @@ export const Register = () => {
         onChange={(e) => setPassword(e.target.value)}
       />
       <button onClick={onSendHandler}>Register</button>
+      <ErrorSnackbar />
     </section>
   );
 };

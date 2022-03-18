@@ -7,6 +7,7 @@ import {
 } from "../../bll/reducer/usersReducer";
 import { selectUsersAll } from "../../bll/selector/selectors";
 import { Spinner } from "../../components/spinner/spinner";
+import { ErrorSnackbar } from "../../components/errorSnackbar/ErrorSnackbar";
 
 export const ProfilePage = () => {
   const { id } = useParams();
@@ -44,6 +45,7 @@ export const ProfilePage = () => {
           follow
         </button>
       )}
+      <ErrorSnackbar />
     </section>
   );
 };

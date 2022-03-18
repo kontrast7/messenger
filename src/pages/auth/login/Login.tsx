@@ -4,6 +4,7 @@ import { setLoginUserTC } from "../../../bll/reducer/loginReducer";
 import { useSelector } from "react-redux";
 import { selectStatus } from "../../../bll/selector/selectors";
 import { Spinner } from "../../../components/spinner/spinner";
+import { ErrorSnackbar } from "../../../components/errorSnackbar/ErrorSnackbar";
 
 export const Login = () => {
   const [email, setEmail] = useState("");
@@ -34,6 +35,7 @@ export const Login = () => {
         />
         <button onClick={onSendHandler}>Login</button>
       </div>
+      <ErrorSnackbar />
     </section>
   );
 };
