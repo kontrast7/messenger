@@ -27,6 +27,9 @@ export const appReducer = (
 export const setIsLoggedInAC = (value: boolean) =>
   ({ type: "AUTH/LOGIN/SET-IS-LOGGED-IN", value } as const);
 
+
+
+
 export const setIsRegisteredInAC = (value: boolean) =>
   ({ type: "AUTH/REGISTERED/SET-IS-REGISTERED-IN", value } as const);
 
