@@ -1,4 +1,5 @@
 const initState: InitStateTypes = {
+  theme: localStorage.getItem("theme") || "dark",
   isLoggedIn: !!localStorage.getItem("user"),
   isRegistered: false,
   errorMessage: null,
@@ -19,6 +20,12 @@ export const appReducer = (
       return { ...state, status: action.value };
     case "APP/CHANGE-INITIALIZED":
       return { ...state, isInitialized: action.value };
+    case "APP/CHANGE-THEME": {
+      return {
+        ...state,
+        theme: action.value,
+      };
+    }
     default:
       return state;
   }
@@ -39,6 +46,9 @@ export const changeStatus = (value: PendingStatusType) =>
 export const changeInitialized = (value: boolean) =>
   ({ type: "APP/CHANGE-INITIALIZED", value } as const);
 
+export const changeThemeAC = (value: string) =>
+  ({ type: "APP/CHANGE-THEME", value } as const);
+
 // Thunk
 
 // Types
@@ -47,10 +57,12 @@ type ActionTypes =
   | ReturnType<typeof changeInitialized>
   | ReturnType<typeof setIsRegisteredInAC>
   | changeStatusType
-  | errorMessageType;
+  | errorMessageType
+  | changeThemeType;
 
 export type changeStatusType = ReturnType<typeof changeStatus>;
 export type errorMessageType = ReturnType<typeof errorMessageAC>;
+export type changeThemeType = ReturnType<typeof changeThemeAC>;
 
 export type PendingStatusType = "idle" | "failed" | "completed" | "loading";
 
@@ -59,6 +71,7 @@ export type PendingStatusType = "idle" | "failed" | "completed" | "loading";
 
 
 type InitStateTypes = {
+  theme: string;
   isLoggedIn: boolean;
   isRegistered: boolean;
   errorMessage: string | null;
