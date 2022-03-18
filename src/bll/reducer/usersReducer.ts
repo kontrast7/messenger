@@ -12,8 +12,6 @@ export const usersReducer = (state = initState, action: ActionType) => {
       return [...action.data];
     case "APP/USERS/SET_SEARCH_USERS":
       return [action.data];
-    case "APP/USERS/SET_FOLLOW_USERS":
-      return [];
     default:
       return state;
   }
@@ -29,12 +27,6 @@ const setAllUsersAC = (data: Array<initStatePropsType>) => {
 const setSearchUserAC = (data: initStatePropsType) => {
   return {
     type: "APP/USERS/SET_SEARCH_USERS",
-    data,
-  } as const;
-};
-const setFollowUserAC = (data: initStatePropsType) => {
-  return {
-    type: "APP/USERS/SET_FOLLOW_USERS",
     data,
   } as const;
 };
@@ -82,6 +74,12 @@ export const searchByNameUserTC = (name: string) => (dispatch: Dispatch) => {
   });
 };
 
+export const setCurrentProfileTC = (id: string) => (dispatch: Dispatch) => {
+  usersApi.getUserById(id).then((res) => {
+    dispatch(setSearchUserAC(res.data));
+  });
+};
+
 // Types
 export type initStatePropsType = {
   coverPicture: string;
@@ -98,5 +96,4 @@ export type initStatePropsType = {
 };
 type ActionType =
   | ReturnType<typeof setAllUsersAC>
-  | ReturnType<typeof setSearchUserAC>
-  | ReturnType<typeof setFollowUserAC>;
+  | ReturnType<typeof setSearchUserAC>;
