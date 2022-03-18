@@ -6,37 +6,41 @@ import {
   setCurrentProfileTC,
 } from "../../bll/reducer/usersReducer";
 import { selectUsersAll } from "../../bll/selector/selectors";
+import { Spinner } from "../../components/spinner/spinner";
 
 export const ProfilePage = () => {
   const { id } = useParams();
+  const dispatch = useDispatch();
+  const users = useSelector(selectUsersAll)[0];
+  const currentUserId = JSON.parse(localStorage.getItem("user") as string)._id;
 
   useEffect(() => {
     id && dispatch(setCurrentProfileTC(id));
   }, []);
-  const dispatch = useDispatch();
-  const user = useSelector(selectUsersAll)[0];
-  const currentUserId = JSON.parse(localStorage.getItem("user") as string)._id;
-   const followUserHandler = (id: string, action: "follow" | "unfollow") => {
+
+  const followUserHandler = (id: string, action: "follow" | "unfollow") => {
     dispatch(followUnFollowUserTC(id, action, currentUserId));
   };
 
+  if (!users) return <Spinner />;
+
   return (
     <section>
-      {user.username}
+      {users.username}
       <img
         style={{ width: "100px" }}
         src={
-          user.profilePicture
-            ? user.profilePicture
+          users.profilePicture
+            ? users.profilePicture
             : "https://ru-static.z-dn.net/files/dba/092be1b0626a7a1af16f540c105576cd.jpeg"
         }
       />
-      {user.followers.includes(currentUserId) ? (
-        <button onClick={() => followUserHandler(user._id, "unfollow")}>
+      {users.followers.includes(currentUserId) ? (
+        <button onClick={() => followUserHandler(users._id, "unfollow")}>
           unfollow
         </button>
       ) : (
-        <button onClick={() => followUserHandler(user._id, "follow")}>
+        <button onClick={() => followUserHandler(users._id, "follow")}>
           follow
         </button>
       )}
