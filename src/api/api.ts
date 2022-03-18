@@ -17,18 +17,22 @@ export const usersApi = {
   getAllUsers: (myid: string) => {
     return instance.get(`/users/all/${myid}`);
   },
-  getUserByNameOrId: (name: string) => {
-    return instance.get(`/users?name=${name}`);
-  },
   getUserFriendsById: (id: string) => {
     return instance.get(`/users/friends/${id}`);
   },
   searchUsersByName: (name: string) => {
     return instance.get(`/users?username=${name}`);
   },
-  followUnFollowUser: (id: string, action: "follow" | "unfollow", userId: string) => {
-    return instance.put(`/users/${id}/${action}`, {userId})
-  }
+  getUserById: (id: string) => {
+    return instance.get(`/users?userId=${id}`);
+  },
+  followUnFollowUser: (
+    id: string,
+    action: "follow" | "unfollow",
+    userId: string
+  ) => {
+    return instance.put(`/users/${id}/${action}`, { userId });
+  },
 };
 
 export type registerUserType = {

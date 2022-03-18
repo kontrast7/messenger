@@ -2,6 +2,7 @@ import React from "react";
 import { initStatePropsType } from "../../../bll/reducer/usersReducer";
 import { followUnFollowUserTC } from "../../../bll/reducer/usersReducer";
 import { useDispatch } from "react-redux";
+import { Link } from "react-router-dom";
 
 export const Contact = ({ contact }: ContactPropsType) => {
   const currentUserId = JSON.parse(localStorage.getItem("user") as string)._id;
@@ -13,7 +14,7 @@ export const Contact = ({ contact }: ContactPropsType) => {
 
   return (
     <div>
-      {contact.username}
+      <Link to={`/user/${contact._id}`}>{contact.username}</Link>
 
       {contact.followers.includes(currentUserId) ? (
         <button onClick={() => followUserHandler(contact._id, "unfollow")}>

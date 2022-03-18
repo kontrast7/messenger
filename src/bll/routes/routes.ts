@@ -3,5 +3,6 @@ export const routes = {
   register: "/register",
   contacts: "/contacts",
   pageNotFound: "/404",
+  profilePage: "/user/:id",
   home: "/",
 };
