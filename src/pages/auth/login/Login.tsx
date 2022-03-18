@@ -10,8 +10,9 @@ export const Login = () => {
   const onSendHandler = () => {
     dispatch(setLoginUserTC({ email, password }));
   };
-  const currentUser = localStorage.getItem("user");
-  console.log(currentUser && JSON.parse(currentUser));
+  // const currentUser = localStorage.getItem("user");
+  // console.log(currentUser && JSON.parse(currentUser));
+
   return (
     <section>
       <div>

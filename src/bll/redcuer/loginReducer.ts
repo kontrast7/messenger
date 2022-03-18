@@ -1,5 +1,8 @@
 import { Dispatch } from "redux";
 import { authApi, loginUserType } from "../../api/api";
+import { changeStatus } from "./appReducer";
+import { serverErrorHandling } from "../../utils/serverHandleError";
+import { setIsLoggedInAC } from "./appReducer";
 
 const initState = {};
 
@@ -23,11 +26,19 @@ const setUserDataAC = (data: initStatePropsType) => {
 export const setLoginUserTC =
   ({ ...payload }: loginUserType) =>
   (dispatch: Dispatch) => {
-    authApi.loginUser(payload).then((res) => {
-      dispatch(setUserDataAC(res.data));
-      console.log(res);
-      localStorage.setItem("user", JSON.stringify(res.data))
-    });
+    dispatch(changeStatus("loading"));
+
+    authApi
+      .loginUser(payload)
+      .then((res) => {
+        dispatch(changeStatus("completed"));
+        dispatch(setUserDataAC(res.data));
+        dispatch(setIsLoggedInAC(true));
+        localStorage.setItem("user", JSON.stringify(res.data));
+      })
+      .catch((err) => {
+        serverErrorHandling(err, dispatch);
+      });
   };
 
 // Types

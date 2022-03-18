@@ -1,5 +1,5 @@
 const initState: InitStateTypes = {
-  isLoggedIn: false,
+  isLoggedIn: !!localStorage.getItem("user"),
   isRegistered: false,
   errorMessage: null,
   isInitialized: false,
