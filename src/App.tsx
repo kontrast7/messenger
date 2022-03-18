@@ -6,25 +6,22 @@ import { PageHolder } from "./components/pageholder/PageHolder";
 import { useState } from "react";
 import { Login } from "./pages/auth/login/Login";
 import { Register } from "./pages/auth/register/Register";
+import { UsersList } from "./pages/usersList/usersList";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-
-  useEffect(() => {
-    usersApi
-      .getAllUsers("62332a59d327af0023f7dfcf")
-      .then((res) => console.log(res.data));
-  }, []);
 
   return (
     <>
       {!isLoggedIn && <Header />}
 
       <PageHolder />
-      <div>Login</div>
-      <Login />
-      <div>Register</div>
-      <Register />
+      {/*<div>Login</div>*/}
+      {/*<Login />*/}
+      {/*<div>Register</div>*/}
+      {/*<Register />*/}
+      <div>UsersList</div>
+      <UsersList />
     </>
   );
 }

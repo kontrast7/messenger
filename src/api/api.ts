@@ -23,6 +23,12 @@ export const usersApi = {
   getUserFriendsById: (id: string) => {
     return instance.get(`/users/friends/${id}`);
   },
+  searchUsersByName: (name: string) => {
+    return instance.get(`/users?username=${name}`);
+  },
+  followUnFollowUser: (id: string, action: "follow" | "unfollow", userId: string) => {
+    return instance.put(`/users/${id}/${action}`, {userId})
+  }
 };
 
 export type registerUserType = {
