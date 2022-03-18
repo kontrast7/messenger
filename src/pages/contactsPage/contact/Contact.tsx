@@ -3,6 +3,7 @@ import { initStatePropsType } from "../../../bll/reducer/usersReducer";
 import { followUnFollowUserTC } from "../../../bll/reducer/usersReducer";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
+import { createChatRoomTC } from "../../../bll/reducer/roomsReducer";
 
 export const Contact = ({ contact }: ContactPropsType) => {
   const currentUserId = JSON.parse(localStorage.getItem("user") as string)._id;
@@ -10,6 +11,9 @@ export const Contact = ({ contact }: ContactPropsType) => {
 
   const followUserHandler = (id: string, action: "follow" | "unfollow") => {
     dispatch(followUnFollowUserTC(id, action, currentUserId));
+    if(action === "follow"){
+      dispatch(createChatRoomTC({id, currentUserId}))
+    }
   };
 
   return (
@@ -17,9 +21,7 @@ export const Contact = ({ contact }: ContactPropsType) => {
       <Link to={`/user/${contact._id}`}>{contact.username}</Link>
 
       {contact.followers.includes(currentUserId) ? (
-        <button onClick={() => followUserHandler(contact._id, "unfollow")}>
-          unfollow
-        </button>
+        <Link to={`/chat/${currentUserId}/${contact._id}`}>go to chat</Link>
       ) : (
         <button onClick={() => followUserHandler(contact._id, "follow")}>
           follow

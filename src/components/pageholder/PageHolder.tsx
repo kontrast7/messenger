@@ -6,6 +6,7 @@ import { Register } from "../../pages/auth/register/Register";
 import { ContactsPage } from "../../pages/contactsPage/ContactsPage";
 import { Spinner } from "../spinner/spinner";
 import { ProfilePage } from "../../pages/profilePage/ProfilePage";
+import { ChatPage } from "../../pages/ChatPage/ChatPage";
 
 export const PageHolder = () => {
   return (
@@ -17,6 +18,7 @@ export const PageHolder = () => {
         <Route path={routes.contacts} element={<ContactsPage />} />
         <Route path={routes.pageNotFound} element={<Spinner />} />
         <Route path={routes.profilePage} element={<ProfilePage />} />
+        <Route path={routes.chatPage} element={<ChatPage />} />
         <Route path={"/*"} element={<Navigate to={"/404"} />} />
       </Routes>
     </section>

@@ -1,5 +1,5 @@
 import { Dispatch } from "redux";
-import { usersApi } from "../../api/api";
+import { chatRoomsApi, usersApi } from "../../api/api";
 import { changeStatus } from "./appReducer";
 import { serverErrorHandling } from "../../utils/serverHandleError";
 import { setIsLoggedInAC } from "./appReducer";
@@ -79,6 +79,8 @@ export const setCurrentProfileTC = (id: string) => (dispatch: Dispatch) => {
     dispatch(setSearchUserAC(res.data));
   });
 };
+
+
 
 // Types
 export type initStatePropsType = {
