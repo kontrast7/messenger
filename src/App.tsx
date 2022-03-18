@@ -1,6 +1,5 @@
-import React, { useEffect } from "react";
+import React from "react";
 import "./App.css";
-import { usersApi } from "./api/api";
 import { Header } from "./components/header/Header";
 import { PageHolder } from "./components/pageholder/PageHolder";
 import { useState } from "react";
