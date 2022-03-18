@@ -1,6 +1,6 @@
-import { changeThemeAC } from "../bll/redcuer/appReducer";
+import { changeThemeAC } from "../bll/reducer/appReducer";
 import { Dispatch } from "redux";
-import { changeThemeType } from "../bll/redcuer/appReducer";
+import { changeThemeType } from "../bll/reducer/appReducer";
 
 export const changeTheme = (
   theme: any,

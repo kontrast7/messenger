@@ -1,17 +1,23 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import { setLoginUserTC } from "../../../bll/redcuer/loginReducer";
+import { setLoginUserTC } from "../../../bll/reducer/loginReducer";
+import { useSelector } from "react-redux";
+import { selectStatus } from "../../../bll/selector/selectors";
+import { Spinner } from "../../../components/spinner/spinner";
 
 export const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const dispatch = useDispatch();
+  const status = useSelector(selectStatus);
 
   const onSendHandler = () => {
     dispatch(setLoginUserTC({ email, password }));
   };
-  // const currentUser = localStorage.getItem("user");
-  // console.log(currentUser && JSON.parse(currentUser));
+
+  if (status === "loading") {
+    return <Spinner />;
+  }
 
   return (
     <section>

@@ -1,9 +1,9 @@
 import { Dispatch } from "react";
 import { AxiosError } from "axios";
-import { errorMessageType } from "../bll/redcuer/appReducer";
-import { changeStatusType } from "../bll/redcuer/appReducer";
-import { errorMessageAC } from "../bll/redcuer/appReducer";
-import { changeStatus } from "../bll/redcuer/appReducer";
+import { errorMessageType } from "../bll/reducer/appReducer";
+import { changeStatusType } from "../bll/reducer/appReducer";
+import { errorMessageAC } from "../bll/reducer/appReducer";
+import { changeStatus } from "../bll/reducer/appReducer";
 
 export const serverErrorHandling = (
   error: AxiosError,

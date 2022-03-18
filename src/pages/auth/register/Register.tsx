@@ -1,17 +1,25 @@
 import React, { useState } from "react";
-import { registerTC } from "../../../bll/redcuer/registerReducer";
+import { registerTC } from "../../../bll/reducer/registerReducer";
 import { useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
+import { selectStatus } from "../../../bll/selector/selectors";
+import { Spinner } from "../../../components/spinner/spinner";
 
 export const Register = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [username, setUsername] = useState("");
+  const status = useSelector(selectStatus);
 
   const dispatch = useDispatch();
 
   const onSendHandler = () => {
     dispatch(registerTC({ username, email, password }));
   };
+
+  if (status === "loading") {
+    return <Spinner />;
+  }
 
   return (
     <section>

@@ -56,11 +56,24 @@ export const setAllUsersTC = (myId: string) => (dispatch: Dispatch) => {
 export const followUnFollowUserTC =
   (id: string, action: "follow" | "unfollow", currentUserId: string) =>
   (dispatch: Dispatch) => {
-    usersApi.followUnFollowUser(id, action, currentUserId).then((res) => {
-      usersApi.getAllUsers(currentUserId).then((res)=> {
-        dispatch(setAllUsersAC(res.data));
+    dispatch(changeStatus("loading"));
+
+    usersApi
+      .followUnFollowUser(id, action, currentUserId)
+      .then((res) => {
+        usersApi
+          .getAllUsers(currentUserId)
+          .then((res) => {
+            dispatch(changeStatus("completed"));
+            dispatch(setAllUsersAC(res.data));
+          })
+          .catch((err) => {
+            serverErrorHandling(err, dispatch);
+          });
       })
-    });
+      .catch((err) => {
+        serverErrorHandling(err, dispatch);
+      });
   };
 
 export const searchByNameUserTC = (name: string) => (dispatch: Dispatch) => {
@@ -70,7 +83,7 @@ export const searchByNameUserTC = (name: string) => (dispatch: Dispatch) => {
 };
 
 // Types
-type initStatePropsType = {
+export type initStatePropsType = {
   coverPicture: string;
   createdAt: string;
   email: string;
