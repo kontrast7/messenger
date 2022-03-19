@@ -1,4 +1,5 @@
 import { createGlobalStyle } from "styled-components";
+import styled from "styled-components";
 
 export const GlobalStyles = createGlobalStyle`
   *,*::before,*::after {
@@ -14,4 +15,9 @@ export const GlobalStyles = createGlobalStyle`
     color: ${({ theme }) => theme.colors.mainText};
     background-color: ${({ theme }) => theme.colors.background};
   }
+`;
+
+export const Container = styled.div`
+  max-width: 1100px;
+  padding: 0 1rem;
 `;

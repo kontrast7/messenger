@@ -5,6 +5,9 @@ import { useSelector } from "react-redux";
 import { selectStatus } from "../../../bll/selector/selectors";
 import { Spinner } from "../../../components/spinner/spinner";
 import { ErrorSnackbar } from "../../../components/errorSnackbar/ErrorSnackbar";
+import { Container } from "../../../styles/global";
+import { Wrapper, Inner, RegisterButton } from "./styles/styles";
+import { Input } from "../../../components/common/input/styles";
 
 export const Register = () => {
   const [email, setEmail] = useState("");
@@ -23,24 +26,37 @@ export const Register = () => {
   }
 
   return (
-    <section>
-      <input
-        value={email}
-        placeholder={"enter email"}
-        onChange={(e) => setEmail(e.target.value)}
-      />
-      <input
-        value={username}
-        placeholder={"enter username"}
-        onChange={(e) => setUsername(e.target.value)}
-      />
-      <input
-        value={password}
-        placeholder={"enter password"}
-        onChange={(e) => setPassword(e.target.value)}
-      />
-      <button onClick={onSendHandler}>Register</button>
-      <ErrorSnackbar />
-    </section>
+    <Container>
+      <Wrapper>
+        <Inner>
+          <Input
+            required
+            type="text"
+            label="Email"
+            id="register-email"
+            value={email}
+            onChange={(e) => setEmail(e.currentTarget.value)}
+          />
+          <Input
+            required
+            type="text"
+            label="Username"
+            id="register-username"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+          />
+          <Input
+            required
+            type="text"
+            label="Password"
+            id="register-password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+          <RegisterButton onClick={onSendHandler}>Register</RegisterButton>
+          <ErrorSnackbar />
+        </Inner>
+      </Wrapper>
+    </Container>
   );
 };
