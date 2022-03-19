@@ -21,7 +21,6 @@ export const ChatPage = () => {
   const messages = useSelector(selectMessages);
 
   const chatRoomId = useSelector(selectChatRoom);
-  //"6234c3cb7e123000232cdbf9"
   const sendMessageHandler = () => {
     dispatch(
       createMessageTC({

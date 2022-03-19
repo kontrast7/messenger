@@ -15,14 +15,15 @@ export const ProfilePage = () => {
     id && dispatch(setCurrentProfileTC(id));
   }, []);
   const dispatch = useDispatch();
-  const user = useSelector(selectUsersAll)[0];
+  const users = useSelector(selectUsersAll);
   const currentUserId = JSON.parse(localStorage.getItem("user") as string)._id;
   const followUserHandler = (id: string, action: "follow" | "unfollow") => {
     dispatch(followUnFollowUserTC(id, action, currentUserId));
   };
 
-  if (!user) return <Spinner />;
+  const user = users.filter((u) => u._id === id)[0];
 
+  if (!user) return <Spinner />;
 
   return (
     <section>
@@ -48,4 +49,4 @@ export const ProfilePage = () => {
       <ErrorSnackbar />
     </section>
   );
-}
+};
