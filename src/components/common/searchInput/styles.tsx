@@ -28,6 +28,14 @@ export const InputField = styled.input`
   &:focus {
     outline: none;
   }
+
+  &::placeholder {
+    color: rgba(255, 255, 255, 0.6);
+    letter-spacing: 1px;
+    font-weight: 400;
+    font-size: 0.875rem;
+    line-height: 1rem;
+  }
 `;
 
 export const InputButton = styled.button`

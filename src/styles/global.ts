@@ -19,6 +19,14 @@ export const GlobalStyles = createGlobalStyle`
 
 export const Container = styled.div`
   max-width: 500px;
-  padding: 0 1rem;
+  padding: 0 1.375rem;
   margin: 0 auto;
+`;
+
+export const Avatar = styled.img`
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  object-fit: cover;
+  filter: drop-shadow(20px 24px 34px rgba(0, 0, 0, 0.45));
 `;

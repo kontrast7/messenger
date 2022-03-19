@@ -10,11 +10,13 @@ import { selectUsersAll } from "../../bll/selector/selectors";
 import { Spinner } from "../../components/spinner/spinner";
 import { selectStatus } from "../../bll/selector/selectors";
 import { ErrorSnackbar } from "../../components/errorSnackbar/ErrorSnackbar";
-import { Link, Navigate } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 import { selectIsLoggedIn } from "../../bll/selector/selectors";
 import { getCurrentUserId } from "../../utils/getCurrentUserId";
 import { routes } from "../../bll/routes/routes";
 import { SearchInput } from "../../components/common/searchInput/styles";
+import { ContactsWrapper } from "./styles/styles";
+import { Wrapper } from "./styles/styles";
 
 export const ContactsPage = () => {
   const dispatch = useDispatch();
@@ -42,19 +44,20 @@ export const ContactsPage = () => {
   }
 
   return (
-    <div>
-      <Link to={`/user/${currentUserId}`}>My Profile</Link>
+    <Wrapper>
       <SearchInput
         placeholder={"Search..."}
         value={input}
         onChange={(e) => setInput(e.target.value)}
         onClick={searchByName}
       />
-      {usersAll &&
-        usersAll.map((c) => {
-          return <Contact key={c._id} contact={c} />;
-        })}
+      <ContactsWrapper>
+        {usersAll &&
+          usersAll.map((c) => {
+            return <Contact key={c._id} contact={c} />;
+          })}
+      </ContactsWrapper>
       <ErrorSnackbar />
-    </div>
+    </Wrapper>
   );
 };
