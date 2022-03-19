@@ -5,8 +5,8 @@ import { Login } from "../../pages/auth/login/Login";
 import { Register } from "../../pages/auth/register/Register";
 import { ContactsPage } from "../../pages/contactsPage/ContactsPage";
 import { ProfilePage } from "../../pages/profilePage/ProfilePage";
-import { ChatPage } from "../../pages/ChatPage/ChatPage";
 import { PageNotFound } from "../../pages/pageNotFound/PageNotFound";
+import { ChatPage } from "../../pages/chatPage/ChatPage";
 
 export const PageHolder = () => {
   return (

@@ -8,14 +8,14 @@ import {
 import { selectUsersAll } from "../../bll/selector/selectors";
 import { Spinner } from "../../components/spinner/spinner";
 import { ErrorSnackbar } from "../../components/errorSnackbar/ErrorSnackbar";
-import { getCurrentUserId } from "../../utils/getCurrentUserId"
+import { getCurrentUserId } from "../../utils/getCurrentUserId";
 
 export const ProfilePage = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
-  const user = useSelector(selectUsersAll)[0];
+  const users = useSelector(selectUsersAll);
 
-  const currentUserId = getCurrentUserId()
+  const currentUserId = getCurrentUserId();
 
   useEffect(() => {
     id && dispatch(setCurrentProfileTC(id));
@@ -24,6 +24,8 @@ export const ProfilePage = () => {
   const followUserHandler = (id: string, action: "follow" | "unfollow") => {
     dispatch(followUnFollowUserTC(id, action, currentUserId));
   };
+
+  const user = users.filter((u) => u._id === id)[0];
 
   if (!user) return <Spinner />;
 

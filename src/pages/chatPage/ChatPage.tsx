@@ -4,7 +4,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { getChatRoomTC } from "../../bll/reducer/roomsReducer";
 import {
   createMessageTC,
-  getMessagesByChatId,
 } from "../../bll/reducer/messageReducer";
 import { Spinner } from "../../components/spinner/spinner";
 import { selectChatRoom, selectMessages } from "../../bll/selector/selectors";
@@ -15,14 +14,13 @@ export const ChatPage = () => {
   const { id } = useParams();
   const currentUserId = getCurrentUserId();
   const dispatch = useDispatch();
+  const messages = useSelector(selectMessages);
+  const chatRoomId = useSelector(selectChatRoom);
 
   useEffect(() => {
     dispatch(getChatRoomTC(id!, currentUserId));
   }, []);
 
-  const messages = useSelector(selectMessages);
-  const chatRoomId = useSelector(selectChatRoom);
-  //"6234c3cb7e123000232cdbf9"
 
   const sendMessageHandler = () => {
     dispatch(
