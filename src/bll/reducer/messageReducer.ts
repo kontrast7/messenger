@@ -32,9 +32,9 @@ export const addLastMessage = (data: initStatePropsTypeMessage) => {
 //Thunk
 export const createMessageTC =
   (payload: sendMessageType) => (dispatch: Dispatch) => {
-    messagesApi.sendMessage({ ...payload }).then((res) => {
-      dispatch(addLastMessage(res.data));
-    });
+    messagesApi
+      .sendMessage({ ...payload })
+      .then((res) => console.log(res.data));
   };
 
 export const getMessagesByChatId = (chatId: string) => (dispatch: Dispatch) => {
