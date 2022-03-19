@@ -20,7 +20,7 @@ export const addedChatRoomAC = (data: initStatePropsType) => {
   return {
     type: "APP/CHAT/ADDED_CHAT",
     data,
-  };
+  } as const
 };
 
 //Thunk
@@ -36,9 +36,8 @@ export const getChatRoomTC =
   (dispatch: ThunkDispatch<RootAppStateType, void, any>) => {
     chatRoomsApi.goToChatRoom(idCurrentUser, idOtherUser).then((res) => {
       dispatch(addedChatRoomAC(res.data));
-      console.log(res.data);
       dispatch(getMessagesByChatId(res.data._id));
-    });
+    })
   };
 
 // Types

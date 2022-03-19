@@ -4,15 +4,16 @@ import { followUnFollowUserTC } from "../../../bll/reducer/usersReducer";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import { createChatRoomTC } from "../../../bll/reducer/roomsReducer";
+import { getCurrentUserId } from "../../../utils/getCurrentUserId"
 
 export const Contact = ({ contact }: ContactPropsType) => {
-  const currentUserId = JSON.parse(localStorage.getItem("user") as string)._id;
+  const currentUserId = getCurrentUserId();
   const dispatch = useDispatch();
 
   const followUserHandler = (id: string, action: "follow" | "unfollow") => {
     dispatch(followUnFollowUserTC(id, action, currentUserId));
-    if(action === "follow"){
-      dispatch(createChatRoomTC({id, currentUserId}))
+    if (action === "follow") {
+      dispatch(createChatRoomTC({ id, currentUserId }));
     }
   };
 
