@@ -10,6 +10,7 @@ import { selectUsersAll } from "../../bll/selector/selectors";
 import { Spinner } from "../../components/spinner/spinner";
 import { selectStatus } from "../../bll/selector/selectors";
 import { ErrorSnackbar } from "../../components/errorSnackbar/ErrorSnackbar";
+import { Link } from "react-router-dom";
 
 export const ContactsPage = () => {
   const [input, setInput] = useState("");
@@ -39,6 +40,7 @@ export const ContactsPage = () => {
         placeholder={"enter to search"}
         onChange={(e) => setInput(e.target.value)}
       />
+      <Link to={`/user/${currentUserId}`}>My Profile</Link>
       <button onClick={searchByName}>Search</button>
       {usersAll &&
         usersAll.map((c) => {

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router";
+import { useParams, Navigate } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
 import { getChatRoomTC } from "../../bll/reducer/roomsReducer";
 import {
@@ -9,15 +9,19 @@ import {
 import { Spinner } from "../../components/spinner/spinner";
 import { selectChatRoom, selectMessages } from "../../bll/selector/selectors";
 import { getCurrentUserId } from "../../utils/getCurrentUserId";
+import { selectStatus } from "../../bll/selector/selectors";
+import { routes } from "../../bll/routes/routes";
+import { ErrorSnackbar } from "../../components/errorSnackbar/ErrorSnackbar";
 
 export const ChatPage = () => {
   const [input, setInput] = useState("");
-  const { id } = useParams();
-  const currentUserId = getCurrentUserId();
+  const { currentUserId, id } = useParams();
+  const currentUserIdLs = getCurrentUserId();
   const dispatch = useDispatch();
+  const status = useSelector(selectStatus);
 
   useEffect(() => {
-    dispatch(getChatRoomTC(id!, currentUserId));
+    dispatch(getChatRoomTC(id!, currentUserIdLs));
   }, []);
 
   const messages = useSelector(selectMessages);
@@ -28,7 +32,7 @@ export const ChatPage = () => {
     dispatch(
       createMessageTC({
         conversationId: chatRoomId[0]._id,
-        sender: currentUserId,
+        sender: currentUserIdLs,
         text: input,
       })
     );
@@ -37,6 +41,9 @@ export const ChatPage = () => {
   };
 
   if (!messages) return <Spinner />;
+  if (status === "loading") return <Spinner />;
+  if (currentUserId !== currentUserIdLs)
+    return <Navigate to={routes.pageNotFound} />;
 
   return (
     <div>
@@ -45,6 +52,7 @@ export const ChatPage = () => {
       {messages.map((m) => {
         return <div key={Math.random()}>{JSON.stringify(m.text)}</div>;
       })}
+      <ErrorSnackbar />
     </div>
   );
 };

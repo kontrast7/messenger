@@ -1,5 +1,7 @@
 import { Dispatch } from "redux";
 import { messagesApi, sendMessageType } from "../../api/api";
+import { changeStatus } from "./appReducer";
+import { serverErrorHandling } from "../../utils/serverHandleError";
 
 const initState: initStatePropsTypeMessage[] = [];
 
@@ -32,15 +34,30 @@ export const addLastMessage = (data: initStatePropsTypeMessage) => {
 //Thunk
 export const createMessageTC =
   (payload: sendMessageType) => (dispatch: Dispatch) => {
+    dispatch(changeStatus("loading"));
+
     messagesApi
       .sendMessage({ ...payload })
-      .then((res) => console.log(res.data));
+      .then((res) => {
+        dispatch(changeStatus("completed"));
+        dispatch(addLastMessage(res.data));
+      })
+      .catch((err) => {
+        serverErrorHandling(err, dispatch);
+      });
   };
 
 export const getMessagesByChatId = (chatId: string) => (dispatch: Dispatch) => {
-  messagesApi.getMessagesByChatId(chatId).then((res) => {
-    dispatch(setAllMessages(res.data));
-  });
+  dispatch(changeStatus("loading"));
+  messagesApi
+    .getMessagesByChatId(chatId)
+    .then((res) => {
+      dispatch(changeStatus("completed"));
+      dispatch(setAllMessages(res.data));
+    })
+    .catch((err) => {
+      serverErrorHandling(err, dispatch);
+    });
 };
 
 // Types

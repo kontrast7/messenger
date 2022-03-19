@@ -8,14 +8,16 @@ import {
 import { selectUsersAll } from "../../bll/selector/selectors";
 import { Spinner } from "../../components/spinner/spinner";
 import { ErrorSnackbar } from "../../components/errorSnackbar/ErrorSnackbar";
-import { getCurrentUserId } from "../../utils/getCurrentUserId"
+import { getCurrentUserId } from "../../utils/getCurrentUserId";
+import { Link } from "react-router-dom";
+import { routes } from "../../bll/routes/routes";
 
 export const ProfilePage = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
   const user = useSelector(selectUsersAll)[0];
 
-  const currentUserId = getCurrentUserId()
+  const currentUserId = getCurrentUserId();
 
   useEffect(() => {
     id && dispatch(setCurrentProfileTC(id));
@@ -39,15 +41,25 @@ export const ProfilePage = () => {
         }
         alt={"photo"}
       />
-      {user.followers.includes(currentUserId) ? (
-        <button onClick={() => followUserHandler(user._id, "unfollow")}>
-          unfollow
-        </button>
+
+      {id === currentUserId ? (
+        <Link to={routes.editProfile} >Edit Profile</Link>
       ) : (
-        <button onClick={() => followUserHandler(user._id, "follow")}>
-          follow
-        </button>
+        <>
+          <Link to={`/chat/${currentUserId}/${user._id}`}>go to chat</Link>
+
+          {user.followers.includes(currentUserId) ? (
+            <button onClick={() => followUserHandler(user._id, "unfollow")}>
+              unfollow
+            </button>
+          ) : (
+            <button onClick={() => followUserHandler(user._id, "follow")}>
+              follow
+            </button>
+          )}
+        </>
       )}
+
       <ErrorSnackbar />
     </section>
   );

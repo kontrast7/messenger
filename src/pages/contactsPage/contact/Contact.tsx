@@ -4,7 +4,8 @@ import { followUnFollowUserTC } from "../../../bll/reducer/usersReducer";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import { createChatRoomTC } from "../../../bll/reducer/roomsReducer";
-import { getCurrentUserId } from "../../../utils/getCurrentUserId"
+import { getCurrentUserId } from "../../../utils/getCurrentUserId";
+import { ErrorSnackbar } from "../../../components/errorSnackbar/ErrorSnackbar";
 
 export const Contact = ({ contact }: ContactPropsType) => {
   const currentUserId = getCurrentUserId();
@@ -28,6 +29,7 @@ export const Contact = ({ contact }: ContactPropsType) => {
           follow
         </button>
       )}
+      <ErrorSnackbar />
     </div>
   );
 };
