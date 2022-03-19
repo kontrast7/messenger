@@ -18,6 +18,7 @@ export const GlobalStyles = createGlobalStyle`
 `;
 
 export const Container = styled.div`
-  max-width: 1100px;
+  max-width: 500px;
   padding: 0 1rem;
+  margin: 0 auto;
 `;

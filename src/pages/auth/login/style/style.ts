@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { Link } from "react-router-dom";
 
 export const Wrapper = styled.section`
   height: 100vh;
@@ -18,6 +19,23 @@ export const LoginButton = styled.button`
   border: 2px solid ${({ theme }) => theme.colors.inputColor};
   color: ${({ theme }) => theme.colors.inputColor};
   background: transparent;
-  font-size: ${({theme}) => theme.fontSize.contactName};
+  font-size: ${({ theme }) => theme.fontSize.contactName};
   font-weight: bold;
+  margin-top: .5rem;
+`;
+
+export const DontHaveAccount = styled.p`
+  display: flex;
+  gap: 0.5em;
+  margin-top: 1rem;
+  align-items: center;
+  flex-direction: column;
+  font-size: ${({ theme }) => theme.fontSize.contactName};
+  color: ${({ theme }) => theme.colors.inputColor};
+`;
+
+export const DontHaveAccountLink = styled(Link)`
+  font-size: ${({ theme }) => theme.fontSize.contactName};
+  color: ${({ theme }) => theme.colors.accentColor};
+  text-decoration: underline;
 `;

@@ -7,6 +7,7 @@ interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
 }
 
 const InputGroup = styled.div`
+  width: 75%;
   position: relative;
 `;
 
@@ -18,9 +19,11 @@ const InputLabel = styled.label`
   background: ${({ theme }) => theme.colors.inputColor};
   transition: 300ms;
   transform: translate(0, -50%);
+  border-radius: 3px;
 `;
 
 const InputField = styled.input`
+  width: 100%;
   outline: none;
   padding: 12px 22px;
   font-size: ${({ theme }) => theme.fontSize.contactName};

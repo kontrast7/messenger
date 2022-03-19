@@ -10,17 +10,23 @@ import { selectUsersAll } from "../../bll/selector/selectors";
 import { Spinner } from "../../components/spinner/spinner";
 import { selectStatus } from "../../bll/selector/selectors";
 import { ErrorSnackbar } from "../../components/errorSnackbar/ErrorSnackbar";
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
+import { selectIsLoggedIn } from "../../bll/selector/selectors";
+import { getCurrentUserId } from "../../utils/getCurrentUserId";
+import { routes } from "../../bll/routes/routes";
+import { SearchInput } from "../../components/common/searchInput/styles";
 
 export const ContactsPage = () => {
-  const [input, setInput] = useState("");
   const dispatch = useDispatch();
-  const currentUserId = JSON.parse(localStorage.getItem("user") as string)._id;
-  const usersAll = useSelector(selectUsersAll);
   const status = useSelector(selectStatus);
+  const isLoggedIn = useSelector(selectIsLoggedIn);
+
+  const [input, setInput] = useState("");
+  const currentUserId = getCurrentUserId();
+  const usersAll = useSelector(selectUsersAll);
 
   useEffect(() => {
-    dispatch(setAllUsersTC(currentUserId));
+    isLoggedIn && dispatch(setAllUsersTC(currentUserId));
   }, []);
 
   const searchByName = () => {
@@ -29,19 +35,21 @@ export const ContactsPage = () => {
       : dispatch(searchByNameUserTC(input));
   };
 
+  if (!isLoggedIn) return <Navigate to={routes.login} />;
+
   if (status === "loading") {
     return <Spinner />;
   }
 
   return (
     <div>
-      <input
-        value={input}
-        placeholder={"enter to search"}
-        onChange={(e) => setInput(e.target.value)}
-      />
       <Link to={`/user/${currentUserId}`}>My Profile</Link>
-      <button onClick={searchByName}>Search</button>
+      <SearchInput
+        placeholder={"Search..."}
+        value={input}
+        onChange={(e) => setInput(e.target.value)}
+        onClick={searchByName}
+      />
       {usersAll &&
         usersAll.map((c) => {
           return <Contact key={c._id} contact={c} />;
