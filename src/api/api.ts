@@ -73,7 +73,7 @@ export type sendMessageType = {
 
 export type updateUserType = {
   username?: string;
-  profilePicture?: string;
+  profilePicture?: any;
   desc?: string;
   city?: string;
   userId: string;

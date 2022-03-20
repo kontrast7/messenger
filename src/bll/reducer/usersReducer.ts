@@ -9,6 +9,7 @@ import { RootAppStateType } from "../redux/store";
 import { useNavigate } from "react-router-dom";
 import { routes } from "../routes/routes";
 import { getCurrentUserId } from "../../utils/getCurrentUserId";
+import { resizeFile } from "../../utils/resizeFile";
 
 const initState: Array<initStatePropsType> = [];
 
@@ -90,15 +91,42 @@ export const updateUserByIdTC =
   (dispatch: ThunkDispatch<RootAppStateType, void, any>) => {
     dispatch(changeStatus("loading"));
 
-    usersApi
-      .updateUser(payload)
-      .then((res) => {
-        dispatch(changeStatus("completed"));
-        navigate(`/user/${payload.userId}`);
-      })
-      .catch((err) => {
-        serverErrorHandling(err, dispatch);
+    // If we have picture parse it
+    if (payload.profilePicture) {
+      resizeFile(payload.profilePicture).then((res) => {
+        payload.profilePicture = res;
+
+        usersApi
+          .updateUser(payload)
+          .then((res) => {
+            dispatch(changeStatus("completed"));
+            navigate(`/user/${payload.userId}`);
+          })
+          .catch((err) => {
+            serverErrorHandling(err, dispatch);
+          });
       });
+    } else {
+      usersApi
+        .updateUser(payload)
+        .then((res) => {
+          dispatch(changeStatus("completed"));
+          navigate(`/user/${payload.userId}`);
+        })
+        .catch((err) => {
+          serverErrorHandling(err, dispatch);
+        });
+    }
+
+    // usersApi
+    //   .updateUser(payload)
+    //   .then((res) => {
+    //     dispatch(changeStatus("completed"));
+    //     navigate(`/user/${payload.userId}`);
+    //   })
+    //   .catch((err) => {
+    //     serverErrorHandling(err, dispatch);
+    //   });
   };
 
 // Types
