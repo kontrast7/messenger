@@ -17,6 +17,7 @@ import { routes } from "../../bll/routes/routes";
 import { SearchInput } from "../../components/common/searchInput/styles";
 import { ContactsWrapper } from "./styles/styles";
 import { Wrapper } from "./styles/styles";
+import { Navigation } from "../../components/navigaton/Navigation";
 
 export const ContactsPage = () => {
   const dispatch = useDispatch();
@@ -44,20 +45,21 @@ export const ContactsPage = () => {
   }
 
   return (
-    <Wrapper>
-      <SearchInput
-        placeholder={"Search..."}
-        value={input}
-        onChange={(e) => setInput(e.target.value)}
-        onClick={searchByName}
-      />
-      <ContactsWrapper>
-        {usersAll &&
-          usersAll.map((c) => {
-            return <Contact key={c._id} contact={c} />;
-          })}
-      </ContactsWrapper>
-      <ErrorSnackbar />
-    </Wrapper>
+      <Wrapper>
+        <SearchInput
+          placeholder={"Search..."}
+          value={input}
+          onChange={(e) => setInput(e.target.value)}
+          onClick={searchByName}
+        />
+        <ContactsWrapper>
+          {usersAll &&
+            usersAll.map((c) => {
+              return <Contact key={c._id} contact={c} />;
+            })}
+        </ContactsWrapper>
+        <ErrorSnackbar />
+        <Navigation />
+      </Wrapper>
   );
 };

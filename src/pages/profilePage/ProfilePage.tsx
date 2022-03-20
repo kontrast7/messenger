@@ -12,6 +12,9 @@ import { getCurrentUserId } from "../../utils/getCurrentUserId";
 import { Link } from "react-router-dom";
 import { routes } from "../../bll/routes/routes";
 import { createChatRoomTC } from "../../bll/reducer/roomsReducer";
+import { Follow, GoToMessages } from "../contactsPage/contact/styles/styles";
+//@ts-ignore
+import messageIcon from "../../assets/images/icons/message-icon.svg";
 
 export const ProfilePage = () => {
   const { id } = useParams();
@@ -53,16 +56,18 @@ export const ProfilePage = () => {
         <Link to={routes.editProfile}>Edit Profile</Link>
       ) : (
         <>
-          <Link to={`/chat/${currentUserId}/${user._id}`}>go to chat</Link>
+          <GoToMessages to={`/chat/${currentUserId}/${user._id}`}>
+            <img src={messageIcon} alt="Navigate to chat room" />
+          </GoToMessages>
 
           {user.followers.includes(currentUserId) ? (
-            <button onClick={() => followUserHandler(user._id, "unfollow")}>
-              unfollow
-            </button>
+            <Follow onClick={() => followUserHandler(user._id, "unfollow")}>
+              -
+            </Follow>
           ) : (
-            <button onClick={() => followUserHandler(user._id, "follow")}>
-              follow
-            </button>
+            <Follow onClick={() => followUserHandler(user._id, "follow")}>
+              +
+            </Follow>
           )}
         </>
       )}

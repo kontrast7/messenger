@@ -5,12 +5,11 @@ import { useDispatch } from "react-redux";
 import { createChatRoomTC } from "../../../bll/reducer/roomsReducer";
 import { getCurrentUserId } from "../../../utils/getCurrentUserId";
 import { ErrorSnackbar } from "../../../components/errorSnackbar/ErrorSnackbar";
-import { Wrapper } from "./styles/styles";
+import { Content, Wrapper } from "./styles/styles";
 import { Username } from "./styles/styles";
 import { GoToMessages } from "./styles/styles";
 import { Follow } from "./styles/styles";
 import { Avatar } from "../../../styles/global";
-import { Content } from "./styles/styles";
 //@ts-ignore
 import messageIcon from "../../../assets/images/icons/message-icon.svg";
 

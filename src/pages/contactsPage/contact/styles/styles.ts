@@ -45,4 +45,5 @@ export const Follow = styled.button`
   line-height: 1.437rem;
   border-radius: 10px;
   border: none;
+  cursor: pointer;
 `;

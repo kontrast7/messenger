@@ -25,7 +25,7 @@ export const Register = () => {
 
   useEffect(() => {
     if (isLoggedIn) {
-      navigate("/");
+      navigate(routes.contacts);
     }
   }, [isLoggedIn]);
 
