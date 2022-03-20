@@ -2,10 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useParams, Navigate } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
 import { getChatRoomTC } from "../../bll/reducer/roomsReducer";
-import {
-  createMessageTC,
-  getMessagesByChatId,
-} from "../../bll/reducer/messageReducer";
+import { createMessageTC} from "../../bll/reducer/messageReducer";
 import { Spinner } from "../../components/spinner/spinner";
 import { selectChatRoom, selectMessages } from "../../bll/selector/selectors";
 import { getCurrentUserId } from "../../utils/getCurrentUserId";
