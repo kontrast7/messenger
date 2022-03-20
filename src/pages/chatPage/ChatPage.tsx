@@ -50,7 +50,7 @@ export const ChatPage = () => {
       <input value={input} onChange={(e) => setInput(e.target.value)} />
       <button onClick={sendMessageHandler}>send</button>
       {messages.map((m) => {
-        return <div key={Math.random()}>{JSON.stringify(m.text)}</div>;
+        return <div key={Math.random()}>{m.text}</div>;
       })}
       <ErrorSnackbar />
     </div>

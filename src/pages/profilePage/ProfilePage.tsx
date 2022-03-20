@@ -11,6 +11,7 @@ import { ErrorSnackbar } from "../../components/errorSnackbar/ErrorSnackbar";
 import { getCurrentUserId } from "../../utils/getCurrentUserId";
 import { Link } from "react-router-dom";
 import { routes } from "../../bll/routes/routes";
+import { createChatRoomTC } from "../../bll/reducer/roomsReducer";
 
 export const ProfilePage = () => {
   const { id } = useParams();
@@ -25,6 +26,10 @@ export const ProfilePage = () => {
 
   const followUserHandler = (id: string, action: "follow" | "unfollow") => {
     dispatch(followUnFollowUserTC(id, action, currentUserId));
+
+    if (action === "follow") {
+      dispatch(createChatRoomTC({ id, currentUserId }));
+    }
   };
 
   const user = users.filter((u) => u._id === id)[0];
@@ -45,7 +50,7 @@ export const ProfilePage = () => {
       />
 
       {id === currentUserId ? (
-        <Link to={routes.editProfile} >Edit Profile</Link>
+        <Link to={routes.editProfile}>Edit Profile</Link>
       ) : (
         <>
           <Link to={`/chat/${currentUserId}/${user._id}`}>go to chat</Link>

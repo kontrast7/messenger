@@ -46,6 +46,7 @@ export const InputButton = styled.button`
   height: 40px;
   background-color: #565e70;
   border: none;
+  border-radius: 10px 0 0 10px;
 `;
 
 export const SearchInput: React.FC<InputProps> = ({

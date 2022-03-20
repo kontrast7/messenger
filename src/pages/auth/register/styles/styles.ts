@@ -21,4 +21,5 @@ export const RegisterButton = styled.button`
   font-size: ${({ theme }) => theme.fontSize.contactName};
   font-weight: bold;
   margin-top: 0.5rem;
+  cursor: pointer;
 `;
