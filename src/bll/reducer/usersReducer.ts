@@ -1,6 +1,6 @@
 import { Dispatch } from "redux";
 import { chatRoomsApi, usersApi } from "../../api/api";
-import { changeStatus } from "./appReducer";
+import { changeInitialized, changeStatus } from "./appReducer";
 import { serverErrorHandling } from "../../utils/serverHandleError";
 import { setIsLoggedInAC } from "./appReducer";
 
@@ -40,10 +40,12 @@ export const setAllUsersTC = (myId: string) => (dispatch: Dispatch) => {
       dispatch(changeStatus("completed"));
       dispatch(setAllUsersAC(res.data));
       dispatch(setIsLoggedInAC(true));
+      dispatch(changeInitialized(true))
     })
     .catch((err) => {
       serverErrorHandling(err, dispatch);
-    });
+    }).finally(()=> {
+  })
 };
 export const followUnFollowUserTC =
   (id: string, action: "follow" | "unfollow", currentUserId: string) =>
@@ -78,6 +80,15 @@ export const setCurrentProfileTC = (id: string) => (dispatch: Dispatch) => {
     dispatch(setSearchUserAC(res.data));
   });
 };
+
+export const setUserFriendsTC = (id:string) => (dispatch: Dispatch) => {
+  dispatch(changeStatus("loading"));
+  usersApi.getUserFriendsById(id).then(res=> {
+    dispatch(setAllUsersAC(res.data));
+    dispatch(changeStatus("completed"));
+    console.log(res.data)
+  })
+}
 
 // Types
 export type initStatePropsType = {

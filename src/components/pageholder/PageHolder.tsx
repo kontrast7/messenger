@@ -10,6 +10,7 @@ import { PageNotFound } from "../../pages/pageNotFound/PageNotFound";
 import { UserSettings } from "../../pages/userSettings/UserSettings";
 import { Wrapper } from "./styles/styles";
 import { Container } from "../../styles/global";
+import { Messenger } from "../../pages/messenger/Messenger";
 
 export const PageHolder = () => {
   return (
@@ -24,6 +25,7 @@ export const PageHolder = () => {
           <Route path={routes.profilePage} element={<ProfilePage />} />
           <Route path={routes.chatPage} element={<ChatPage />} />
           <Route path={routes.editProfile} element={<UserSettings />} />
+          <Route path={routes.messenger} element={<Messenger />} />
           <Route path={"/*"} element={<Navigate to={"/404"} />} />
         </Routes>
       </Container>
