@@ -22,6 +22,7 @@ export const LoginButton = styled.button`
   font-size: ${({ theme }) => theme.fontSize.contactName};
   font-weight: bold;
   margin-top: .5rem;
+  cursor: pointer;
 `;
 
 export const DontHaveAccount = styled.p`

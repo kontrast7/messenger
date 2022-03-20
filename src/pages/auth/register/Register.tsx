@@ -60,7 +60,7 @@ export const Register = () => {
         />
         <Input
           required
-          type="text"
+          type="password"
           label="Password"
           id="register-password"
           value={password}
