@@ -3,6 +3,12 @@ import { chatRoomsApi, usersApi } from "../../api/api";
 import { changeStatus } from "./appReducer";
 import { serverErrorHandling } from "../../utils/serverHandleError";
 import { setIsLoggedInAC } from "./appReducer";
+import { updateUserType } from "../../api/api";
+import { ThunkDispatch } from "redux-thunk";
+import { RootAppStateType } from "../redux/store";
+import { useNavigate } from "react-router-dom";
+import { routes } from "../routes/routes";
+import { getCurrentUserId } from "../../utils/getCurrentUserId";
 
 const initState: Array<initStatePropsType> = [];
 
@@ -78,6 +84,22 @@ export const setCurrentProfileTC = (id: string) => (dispatch: Dispatch) => {
     dispatch(setSearchUserAC(res.data));
   });
 };
+
+export const updateUserByIdTC =
+  (payload: updateUserType, navigate: (path: string) => void) =>
+  (dispatch: ThunkDispatch<RootAppStateType, void, any>) => {
+    dispatch(changeStatus("loading"));
+
+    usersApi
+      .updateUser(payload)
+      .then((res) => {
+        dispatch(changeStatus("completed"));
+        navigate(`/user/${payload.userId}`);
+      })
+      .catch((err) => {
+        serverErrorHandling(err, dispatch);
+      });
+  };
 
 // Types
 export type initStatePropsType = {

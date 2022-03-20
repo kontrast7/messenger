@@ -49,6 +49,10 @@ const InputField = styled.input`
     font-size: 14px;
     transition: 300ms;
   }
+ 
+  button {
+    opacity: 0;
+  }
 `;
 
 export const Input: React.FC<InputProps> = ({ id, label, ...rest }) => {

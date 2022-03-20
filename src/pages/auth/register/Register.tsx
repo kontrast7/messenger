@@ -31,8 +31,14 @@ export const Register = () => {
 
   const dispatch = useDispatch();
 
+  const payload = {
+    username,
+    email,
+    password,
+  };
+
   const onSendHandler = () => {
-    dispatch(registerTC({ username, email, password }));
+    dispatch(registerTC(payload, navigate));
   };
 
   if (status === "loading") {

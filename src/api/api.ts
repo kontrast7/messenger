@@ -33,6 +33,9 @@ export const usersApi = {
   ) => {
     return instance.put(`/users/${id}/${action}`, { userId });
   },
+  updateUser: (payload: updateUserType) => {
+    return instance.put(`/users/${payload.userId}`, { ...payload });
+  },
 };
 
 export const chatRoomsApi = {
@@ -49,8 +52,8 @@ export const messagesApi = {
     return instance.get(`/messages/${id}`);
   },
   sendMessage: (payload: sendMessageType) => {
-    return instance.post(`/messages`, {...payload})
-  }
+    return instance.post(`/messages`, { ...payload });
+  },
 };
 
 export type registerUserType = {
@@ -63,7 +66,15 @@ export type loginUserType = {
   password: string;
 };
 export type sendMessageType = {
-  conversationId: string,
-  sender: string,
-  text: string
-}
+  conversationId: string;
+  sender: string;
+  text: string;
+};
+
+export type updateUserType = {
+  username?: string;
+  profilePicture?: string;
+  desc?: string;
+  city?: string;
+  userId: string;
+};

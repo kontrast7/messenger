@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { Link } from "react-router-dom";
 
 export const Wrapper = styled.section`
-  height: 100vh;
+  height: calc(100vh - 76px);
 `;
 
 export const Inner = styled.div`

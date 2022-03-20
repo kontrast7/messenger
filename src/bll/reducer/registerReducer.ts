@@ -4,6 +4,9 @@ import { registerUserType } from "../../api/api";
 import { changeStatus } from "./appReducer";
 import { setIsRegisteredInAC } from "./appReducer";
 import { serverErrorHandling } from "../../utils/serverHandleError";
+import { useNavigate } from "react-router-dom";
+import { routes } from "../routes/routes";
+import React from "react";
 
 const initState: initStatePropsType = {};
 
@@ -16,21 +19,16 @@ export const registerReducer = (state = initState, action: ActionType) => {
 
 // Thunk Creators
 export const registerTC =
-  ({ username, email, password }: registerUserType) =>
+  (payload: registerUserType, navigate: (path: string) => void) =>
   (dispatch: Dispatch<ActionType>) => {
     dispatch(changeStatus("loading"));
-
-    const payload: registerUserType = {
-      username,
-      email,
-      password,
-    };
 
     authApi
       .registerUser(payload)
       .then((res) => {
         dispatch(changeStatus("completed"));
         dispatch(setIsRegisteredInAC(true));
+        navigate(routes.login);
       })
       .catch((err) => {
         serverErrorHandling(err, dispatch);
@@ -40,5 +38,9 @@ export const registerTC =
 // Types
 
 type initStatePropsType = {};
+type RegisterPropsType = {
+  payload: registerUserType;
+  navigate: string;
+};
 
 type ActionType = any;
