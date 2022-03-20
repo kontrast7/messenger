@@ -1,3 +1,5 @@
+import { Wrapper } from "./styles/styles";
+
 export const Navigation = () => {
-  return <section>NAVI</section>;
+  return <Wrapper>NAVI</Wrapper>;
 };

@@ -45,21 +45,20 @@ export const ContactsPage = () => {
   }
 
   return (
-      <Wrapper>
-        <SearchInput
-          placeholder={"Search..."}
-          value={input}
-          onChange={(e) => setInput(e.target.value)}
-          onClick={searchByName}
-        />
-        <ContactsWrapper>
-          {usersAll &&
-            usersAll.map((c) => {
-              return <Contact key={c._id} contact={c} />;
-            })}
-        </ContactsWrapper>
-        <ErrorSnackbar />
-        <Navigation />
-      </Wrapper>
+    <Wrapper>
+      <SearchInput
+        placeholder={"Search..."}
+        value={input}
+        onChange={(e) => setInput(e.target.value)}
+        onClick={searchByName}
+      />
+      <ContactsWrapper>
+        {usersAll &&
+          usersAll.map((c) => {
+            return <Contact key={c._id} contact={c} />;
+          })}
+      </ContactsWrapper>
+      <ErrorSnackbar />
+    </Wrapper>
   );
 };

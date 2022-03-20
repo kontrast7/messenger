@@ -2,28 +2,28 @@ import React from "react";
 import "./App.css";
 import { Header } from "./components/header/Header";
 import { PageHolder } from "./components/pageholder/PageHolder";
-import { useState } from "react";
 import { ThemeProvider } from "styled-components";
 import light from "./styles/theme/light";
 import dark from "./styles/theme/dark";
 import { GlobalStyles } from "./styles/global";
-import { useDispatch } from "react-redux";
+import { Navigation } from "./components/navigaton/Navigation";
 import { useSelector } from "react-redux";
-import { selectTheme } from "./bll/selector/selectors";
-import { changeTheme } from "./utils/changeTheme";
+import { selectIsLoggedIn } from "./bll/selector/selectors";
+import { PageWrapper } from "./styles/global";
 
 function App() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const dispatch = useDispatch();
-  const theme = useSelector(selectTheme);
+  const isLoggedIn = useSelector(selectIsLoggedIn);
 
   return (
     <ThemeProvider
       theme={localStorage.getItem("theme") === "dark" ? dark : light}
     >
-      <GlobalStyles />
-      {!isLoggedIn && <Header />}
-      <PageHolder />
+      <PageWrapper>
+        <GlobalStyles />
+        <Header />
+        <PageHolder />
+        {isLoggedIn && <Navigation />}
+      </PageWrapper>
     </ThemeProvider>
   );
 }

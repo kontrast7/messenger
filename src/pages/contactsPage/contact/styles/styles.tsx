@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
+import React from "react";
 
 export const Wrapper = styled.div`
   display: flex;
@@ -20,7 +21,7 @@ export const Username = styled(Link)`
   margin-top: 1px;
 `;
 
-export const GoToMessages = styled(Link)`
+export const GoToMessages = styled(Link)<GoToMessagesPropsType>`
   display: flex;
   align-items: center;
   justify-content: center;
@@ -29,6 +30,8 @@ export const GoToMessages = styled(Link)`
   background-color: ${({ theme }) => theme.colors.secondaryAccentColor};
   border-radius: 10px;
   border: none;
+  pointer-events: ${({ disabled }) => (disabled ? "none" : "fill")};
+  opacity: ${({ disabled }) => (disabled ? ".5" : "1")};
 
   img {
     width: 27px;
@@ -47,3 +50,9 @@ export const Follow = styled.button`
   border: none;
   cursor: pointer;
 `;
+
+// Types
+
+type GoToMessagesPropsType = {
+  disabled?: boolean;
+};

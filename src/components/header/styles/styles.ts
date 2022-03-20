@@ -18,5 +18,5 @@ export const Inner = styled.div`
 `;
 
 export const Logo = styled.img`
-  width: 200px;
+  width: 150px;
 `;

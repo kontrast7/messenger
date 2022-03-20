@@ -17,6 +17,13 @@ export const GlobalStyles = createGlobalStyle`
   }
 `;
 
+export const PageWrapper = styled.div`
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+`;
+
 export const Container = styled.div`
   max-width: 500px;
   padding: 0 1.375rem;

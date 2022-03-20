@@ -56,7 +56,10 @@ export const ProfilePage = () => {
         <Link to={routes.editProfile}>Edit Profile</Link>
       ) : (
         <>
-          <GoToMessages to={`/chat/${currentUserId}/${user._id}`}>
+          <GoToMessages
+            disabled={!user.followers.includes(currentUserId)}
+            to={`/chat/${currentUserId}/${user._id}`}
+          >
             <img src={messageIcon} alt="Navigate to chat room" />
           </GoToMessages>
 
