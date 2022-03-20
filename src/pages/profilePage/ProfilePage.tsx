@@ -15,6 +15,7 @@ import { createChatRoomTC } from "../../bll/reducer/roomsReducer";
 import { Follow, GoToMessages } from "../contactsPage/contact/styles/styles";
 //@ts-ignore
 import messageIcon from "../../assets/images/icons/message-icon.svg";
+import { changeInitialized } from "../../bll/reducer/appReducer";
 
 export const ProfilePage = () => {
   const { id } = useParams();
@@ -25,6 +26,7 @@ export const ProfilePage = () => {
 
   useEffect(() => {
     id && dispatch(setCurrentProfileTC(id));
+    dispatch(changeInitialized(false))
   }, []);
 
   const followUserHandler = (id: string, action: "follow" | "unfollow") => {

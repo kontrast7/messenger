@@ -13,7 +13,6 @@ import { PageWrapper } from "./styles/global";
 
 function App() {
   const isLoggedIn = useSelector(selectIsLoggedIn);
-
   return (
     <ThemeProvider
       theme={localStorage.getItem("theme") === "dark" ? dark : light}

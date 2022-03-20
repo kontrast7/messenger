@@ -1,7 +1,7 @@
 import React from "react";
 import { initStatePropsType } from "../../../bll/reducer/usersReducer";
 import { followUnFollowUserTC } from "../../../bll/reducer/usersReducer";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { createChatRoomTC } from "../../../bll/reducer/roomsReducer";
 import { getCurrentUserId } from "../../../utils/getCurrentUserId";
 import { ErrorSnackbar } from "../../../components/errorSnackbar/ErrorSnackbar";
@@ -12,6 +12,8 @@ import { Follow } from "./styles/styles";
 import { Avatar } from "../../../styles/global";
 //@ts-ignore
 import messageIcon from "../../../assets/images/icons/message-icon.svg";
+import { Spinner } from "../../../components/spinner/spinner";
+import { selectStatus } from "../../../bll/selector/selectors";
 
 export const Contact = ({ contact }: ContactPropsType) => {
   const currentUserId = getCurrentUserId();
@@ -23,6 +25,10 @@ export const Contact = ({ contact }: ContactPropsType) => {
       dispatch(createChatRoomTC({ id, currentUserId }));
     }
   };
+  const status = useSelector(selectStatus);
+  if (status === "loading") {
+    return <Spinner />;
+  }
 
   return (
     <Wrapper>

@@ -6,7 +6,10 @@ import {
   setAllUsersTC,
 } from "../../bll/reducer/usersReducer";
 import { Contact } from "./contact/Contact";
-import { selectUsersAll } from "../../bll/selector/selectors";
+import {
+  selectIsInitialized,
+  selectUsersAll,
+} from "../../bll/selector/selectors";
 import { Spinner } from "../../components/spinner/spinner";
 import { selectStatus } from "../../bll/selector/selectors";
 import { ErrorSnackbar } from "../../components/errorSnackbar/ErrorSnackbar";
@@ -18,15 +21,16 @@ import { SearchInput } from "../../components/common/searchInput/styles";
 import { ContactsWrapper } from "./styles/styles";
 import { Wrapper } from "./styles/styles";
 import { Navigation } from "../../components/navigaton/Navigation";
+import { changeInitialized } from "../../bll/reducer/appReducer";
 
 export const ContactsPage = () => {
   const dispatch = useDispatch();
   const status = useSelector(selectStatus);
   const isLoggedIn = useSelector(selectIsLoggedIn);
-
   const [input, setInput] = useState("");
   const currentUserId = getCurrentUserId();
   const usersAll = useSelector(selectUsersAll);
+  const isInitialized = useSelector(selectIsInitialized);
 
   useEffect(() => {
     isLoggedIn && dispatch(setAllUsersTC(currentUserId));
@@ -39,10 +43,8 @@ export const ContactsPage = () => {
   };
 
   if (!isLoggedIn) return <Navigate to={routes.login} />;
-
-  if (status === "loading") {
-    return <Spinner />;
-  }
+  if (status === "loading") return <Spinner />
+  if (!isInitialized) return <Spinner />
 
   return (
     <Wrapper>
