@@ -9,9 +9,7 @@ export const serverErrorHandling = (
   error: AxiosError,
   dispatch: Dispatch<errorMessageType | changeStatusType>
 ) => {
-  const resultError = error.response
-    ? error.response.data.error
-    : error.message;
+  const resultError = error.response ? error.response.data : error.message;
 
   dispatch(errorMessageAC(resultError));
   dispatch(changeStatus("failed"));

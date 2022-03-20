@@ -4,7 +4,19 @@ import { changeStatus } from "./appReducer";
 import { serverErrorHandling } from "../../utils/serverHandleError";
 import { setIsLoggedInAC } from "./appReducer";
 
-const initState = {};
+const initState: InitStatePropsType = {
+  _id: "",
+  coverPicture: "",
+  createdAt: "",
+  email: "",
+  followers: [],
+  followings: [],
+  isAdmin: false,
+  password: "",
+  profilePicture: "",
+  updatedAt: "",
+  username: "",
+};
 
 export const loginReducer = (state = initState, action: ActionType) => {
   switch (action.type) {
@@ -16,7 +28,7 @@ export const loginReducer = (state = initState, action: ActionType) => {
 };
 
 //AC
-const setUserDataAC = (data: initStatePropsType) => {
+const setUserDataAC = (data: InitStatePropsType) => {
   return {
     type: "APP/LOGIN",
     data,
@@ -42,7 +54,7 @@ export const setLoginUserTC =
   };
 
 // Types
-type initStatePropsType = {
+type InitStatePropsType = {
   coverPicture: string;
   createdAt: string;
   email: string;

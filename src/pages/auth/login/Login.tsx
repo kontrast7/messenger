@@ -5,12 +5,33 @@ import { useSelector } from "react-redux";
 import { selectStatus } from "../../../bll/selector/selectors";
 import { Spinner } from "../../../components/spinner/spinner";
 import { ErrorSnackbar } from "../../../components/errorSnackbar/ErrorSnackbar";
+import { Input } from "../../../components/common/input/styles";
+import {
+  LoginButton,
+  DontHaveAccount,
+  Inner,
+  Wrapper,
+  DontHaveAccountLink,
+} from "./style/style";
+import { useEffect } from "react";
+import { selectIsLoggedIn } from "../../../bll/selector/selectors";
+import { useNavigate } from "react-router-dom";
+import { routes } from "../../../bll/routes/routes";
 
 export const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const dispatch = useDispatch();
   const status = useSelector(selectStatus);
+
+  const isLoggedIn = useSelector(selectIsLoggedIn);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (isLoggedIn) {
+      navigate("/");
+    }
+  }, [isLoggedIn]);
 
   const onSendHandler = () => {
     dispatch(setLoginUserTC({ email, password }));
@@ -21,21 +42,33 @@ export const Login = () => {
   }
 
   return (
-    <section>
-      <div>
-        <input
-          placeholder="Enter your email"
+    <Wrapper>
+      <Inner>
+        <Input
+          required
+          type="text"
+          label="Email"
+          id="login-email"
           value={email}
-          onChange={(e) => setEmail(e.target.value)}
+          onChange={(e) => setEmail(e.currentTarget.value)}
         />
-        <input
-          placeholder="Enter your password"
+        <Input
+          required
+          type="password"
+          label="Password"
+          id="login-password"
           value={password}
-          onChange={(e) => setPassword(e.target.value)}
+          onChange={(e) => setPassword(e.currentTarget.value)}
         />
-        <button onClick={onSendHandler}>Login</button>
-      </div>
+        <LoginButton onClick={onSendHandler}>Login</LoginButton>
+        <DontHaveAccount>
+          Don't have an account?
+          <DontHaveAccountLink to={routes.register}>
+            Sign up
+          </DontHaveAccountLink>
+        </DontHaveAccount>
+      </Inner>
       <ErrorSnackbar />
-    </section>
+    </Wrapper>
   );
 };

@@ -13,6 +13,7 @@ declare module "styled-components" {
       secondaryAccentColor: string,
       receivedMessage: string,
       sendMessage: string,
+      inputColor: string,
     },
 
     fontSize: {

@@ -24,7 +24,6 @@ function App() {
       <GlobalStyles />
       {!isLoggedIn && <Header />}
       <PageHolder />
-      <button onClick={() => changeTheme(theme, dispatch)}>ChangeTheme</button>
     </ThemeProvider>
   );
 }

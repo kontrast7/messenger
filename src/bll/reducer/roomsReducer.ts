@@ -3,6 +3,8 @@ import { chatRoomsApi } from "../../api/api";
 import { getMessagesByChatId } from "./messageReducer";
 import { ThunkDispatch } from "redux-thunk";
 import { RootAppStateType } from "../redux/store";
+import { changeStatus } from "./appReducer";
+import { serverErrorHandling } from "../../utils/serverHandleError";
 
 const initState: Array<initStatePropsType> = [];
 
@@ -20,24 +22,39 @@ export const addedChatRoomAC = (data: initStatePropsType) => {
   return {
     type: "APP/CHAT/ADDED_CHAT",
     data,
-  } as const
+  } as const;
 };
 
 //Thunk
 export const createChatRoomTC = (payload: any) => (dispatch: Dispatch) => {
-  chatRoomsApi.createChatRoom(payload).then((res) => {
-    dispatch(addedChatRoomAC(res.data));
-    console.log(res.data);
-  });
+  dispatch(changeStatus("loading"));
+  chatRoomsApi
+
+    .createChatRoom(payload)
+    .then((res) => {
+      dispatch(addedChatRoomAC(res.data));
+      dispatch(changeStatus("completed"));
+    })
+    .catch((err) => {
+      serverErrorHandling(err, dispatch);
+    });
 };
 
 export const getChatRoomTC =
   (idCurrentUser: string, idOtherUser: string) =>
   (dispatch: ThunkDispatch<RootAppStateType, void, any>) => {
-    chatRoomsApi.goToChatRoom(idCurrentUser, idOtherUser).then((res) => {
-      dispatch(addedChatRoomAC(res.data));
-      dispatch(getMessagesByChatId(res.data._id));
-    })
+    dispatch(changeStatus("loading"));
+
+    chatRoomsApi
+      .goToChatRoom(idCurrentUser, idOtherUser)
+      .then((res) => {
+        dispatch(changeStatus("completed"));
+        dispatch(addedChatRoomAC(res.data));
+        dispatch(getMessagesByChatId(res.data._id));
+      })
+      .catch((err) => {
+        serverErrorHandling(err, dispatch);
+      });
   };
 
 // Types

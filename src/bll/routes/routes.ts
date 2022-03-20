@@ -5,5 +5,6 @@ export const routes = {
   pageNotFound: "/404",
   profilePage: "/user/:id",
   chatPage: "/chat/:currentUserId/:id",
+  editProfile: "/edit",
   home: "/",
 };

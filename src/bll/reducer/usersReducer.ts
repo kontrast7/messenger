@@ -49,7 +49,6 @@ export const followUnFollowUserTC =
   (id: string, action: "follow" | "unfollow", currentUserId: string) =>
   (dispatch: Dispatch) => {
     dispatch(changeStatus("loading"));
-
     usersApi
       .followUnFollowUser(id, action, currentUserId)
       .then((res) => {
@@ -79,8 +78,6 @@ export const setCurrentProfileTC = (id: string) => (dispatch: Dispatch) => {
     dispatch(setSearchUserAC(res.data));
   });
 };
-
-
 
 // Types
 export type initStatePropsType = {
