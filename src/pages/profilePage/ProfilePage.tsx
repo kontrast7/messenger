@@ -25,6 +25,9 @@ export const ProfilePage = () => {
     dispatch(followUnFollowUserTC(id, action, currentUserId));
   };
 
+
+
+
   const user = users.filter((u) => u._id === id)[0];
 
   if (!user) return <Spinner />;
