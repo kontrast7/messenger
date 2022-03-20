@@ -15,7 +15,7 @@ import { routes } from "../../bll/routes/routes";
 export const ProfilePage = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
-  const user = useSelector(selectUsersAll)[0];
+  const users = useSelector(selectUsersAll);
 
   const currentUserId = getCurrentUserId();
 
@@ -26,6 +26,8 @@ export const ProfilePage = () => {
   const followUserHandler = (id: string, action: "follow" | "unfollow") => {
     dispatch(followUnFollowUserTC(id, action, currentUserId));
   };
+
+  const user = users.filter((u) => u._id === id)[0];
 
   if (!user) return <Spinner />;
 
