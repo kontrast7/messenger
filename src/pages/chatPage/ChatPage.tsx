@@ -9,6 +9,14 @@ import { getCurrentUserId } from "../../utils/getCurrentUserId";
 import { selectStatus } from "../../bll/selector/selectors";
 import { routes } from "../../bll/routes/routes";
 import { ErrorSnackbar } from "../../components/errorSnackbar/ErrorSnackbar";
+import { Wrapper, ControlPanel, Content } from "./styles/styles";
+import { ChatLog } from "./styles/styles";
+import { SendMessage } from "./styles/styles";
+//@ts-ignore
+import messageIcon from "../../assets/images/icons/message-icon.svg";
+import { Chat } from "./chat/Chat";
+import { useRef } from "react";
+import { selectIsLoggedIn } from "../../bll/selector/selectors";
 
 export const ChatPage = () => {
   const [input, setInput] = useState("");
@@ -16,6 +24,7 @@ export const ChatPage = () => {
   const currentUserIdLs = getCurrentUserId();
   const dispatch = useDispatch();
   const status = useSelector(selectStatus);
+  const isLoggedIn = useSelector(selectIsLoggedIn);
 
   useEffect(() => {
     dispatch(getChatRoomTC(id!, currentUserIdLs));
@@ -25,29 +34,58 @@ export const ChatPage = () => {
   const chatRoomId = useSelector(selectChatRoom);
 
   const sendMessageHandler = () => {
-    dispatch(
-      createMessageTC({
-        conversationId: chatRoomId[0]._id,
-        sender: currentUserIdLs,
-        text: input,
-      })
-    );
+    if (input.length !== 0) {
+      dispatch(
+        createMessageTC({
+          conversationId: chatRoomId[0]._id,
+          sender: currentUserIdLs,
+          text: input,
+        })
+      );
+    }
     setInput("");
   };
 
+  const scrollItem = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (scrollItem.current) {
+      scrollItem.current.scrollIntoView({ behavior: "smooth" });
+    }
+  }, [sendMessageHandler]);
+
   if (!messages) return <Spinner />;
+  if (!isLoggedIn) return <Navigate to={routes.login} />;
   if (status === "loading") return <Spinner />;
   if (currentUserId !== currentUserIdLs)
     return <Navigate to={routes.pageNotFound} />;
 
   return (
-    <div>
-      <input value={input} onChange={(e) => setInput(e.target.value)} />
-      <button onClick={sendMessageHandler}>send</button>
-      {messages.map((m) => {
-        return <div key={Math.random()}>{m.text}</div>;
-      })}
+    <Wrapper>
+      <Content>
+        {messages.map((m) => {
+          return (
+            <Chat
+              myChat={currentUserId === m.sender}
+              message={m}
+              key={Math.random()}
+            />
+          );
+        })}
+        <div ref={scrollItem}></div>
+      </Content>
+      <ControlPanel>
+        <ChatLog
+          placeholder="Write"
+          maxRows={8}
+          value={input}
+          onChange={(e) => setInput(e.target.value)}
+        />
+        <SendMessage onClick={sendMessageHandler}>
+          <img src={messageIcon} alt="Send message" />
+        </SendMessage>
+      </ControlPanel>
       <ErrorSnackbar />
-    </div>
+    </Wrapper>
   );
 };

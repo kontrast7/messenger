@@ -15,22 +15,29 @@ import { ErrorSnackbar } from "../../components/errorSnackbar/ErrorSnackbar";
 import { Spinner } from "../../components/spinner/spinner";
 import { routes } from "../../bll/routes/routes";
 import { Navigate } from "react-router-dom";
+import { Message } from "./message/Message";
+import { setAllUsersTC } from "../../bll/reducer/usersReducer"
+import { searchByNameUserTC } from "../../bll/reducer/usersReducer"
 
 export const Messenger = () => {
   const [input, setInput] = useState("");
   const dispatch = useDispatch();
-  const getUserId = getCurrentUserId();
+  const currentUserId = getCurrentUserId();
   const usersAll = useSelector(selectUsersAll);
   const isMesage = useSelector(selectIsMessage);
   const status = useSelector(selectStatus);
   const isLoggedIn = useSelector(selectIsLoggedIn);
 
   useEffect(() => {
-    dispatch(setUserFriendsTC(getUserId));
+    dispatch(setUserFriendsTC(currentUserId));
     dispatch(changeInitialized(false));
   }, []);
 
-  const searchByName = () => {};
+  const searchByName = () => {
+    input.length === 0
+      ? dispatch(setAllUsersTC(currentUserId))
+      : dispatch(searchByNameUserTC(input));
+  };
 
   if (!isLoggedIn) return <Navigate to={routes.login} />;
   if (status === "loading") return <Spinner />;
@@ -47,7 +54,7 @@ export const Messenger = () => {
       <ContactsWrapper>
         {usersAll &&
           usersAll.map((c) => {
-            return <div key={c._id}>{c.username}</div>;
+            return <Message contact={c} key={c._id} />
           })}
       </ContactsWrapper>
       <ErrorSnackbar />
