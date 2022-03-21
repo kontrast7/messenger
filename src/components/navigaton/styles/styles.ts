@@ -16,6 +16,20 @@ export const NavigationIcons = styled(Link)`
   justify-content: center;
   height: 50px;
   width: 50px;
+
+  :first-child img {
+    border-radius: 50%;
+  }
+`;
+
+export const ExitIcons = styled.button`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 50px;
+  width: 50px;
+  border: none;
+  background: transparent;
 `;
 
 export const Avatar = styled.img`
