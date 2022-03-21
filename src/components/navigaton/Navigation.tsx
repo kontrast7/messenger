@@ -2,7 +2,7 @@ import { Wrapper } from "./styles/styles";
 import React, { useEffect } from "react";
 import { routes } from "../../bll/routes/routes";
 import { useSelector } from "react-redux";
-import { selectCurrentLoggedInUser, selectCurrentUserStateApp } from "../../bll/selector/selectors";
+import { selectCurrentLoggedInUser} from "../../bll/selector/selectors";
 import { getCurrentUser } from "../../utils/getCurrentUserId";
 import { NavigationIcons } from "./styles/styles";
 //@ts-ignore
@@ -17,6 +17,8 @@ import { Avatar } from "./styles/styles";
 import { ExitIcons } from "./styles/styles";
 import { useDispatch } from "react-redux";
 import { changeCurrentUser, setIsLoggedInAC } from "../../bll/reducer/appReducer";
+import { selectCurrentUserStateApp } from "../../bll/selector/selectors"
+
 
 export const Navigation = () => {
   const dispatch = useDispatch();
