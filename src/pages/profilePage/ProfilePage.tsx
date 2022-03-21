@@ -15,7 +15,7 @@ import { Follow, GoToMessages } from "../contactsPage/contact/styles/styles";
 import defaultUserIcon from "../../assets/images/icons/default-user-icon.svg";
 //@ts-ignore
 import messageIcon from "../../assets/images/icons/message-icon.svg";
-import { changeInitialized } from "../../bll/reducer/appReducer";
+import { changeInitialized, setIsMessageAC } from "../../bll/reducer/appReducer";
 import {
   Wrapper,
   Avatar,
@@ -39,10 +39,7 @@ export const ProfilePage = () => {
 
   const currentUserId = getCurrentUserId();
 
-  useEffect(() => {
-    id && dispatch(setCurrentProfileTC(id));
-    dispatch(changeInitialized(false));
-  }, [id]);
+
 
   const followUserHandler = (id: string, action: "follow" | "unfollow") => {
     dispatch(followUnFollowUserTC(id, action, currentUserId));
@@ -53,6 +50,13 @@ export const ProfilePage = () => {
   };
 
   let user = users.filter((u) => u._id === id)[0];
+
+
+  useEffect(() => {
+    id && dispatch(setCurrentProfileTC(id));
+    dispatch(changeInitialized(false));
+    dispatch(setIsMessageAC(false))
+  }, [id]);
 
   if (!user) return <Spinner />;
   if (!isLoggedIn) return <Navigate to={routes.login} />;

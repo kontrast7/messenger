@@ -9,5 +9,9 @@ export const selectIsLoggedIn = (state: RootAppStateType) =>
   state.app.isLoggedIn;
 export const selectIsInitialized = (state: RootAppStateType) =>
   state.app.isInitialized;
+export const selectIsMessage = (state: RootAppStateType) =>
+  state.app.isMesage;
 export const selectCurrentLoggedInUser = (state: RootAppStateType) =>
   state.login;
+export const selectCurrentUserStateApp = (state: RootAppStateType) =>
+  state.app.currentUser;

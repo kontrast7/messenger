@@ -20,8 +20,7 @@ import { routes } from "../../bll/routes/routes";
 import { SearchInput } from "../../components/common/searchInput/styles";
 import { ContactsWrapper } from "./styles/styles";
 import { Wrapper } from "./styles/styles";
-import { Navigation } from "../../components/navigaton/Navigation";
-import { changeInitialized } from "../../bll/reducer/appReducer";
+import { setIsMessageAC } from "../../bll/reducer/appReducer";
 
 export const ContactsPage = () => {
   const dispatch = useDispatch();
@@ -34,6 +33,7 @@ export const ContactsPage = () => {
 
   useEffect(() => {
     isLoggedIn && dispatch(setAllUsersTC(currentUserId));
+    dispatch(setIsMessageAC(false))
   }, []);
 
   const searchByName = () => {

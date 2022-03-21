@@ -1,6 +1,11 @@
 import { Dispatch } from "redux";
 import { usersApi } from "../../api/api";
-import { changeInitialized, changeStatus } from "./appReducer";
+import {
+  changeCurrentUser,
+  changeInitialized,
+  changeStatus,
+  setIsMessageAC,
+} from "./appReducer";
 import { serverErrorHandling } from "../../utils/serverHandleError";
 import { setIsLoggedInAC } from "./appReducer";
 import { updateUserType } from "../../api/api";
@@ -90,17 +95,13 @@ export const setUserFriendsTC = (id: string) => (dispatch: Dispatch) => {
   usersApi.getUserFriendsById(id).then((res) => {
     dispatch(setAllUsersAC(res.data));
     dispatch(changeStatus("completed"));
-    console.log(res.data);
+    dispatch(setIsMessageAC(true));
   });
 };
 
 export const updateUserByIdTC =
   (payload: updateUserType, navigate: (path: string) => void) =>
-  (
-    dispatch: ThunkDispatch<RootAppStateType, void, any>,
-    getState: () => RootAppStateType
-  ) => {
-    let temp = getState().users;
+  (dispatch: ThunkDispatch<RootAppStateType, void, any>) => {
     dispatch(changeStatus("loading"));
 
     // If we have picture parse it
@@ -113,10 +114,8 @@ export const updateUserByIdTC =
           .then((res) => {
             dispatch(changeStatus("completed"));
             navigate(`/user/${payload.userId}`);
-
-            debugger
-
-            console.log(temp);
+            dispatch(changeCurrentUser(res.data));
+            localStorage.setItem("user", JSON.stringify(res.data));
           })
           .catch((err) => {
             serverErrorHandling(err, dispatch);
@@ -127,7 +126,9 @@ export const updateUserByIdTC =
         .updateUser(payload)
         .then((res) => {
           dispatch(changeStatus("completed"));
+          dispatch(changeCurrentUser(res.data));
           navigate(`/user/${payload.userId}`);
+          localStorage.setItem("user", JSON.stringify(res.data));
         })
         .catch((err) => {
           serverErrorHandling(err, dispatch);

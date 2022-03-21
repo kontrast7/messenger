@@ -5,11 +5,13 @@ import { Container } from "../../styles/global";
 import logo from "../../assets/images/icons/white-logo.svg";
 
 export const Header = () => {
+
   return (
     <Wrapper>
       <Container>
         <Inner>
           <Logo src={logo} alt="Logotype" />
+
         </Inner>
       </Container>
     </Wrapper>
