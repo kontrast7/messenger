@@ -11,7 +11,7 @@ export const GlobalStyles = createGlobalStyle`
   
   body {
     font-size: 16px;
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Montserrat', sans-serif;
     color: ${({ theme }) => theme.colors.mainText};
     background-color: ${({ theme }) => theme.colors.background};
   }
