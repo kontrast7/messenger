@@ -10,10 +10,11 @@ export const Wrapper = styled.section`
 `;
 
 export const Avatar = styled.img`
-  width: 50%;
+  width: 190px;
+  height: 190px;
   border-radius: 50%;
   object-fit: cover;
-  margin-bottom: .5em;
+  margin-bottom: 0.5em;
 `;
 
 export const UserName = styled.h1`
@@ -21,27 +22,31 @@ export const UserName = styled.h1`
   text-transform: capitalize;
   font-size: 1.4rem;
   line-height: 32px;
-  margin-bottom: 2em;
+  margin-bottom: 0.7em;
 `;
 
 export const ButtonWrapper = styled.div`
   display: flex;
+  justify-content: center;
+  width: 100%;
   gap: 2.5rem;
 
   button {
-    width: 80px;
+    width: 40%;
   }
 
   a {
-    width: 80px;
+    width: 40%;
   }
 `;
 
 export const InfoWrapper = styled.div`
   display: flex;
+  justify-self: start;
   flex-direction: column;
-  gap: 0.3em;
+  gap: 0.5em;
   margin: 7% 0;
+  width: 90%;
 `;
 
 export const Description = styled.p``;
@@ -51,14 +56,14 @@ export const Email = styled.p``;
 export const City = styled.p``;
 
 export const ShowPosts = styled(Follow)`
-  width: 70%;
+  width: 90%;
 `;
 
 export const EditProfile = styled(Link)`
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 70%;
+  width: 90%;
   height: 40px;
   background-color: ${({ theme }) => theme.colors.secondaryAccentColor};
   letter-spacing: 1px;
