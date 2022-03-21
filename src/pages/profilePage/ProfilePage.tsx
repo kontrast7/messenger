@@ -15,10 +15,6 @@ import { ErrorSnackbar } from "../../components/errorSnackbar/ErrorSnackbar";
 import { routes } from "../../bll/routes/routes";
 import { createChatRoomTC } from "../../bll/reducer/roomsReducer";
 import { Follow, GoToMessages } from "../contactsPage/contact/styles/styles";
-//@ts-ignore
-import defaultUserIcon from "../../assets/images/icons/default-user-icon.svg";
-//@ts-ignore
-import messageIcon from "../../assets/images/icons/message-icon.svg";
 import {
   changeInitialized,
   setIsLoadingPosts,
@@ -39,8 +35,12 @@ import { getCurrentUserId } from "../../utils/getCurrentUserId";
 import { ShowPosts } from "./styles/styles";
 import { selectIsLoggedIn } from "../../bll/selector/selectors";
 import { getAllPostsUser, sendNewPostTC } from "../../bll/reducer/postsReducer";
-import { createNewPostsType, postsApi, updateUserType } from "../../api/api";
+import { createNewPostsType } from "../../api/api";
 import { Input } from "../../components/common/input/styles";
+//@ts-ignore
+import messageIcon from "../../assets/images/icons/message-icon.svg";
+//@ts-ignore
+import defaultUserIcon from "../../assets/images/icons/default-user-icon.svg";
 
 export const ProfilePage = () => {
   const [show, setShow] = useState(false);
