@@ -28,5 +28,4 @@ export const Avatar = styled.img`
   :active {
     transform: scale(0.9);
   }
-
 `;
