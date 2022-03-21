@@ -37,21 +37,12 @@ export const ProfilePage = () => {
   const dispatch = useDispatch();
   const users = useSelector(selectUsersAll);
 
-  debugger;
-  
   const currentUserId = getCurrentUserId();
 
   useEffect(() => {
     id && dispatch(setCurrentProfileTC(id));
     dispatch(changeInitialized(false));
   }, [id]);
-
-  // useEffect(() => {
-  //   if (id === currentUserId) {
-  //     debugger;
-  //     localStorage.setItem("user", JSON.stringify(user));
-  //   }
-  // }, []);
 
   const followUserHandler = (id: string, action: "follow" | "unfollow") => {
     dispatch(followUnFollowUserTC(id, action, currentUserId));
