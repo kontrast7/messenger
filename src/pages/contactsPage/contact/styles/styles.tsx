@@ -10,9 +10,13 @@ export const Wrapper = styled.div`
 export const Content = styled.div`
   display: flex;
   gap: 21px;
+  cursor: pointer;
 `;
 
 export const Username = styled(Link)`
+  display: flex;
+  align-items: center;
+  gap: .8em;
   letter-spacing: 1px;
   text-transform: capitalize;
   color: ${({ theme }) => theme.colors.inputColor};

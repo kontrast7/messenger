@@ -35,13 +35,15 @@ export const Contact = ({ contact }: ContactPropsType) => {
   return (
     <Wrapper>
       <Content>
-        <Avatar
-          src={
-            contact.profilePicture ? contact.profilePicture : defaultUserIcon
-          }
-          alt={"Avatar"}
-        />
-        <Username to={`/user/${contact._id}`}>{contact.username}</Username>
+        <Username to={`/user/${contact._id}`}>
+          <Avatar
+            src={
+              contact.profilePicture ? contact.profilePicture : defaultUserIcon
+            }
+            alt={"Avatar"}
+          />
+          <p>{contact.username}</p>
+        </Username>
       </Content>
       {contact.followers.includes(currentUserId) ? (
         <GoToMessages to={`/chat/${currentUserId}/${contact._id}`}>

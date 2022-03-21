@@ -16,6 +16,10 @@ export const GlobalStyles = createGlobalStyle`
     color: ${({ theme }) => theme.colors.mainText};
     background-color: ${({ theme }) => theme.colors.background};
   }
+  
+  button {
+    cursor: pointer;
+  }
 `;
 
 export const PageWrapper = styled.div`
