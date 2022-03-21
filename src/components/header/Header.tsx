@@ -5,7 +5,6 @@ import { Container } from "../../styles/global";
 import logo from "../../assets/images/icons/white-logo.svg";
 
 export const Header = () => {
-
   return (
     <Wrapper>
       <Container>
