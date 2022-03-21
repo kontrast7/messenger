@@ -17,6 +17,7 @@ import { Avatar } from "./styles/styles";
 import { ExitIcons } from "./styles/styles";
 import { useDispatch } from "react-redux";
 import { setIsLoggedInAC } from "../../bll/reducer/appReducer";
+import { useEffect } from "react"
 
 export const Navigation = () => {
   const dispatch = useDispatch();
@@ -24,6 +25,10 @@ export const Navigation = () => {
   const currentLoggedInUser = useSelector(selectCurrentLoggedInUser);
 
   let currentUser = currentUserLs ? currentUserLs : currentLoggedInUser;
+
+  // useEffect(() => {
+  //
+  // }, [currentUser])
 
   const logoutHandler = () => {
     localStorage.removeItem("user");

@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { useParams } from "react-router";
+import { useParams, Navigate } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
 import {
   followUnFollowUserTC,
@@ -29,18 +29,29 @@ import {
 } from "./styles/styles";
 import { getCurrentUserId } from "../../utils/getCurrentUserId";
 import { ShowPosts } from "./styles/styles";
+import { selectIsLoggedIn } from "../../bll/selector/selectors";
 
 export const ProfilePage = () => {
   const { id } = useParams();
+  const isLoggedIn = useSelector(selectIsLoggedIn);
   const dispatch = useDispatch();
   const users = useSelector(selectUsersAll);
 
+  debugger;
+  
   const currentUserId = getCurrentUserId();
 
   useEffect(() => {
     id && dispatch(setCurrentProfileTC(id));
     dispatch(changeInitialized(false));
   }, [id]);
+
+  // useEffect(() => {
+  //   if (id === currentUserId) {
+  //     debugger;
+  //     localStorage.setItem("user", JSON.stringify(user));
+  //   }
+  // }, []);
 
   const followUserHandler = (id: string, action: "follow" | "unfollow") => {
     dispatch(followUnFollowUserTC(id, action, currentUserId));
@@ -50,11 +61,10 @@ export const ProfilePage = () => {
     }
   };
 
-  const user = users.filter((u) => u._id === id)[0];
-
-  console.log(users);
+  let user = users.filter((u) => u._id === id)[0];
 
   if (!user) return <Spinner />;
+  if (!isLoggedIn) return <Navigate to={routes.login} />;
 
   return (
     <Wrapper>

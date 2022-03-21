@@ -7,6 +7,7 @@ import { updateUserByIdTC } from "../../bll/reducer/usersReducer";
 import { getCurrentUserId } from "../../utils/getCurrentUserId";
 import { updateUserType } from "../../api/api";
 import { useNavigate } from "react-router-dom";
+import { useEffect } from "react"
 
 export const UserSettings = () => {
   const dispatch = useDispatch();
@@ -29,8 +30,6 @@ export const UserSettings = () => {
 
     dispatch(updateUserByIdTC(payload, navigate));
   };
-
-  console.log(profileImage);
 
   return (
     <Wrapper>

@@ -1,5 +1,5 @@
 import { Dispatch } from "redux";
-import { chatRoomsApi, usersApi } from "../../api/api";
+import { usersApi } from "../../api/api";
 import { changeInitialized, changeStatus } from "./appReducer";
 import { serverErrorHandling } from "../../utils/serverHandleError";
 import { setIsLoggedInAC } from "./appReducer";
@@ -44,12 +44,12 @@ export const setAllUsersTC = (myId: string) => (dispatch: Dispatch) => {
       dispatch(changeStatus("completed"));
       dispatch(setAllUsersAC(res.data));
       dispatch(setIsLoggedInAC(true));
-      dispatch(changeInitialized(true))
+      dispatch(changeInitialized(true));
     })
     .catch((err) => {
       serverErrorHandling(err, dispatch);
-    }).finally(()=> {
-  })
+    })
+    .finally(() => {});
 };
 export const followUnFollowUserTC =
   (id: string, action: "follow" | "unfollow", currentUserId: string) =>
@@ -85,18 +85,22 @@ export const setCurrentProfileTC = (id: string) => (dispatch: Dispatch) => {
   });
 };
 
-export const setUserFriendsTC = (id:string) => (dispatch: Dispatch) => {
+export const setUserFriendsTC = (id: string) => (dispatch: Dispatch) => {
   dispatch(changeStatus("loading"));
-  usersApi.getUserFriendsById(id).then(res=> {
+  usersApi.getUserFriendsById(id).then((res) => {
     dispatch(setAllUsersAC(res.data));
     dispatch(changeStatus("completed"));
-    console.log(res.data)
-  })
-}
+    console.log(res.data);
+  });
+};
 
 export const updateUserByIdTC =
   (payload: updateUserType, navigate: (path: string) => void) =>
-  (dispatch: ThunkDispatch<RootAppStateType, void, any>) => {
+  (
+    dispatch: ThunkDispatch<RootAppStateType, void, any>,
+    getState: () => RootAppStateType
+  ) => {
+    let temp = getState().users;
     dispatch(changeStatus("loading"));
 
     // If we have picture parse it
@@ -109,6 +113,10 @@ export const updateUserByIdTC =
           .then((res) => {
             dispatch(changeStatus("completed"));
             navigate(`/user/${payload.userId}`);
+
+            debugger
+
+            console.log(temp);
           })
           .catch((err) => {
             serverErrorHandling(err, dispatch);
@@ -140,8 +148,8 @@ export type initStatePropsType = {
   updatedAt: string;
   username: string;
   _id: string;
-  desc: string
-  city: string
+  desc: string;
+  city: string;
 };
 type ActionType =
   | ReturnType<typeof setAllUsersAC>
