@@ -8,14 +8,27 @@ import {
 import { selectUsersAll } from "../../bll/selector/selectors";
 import { Spinner } from "../../components/spinner/spinner";
 import { ErrorSnackbar } from "../../components/errorSnackbar/ErrorSnackbar";
-import { getCurrentUserId } from "../../utils/getCurrentUserId";
-import { Link } from "react-router-dom";
 import { routes } from "../../bll/routes/routes";
 import { createChatRoomTC } from "../../bll/reducer/roomsReducer";
 import { Follow, GoToMessages } from "../contactsPage/contact/styles/styles";
 //@ts-ignore
+import defaultUserIcon from "../../assets/images/icons/default-user-icon.svg";
+//@ts-ignore
 import messageIcon from "../../assets/images/icons/message-icon.svg";
 import { changeInitialized } from "../../bll/reducer/appReducer";
+import {
+  Wrapper,
+  Avatar,
+  EditProfile,
+  ButtonWrapper,
+  UserName,
+  InfoWrapper,
+  City,
+  Description,
+  Email,
+} from "./styles/styles";
+import { getCurrentUserId } from "../../utils/getCurrentUserId";
+import { ShowPosts } from "./styles/styles";
 
 export const ProfilePage = () => {
   const { id } = useParams();
@@ -26,8 +39,8 @@ export const ProfilePage = () => {
 
   useEffect(() => {
     id && dispatch(setCurrentProfileTC(id));
-    dispatch(changeInitialized(false))
-  }, []);
+    dispatch(changeInitialized(false));
+  }, [id]);
 
   const followUserHandler = (id: string, action: "follow" | "unfollow") => {
     dispatch(followUnFollowUserTC(id, action, currentUserId));
@@ -39,25 +52,21 @@ export const ProfilePage = () => {
 
   const user = users.filter((u) => u._id === id)[0];
 
+  console.log(users);
+
   if (!user) return <Spinner />;
 
   return (
-    <section>
-      {user.username}
-      <img
-        style={{ width: "35%", borderRadius: "50%", backgroundSize: "fill" }}
-        src={
-          user.profilePicture
-            ? user.profilePicture
-            : "https://pbs.twimg.com/media/E2xsCwOXEAg5-pK.png"
-        }
+    <Wrapper>
+      <Avatar
+        src={user.profilePicture ? user.profilePicture : defaultUserIcon}
         alt={"photo"}
       />
-
+      <UserName>{user.username}</UserName>
       {id === currentUserId ? (
-        <Link to={routes.editProfile}>Edit Profile</Link>
+        <EditProfile to={routes.editProfile}>Edit Profile</EditProfile>
       ) : (
-        <>
+        <ButtonWrapper>
           <GoToMessages
             disabled={!user.followers.includes(currentUserId)}
             to={`/chat/${currentUserId}/${user._id}`}
@@ -74,10 +83,18 @@ export const ProfilePage = () => {
               +
             </Follow>
           )}
-        </>
+        </ButtonWrapper>
       )}
 
+      <InfoWrapper>
+        {user.desc && <Description>Description: {user.desc}</Description>}
+        <Email>Email: {user.email}</Email>
+        {user.city && <City>City: {user.city}</City>}
+      </InfoWrapper>
+
+      <ShowPosts>Show Posts</ShowPosts>
+
       <ErrorSnackbar />
-    </section>
+    </Wrapper>
   );
 };

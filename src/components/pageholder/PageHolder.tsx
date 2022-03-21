@@ -17,7 +17,7 @@ export const PageHolder = () => {
     <Wrapper>
       <Container>
         <Routes>
-          <Route path={routes.home} element={<h1>Home page</h1>} />
+          <Route path={routes.home} element={<Navigate to={routes.login} />} />
           <Route path={routes.login} element={<Login />} />
           <Route path={routes.register} element={<Register />} />
           <Route path={routes.contacts} element={<ContactsPage />} />

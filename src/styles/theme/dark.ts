@@ -10,6 +10,7 @@ export default {
     receivedMessage: "#373E4E",
     sendMessage: "#272A35",
     inputColor: "#fff",
+    navigateColor: "#C4C4C4",
   },
 
   fontSize: {

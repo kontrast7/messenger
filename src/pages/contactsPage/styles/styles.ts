@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 export const Wrapper = styled.div`
-  margin-top: 8.875rem;
+  margin-top: 20%;
 `;
 
 export const ContactsWrapper = styled.div`

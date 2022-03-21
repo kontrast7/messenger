@@ -6,9 +6,6 @@ import { setIsLoggedInAC } from "./appReducer";
 import { updateUserType } from "../../api/api";
 import { ThunkDispatch } from "redux-thunk";
 import { RootAppStateType } from "../redux/store";
-import { useNavigate } from "react-router-dom";
-import { routes } from "../routes/routes";
-import { getCurrentUserId } from "../../utils/getCurrentUserId";
 import { resizeFile } from "../../utils/resizeFile";
 
 const initState: Array<initStatePropsType> = [];
@@ -128,16 +125,6 @@ export const updateUserByIdTC =
           serverErrorHandling(err, dispatch);
         });
     }
-
-    // usersApi
-    //   .updateUser(payload)
-    //   .then((res) => {
-    //     dispatch(changeStatus("completed"));
-    //     navigate(`/user/${payload.userId}`);
-    //   })
-    //   .catch((err) => {
-    //     serverErrorHandling(err, dispatch);
-    //   });
   };
 
 // Types
@@ -153,6 +140,8 @@ export type initStatePropsType = {
   updatedAt: string;
   username: string;
   _id: string;
+  desc: string
+  city: string
 };
 type ActionType =
   | ReturnType<typeof setAllUsersAC>

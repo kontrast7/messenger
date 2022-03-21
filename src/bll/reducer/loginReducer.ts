@@ -16,6 +16,8 @@ const initState: InitStatePropsType = {
   profilePicture: "",
   updatedAt: "",
   username: "",
+  desc: "",
+  city: ""
 };
 
 export const loginReducer = (state = initState, action: ActionType) => {
@@ -66,6 +68,8 @@ type InitStatePropsType = {
   updatedAt: string;
   username: string;
   _id: string;
+  desc: string
+  city: string
 };
 
 type ActionType = ReturnType<typeof setUserDataAC>;

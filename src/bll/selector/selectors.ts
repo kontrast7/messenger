@@ -5,5 +5,9 @@ export const selectUsersAll = (state: RootAppStateType) => state.users;
 export const selectStatus = (state: RootAppStateType) => state.app.status;
 export const selectMessages = (state: RootAppStateType) => state.messages;
 export const selectChatRoom = (state: RootAppStateType) => state.rooms;
-export const selectIsLoggedIn = (state: RootAppStateType) => state.app.isLoggedIn;
-export const selectIsInitialized = (state: RootAppStateType) => state.app.isInitialized;
+export const selectIsLoggedIn = (state: RootAppStateType) =>
+  state.app.isLoggedIn;
+export const selectIsInitialized = (state: RootAppStateType) =>
+  state.app.isInitialized;
+export const selectCurrentLoggedInUser = (state: RootAppStateType) =>
+  state.login;

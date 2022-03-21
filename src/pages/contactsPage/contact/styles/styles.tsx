@@ -49,6 +49,11 @@ export const Follow = styled.button`
   border-radius: 10px;
   border: none;
   cursor: pointer;
+  
+  :hover {
+    background-color: ${({ theme }) => theme.colors.accentColor};
+    opacity: .9;
+  }
 `;
 
 // Types

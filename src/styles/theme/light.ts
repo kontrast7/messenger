@@ -9,7 +9,8 @@ export default {
     secondaryAccentColor: "#F18303",
     receivedMessage: "#c0c2c9",
     sendMessage: "#ffffff",
-    inputColor: "black"
+    inputColor: "black",
+    navigateColor: "gray"
   },
 
   fontSize: {

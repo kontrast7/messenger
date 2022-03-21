@@ -12,6 +12,8 @@ import { Follow } from "./styles/styles";
 import { Avatar } from "../../../styles/global";
 //@ts-ignore
 import messageIcon from "../../../assets/images/icons/message-icon.svg";
+//@ts-ignore
+import defaultUserIcon from "../../../assets/images/icons/default-user-icon.svg";
 import { Spinner } from "../../../components/spinner/spinner";
 import { selectStatus } from "../../../bll/selector/selectors";
 
@@ -35,7 +37,7 @@ export const Contact = ({ contact }: ContactPropsType) => {
       <Content>
         <Avatar
           src={
-            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTzKm_tv1pCpWfZLXg3Uyd4_2IVGtEB2wp3iw&usqp=CAU"
+            contact.profilePicture ? contact.profilePicture : defaultUserIcon
           }
           alt={"Avatar"}
         />
