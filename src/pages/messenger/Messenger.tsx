@@ -4,8 +4,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { setUserFriendsTC } from "../../bll/reducer/usersReducer";
 import { getCurrentUserId } from "../../utils/getCurrentUserId";
 import {
-  selectIsInitialized,
   selectIsLoggedIn,
+  selectIsMessage,
   selectStatus,
   selectUsersAll,
 } from "../../bll/selector/selectors";
@@ -21,7 +21,7 @@ export const Messenger = () => {
   const dispatch = useDispatch();
   const getUserId = getCurrentUserId();
   const usersAll = useSelector(selectUsersAll);
-
+  const isMesage = useSelector(selectIsMessage);
   const status = useSelector(selectStatus);
   const isLoggedIn = useSelector(selectIsLoggedIn);
 
@@ -34,6 +34,7 @@ export const Messenger = () => {
 
   if (!isLoggedIn) return <Navigate to={routes.login} />;
   if (status === "loading") return <Spinner />;
+  if (!isMesage) return <Spinner />;
 
   return (
     <Wrapper>

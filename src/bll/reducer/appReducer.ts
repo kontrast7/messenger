@@ -4,7 +4,9 @@ const initState: InitStateTypes = {
   isRegistered: false,
   errorMessage: null,
   isInitialized: false,
+  isMesage: false,
   status: "idle",
+  currentUser: {},
 };
 
 export const appReducer = (
@@ -20,12 +22,17 @@ export const appReducer = (
       return { ...state, status: action.value };
     case "APP/CHANGE-INITIALIZED":
       return { ...state, isInitialized: action.value };
+    case "AUTH/LOGIN/SET-IS-MESSAGE-IN":
+      return { ...state, isMesage: action.value };
     case "APP/CHANGE-THEME": {
       return {
         ...state,
         theme: action.value,
       };
     }
+    case "APP/CHANGE-CURRENT-USER":
+      return { ...state, currentUser: action.value };
+
     default:
       return state;
   }
@@ -33,6 +40,9 @@ export const appReducer = (
 
 export const setIsLoggedInAC = (value: boolean) =>
   ({ type: "AUTH/LOGIN/SET-IS-LOGGED-IN", value } as const);
+
+export const setIsMessageAC = (value: boolean) =>
+  ({ type: "AUTH/LOGIN/SET-IS-MESSAGE-IN", value } as const);
 
 export const setIsRegisteredInAC = (value: boolean) =>
   ({ type: "AUTH/REGISTERED/SET-IS-REGISTERED-IN", value } as const);
@@ -49,6 +59,9 @@ export const changeInitialized = (value: boolean) =>
 export const changeThemeAC = (value: string) =>
   ({ type: "APP/CHANGE-THEME", value } as const);
 
+export const changeCurrentUser = (value: string) =>
+  ({ type: "APP/CHANGE-CURRENT-USER", value } as const);
+
 // Thunk
 
 // Types
@@ -56,6 +69,8 @@ type ActionTypes =
   | ReturnType<typeof setIsLoggedInAC>
   | ReturnType<typeof changeInitialized>
   | ReturnType<typeof setIsRegisteredInAC>
+  | ReturnType<typeof changeCurrentUser>
+  | ReturnType<typeof setIsMessageAC>
   | changeStatusType
   | errorMessageType
   | changeThemeType;
@@ -66,10 +81,6 @@ export type changeThemeType = ReturnType<typeof changeThemeAC>;
 
 export type PendingStatusType = "idle" | "failed" | "completed" | "loading";
 
-
-
-
-
 type InitStateTypes = {
   theme: string;
   isLoggedIn: boolean;
@@ -77,4 +88,6 @@ type InitStateTypes = {
   errorMessage: string | null;
   status: PendingStatusType;
   isInitialized: boolean;
+  currentUser: any;
+  isMesage: boolean;
 };

@@ -1,8 +1,8 @@
 import { Wrapper } from "./styles/styles";
-import React from "react";
+import React, { useEffect } from "react";
 import { routes } from "../../bll/routes/routes";
 import { useSelector } from "react-redux";
-import { selectCurrentLoggedInUser } from "../../bll/selector/selectors";
+import { selectCurrentLoggedInUser, selectCurrentUserStateApp } from "../../bll/selector/selectors";
 import { getCurrentUser } from "../../utils/getCurrentUserId";
 import { NavigationIcons } from "./styles/styles";
 //@ts-ignore
@@ -16,19 +16,18 @@ import exitIcon from "../../assets/images/icons/exit-icon.svg";
 import { Avatar } from "./styles/styles";
 import { ExitIcons } from "./styles/styles";
 import { useDispatch } from "react-redux";
-import { setIsLoggedInAC } from "../../bll/reducer/appReducer";
-import { useEffect } from "react"
+import { changeCurrentUser, setIsLoggedInAC } from "../../bll/reducer/appReducer";
 
 export const Navigation = () => {
   const dispatch = useDispatch();
   const currentUserLs = getCurrentUser();
+  const currentUserLsPic = getCurrentUser().profilePicture;
   const currentLoggedInUser = useSelector(selectCurrentLoggedInUser);
-
-  let currentUser = currentUserLs ? currentUserLs : currentLoggedInUser;
-
-  // useEffect(() => {
-  //
-  // }, [currentUser])
+  const currentUser = useSelector(selectCurrentUserStateApp);
+  useEffect(() => {
+    console.log("currentUser");
+    dispatch(changeCurrentUser(currentUserLs))
+  }, [currentUserLsPic, currentLoggedInUser, dispatch]);
 
   const logoutHandler = () => {
     localStorage.removeItem("user");
@@ -37,7 +36,7 @@ export const Navigation = () => {
 
   return (
     <Wrapper>
-      {currentUser && currentUser._id && (
+      {currentUser._id && (
         <NavigationIcons to={`/user/${currentUser._id}`}>
           <Avatar
             src={
