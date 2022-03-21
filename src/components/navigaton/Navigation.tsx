@@ -7,7 +7,13 @@ import {
   selectCurrentUserStateApp,
 } from "../../bll/selector/selectors";
 import { getCurrentUser } from "../../utils/getCurrentUserId";
-import { NavigationIcons } from "./styles/styles";
+import {
+  changeCurrentUser,
+  setIsLoggedInAC,
+} from "../../bll/reducer/appReducer";
+import { useDispatch } from "react-redux";
+import { Avatar, ExitIcons, NavigationIcons } from "./styles/styles";
+import { Spinner } from "../spinner/spinner";
 //@ts-ignore
 import defaultUserIcon from "../../assets/images/icons/default-user-icon-black.svg";
 //@ts-ignore
@@ -16,14 +22,7 @@ import messageIcon from "../../assets/images/icons/message-icon.svg";
 import contactsIcon from "../../assets/images/icons/contacts-icon.svg";
 //@ts-ignore
 import exitIcon from "../../assets/images/icons/exit-icon.svg";
-import { Avatar } from "./styles/styles";
-import { ExitIcons } from "./styles/styles";
-import { useDispatch } from "react-redux";
-import {
-  changeCurrentUser,
-  setIsLoggedInAC,
-} from "../../bll/reducer/appReducer";
-import { Spinner } from "../spinner/spinner";
+
 
 export const Navigation = () => {
   const dispatch = useDispatch();
