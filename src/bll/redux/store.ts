@@ -7,6 +7,7 @@ import { messageReducer } from "../reducer/messageReducer";
 import { registerReducer } from "../reducer/registerReducer";
 import { loginReducer } from "../reducer/loginReducer";
 import thunk from "redux-thunk";
+import { postsReducer } from "../reducer/postsReducer";
 
 const rootReducer = combineReducers({
   register: registerReducer,
@@ -14,7 +15,8 @@ const rootReducer = combineReducers({
   app: appReducer,
   users: usersReducer,
   rooms: roomsReducer,
-  messages: messageReducer
+  messages: messageReducer,
+  posts: postsReducer,
 });
 
 export const store = createStore(rootReducer, applyMiddleware(thunk));

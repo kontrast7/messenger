@@ -15,3 +15,7 @@ export const selectCurrentLoggedInUser = (state: RootAppStateType) =>
   state.login;
 export const selectCurrentUserStateApp = (state: RootAppStateType) =>
   state.app.currentUser;
+export const selectCurrentUserPosts = (state: RootAppStateType) =>
+  state.posts;
+export const selectIsLoadingPosts = (state: RootAppStateType) =>
+  state.app.loadingPosts;

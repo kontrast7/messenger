@@ -5,6 +5,7 @@ const initState: InitStateTypes = {
   errorMessage: null,
   isInitialized: false,
   isMesage: false,
+  loadingPosts: false,
   status: "idle",
   currentUser: {},
 };
@@ -25,14 +26,11 @@ export const appReducer = (
     case "AUTH/LOGIN/SET-IS-MESSAGE-IN":
       return { ...state, isMesage: action.value };
     case "APP/CHANGE-THEME": {
-      return {
-        ...state,
-        theme: action.value,
-      };
-    }
+      return { ...state, theme: action.value, }}
     case "APP/CHANGE-CURRENT-USER":
       return { ...state, currentUser: action.value };
-
+    case "APP/SET-IS-LOADING-POSTS":
+      return { ...state, loadingPosts: action.value };
     default:
       return state;
   }
@@ -40,6 +38,9 @@ export const appReducer = (
 
 export const setIsLoggedInAC = (value: boolean) =>
   ({ type: "AUTH/LOGIN/SET-IS-LOGGED-IN", value } as const);
+
+export const setIsLoadingPosts = (value: boolean) =>
+  ({ type: "APP/SET-IS-LOADING-POSTS", value } as const);
 
 export const setIsMessageAC = (value: boolean) =>
   ({ type: "AUTH/LOGIN/SET-IS-MESSAGE-IN", value } as const);
@@ -71,6 +72,7 @@ type ActionTypes =
   | ReturnType<typeof setIsRegisteredInAC>
   | ReturnType<typeof changeCurrentUser>
   | ReturnType<typeof setIsMessageAC>
+  | ReturnType<typeof setIsLoadingPosts>
   | changeStatusType
   | errorMessageType
   | changeThemeType;
@@ -90,4 +92,5 @@ type InitStateTypes = {
   isInitialized: boolean;
   currentUser: any;
   isMesage: boolean;
+  loadingPosts: boolean
 };

@@ -56,6 +56,15 @@ export const messagesApi = {
   },
 };
 
+export const postsApi = {
+  getPostsByName: (username: string) => {
+    return instance.get(`/posts/profile/${username}`);
+  },
+  createNewPosts: (payload: createNewPostsType) => {
+    return instance.post(`/posts/`, {...payload});
+  },
+};
+
 export type registerUserType = {
   username: string;
   email: string;
@@ -70,11 +79,15 @@ export type sendMessageType = {
   sender: string;
   text: string;
 };
-
 export type updateUserType = {
   username?: string;
   profilePicture?: any;
   desc?: string;
   city?: string;
   userId: string;
+};
+export type createNewPostsType = {
+  userId: string;
+  desc: string;
+  img?: any;
 };
