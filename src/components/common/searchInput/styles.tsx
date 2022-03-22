@@ -54,10 +54,16 @@ export const SearchInput: React.FC<InputProps> = ({
   onChange,
   placeholder,
   onClick,
+  onKeyPress,
 }) => {
   return (
     <InputGroup>
-      <InputField value={value} onChange={onChange} placeholder={placeholder} />
+      <InputField
+        value={value}
+        onChange={onChange}
+        placeholder={placeholder}
+        onKeyPress={onKeyPress}
+      />
       <InputButton onClick={onClick}>
         <img src={searchLogo} alt="Search button" />
       </InputButton>

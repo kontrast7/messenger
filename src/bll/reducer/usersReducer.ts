@@ -78,9 +78,16 @@ export const followUnFollowUserTC =
   };
 
 export const searchByNameUserTC = (name: string) => (dispatch: Dispatch) => {
-  usersApi.searchUsersByName(name).then((res) => {
-    dispatch(setSearchUserAC(res.data));
-  });
+  dispatch(changeStatus("loading"));
+  usersApi
+    .searchUsersByName(name)
+    .then((res) => {
+      dispatch(changeStatus("completed"));
+      dispatch(setSearchUserAC(res.data));
+    })
+    .catch((err) => {
+      serverErrorHandling(err, dispatch);
+    });
 };
 
 export const setCurrentProfileTC = (id: string) => (dispatch: Dispatch) => {

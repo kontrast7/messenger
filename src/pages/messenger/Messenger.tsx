@@ -16,8 +16,9 @@ import { Spinner } from "../../components/spinner/spinner";
 import { routes } from "../../bll/routes/routes";
 import { Navigate } from "react-router-dom";
 import { Message } from "./message/Message";
-import { setAllUsersTC } from "../../bll/reducer/usersReducer"
-import { searchByNameUserTC } from "../../bll/reducer/usersReducer"
+import { setAllUsersTC } from "../../bll/reducer/usersReducer";
+import { searchByNameUserTC } from "../../bll/reducer/usersReducer";
+import { onEnterPress } from "../../utils/onEnter";
 
 export const Messenger = () => {
   const [input, setInput] = useState("");
@@ -46,6 +47,7 @@ export const Messenger = () => {
   return (
     <Wrapper>
       <SearchInput
+        onKeyPress={(e) => onEnterPress(e, searchByName)}
         placeholder={"Search..."}
         value={input}
         onChange={(e) => setInput(e.target.value)}
@@ -54,7 +56,7 @@ export const Messenger = () => {
       <ContactsWrapper>
         {usersAll &&
           usersAll.map((c) => {
-            return <Message contact={c} key={c._id} />
+            return <Message contact={c} key={c._id} />;
           })}
       </ContactsWrapper>
       <ErrorSnackbar />
