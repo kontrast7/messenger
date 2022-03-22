@@ -34,17 +34,16 @@ import {
 import { getCurrentUserId } from "../../utils/getCurrentUserId";
 import { ShowPosts } from "./styles/styles";
 import { selectIsLoggedIn } from "../../bll/selector/selectors";
-import {
-  deletePostTC,
-  editPostTC,
-  getAllPostsUser,
-  sendNewPostTC,
-} from "../../bll/reducer/postsReducer";
-import { createNewPostsType, deletePostType } from "../../api/api";
+import { getAllPostsUser, sendNewPostTC } from "../../bll/reducer/postsReducer";
+import { createNewPostsType } from "../../api/api";
 //@ts-ignore
 import messageIcon from "../../assets/images/icons/message-icon.svg";
 //@ts-ignore
 import defaultUserIcon from "../../assets/images/icons/default-user-icon.svg";
+import { Inner } from "../postsTape/post/styles/styles";
+import { ProfileChatLog } from "./styles/styles";
+import { Post } from "./post/Post";
+import { PostsWrapper } from "./styles/styles"
 
 export const ProfilePage = () => {
   const [show, setShow] = useState(false);
@@ -100,23 +99,6 @@ export const ProfilePage = () => {
     setProfileImage(undefined);
     setShowAddedPost(false);
   };
-  const editPostHandler = (idPost: string) => {
-    const payload: createNewPostsType = {
-      userId: currentUserId,
-    };
-    inputValue && (payload.desc = inputValue);
-    profileImage && (payload.img = profileImage);
-    dispatch(editPostTC(payload, idPost));
-    setProfileImage(undefined);
-    setShowEditPost(false);
-    setInputValue("");
-  };
-  const deletePostHandler = (idPost: string) => {
-    const payload: deletePostType = {
-      userId: currentUserId,
-    };
-    dispatch(deletePostTC(idPost, payload));
-  };
 
   if (!user) return <Spinner />;
   if (!isLoggedIn) return <Navigate to={routes.login} />;
@@ -158,18 +140,18 @@ export const ProfilePage = () => {
       </InfoWrapper>
 
       <ButtonWrapper>
+        <ShowPosts onClick={showPostsHandler}>Show Posts</ShowPosts>
 
-      <ShowPosts onClick={showPostsHandler}>Show Posts</ShowPosts>
-
-      {id === currentUserId && (
-        <ShowPosts onClick={showAddedPostsHandler}>Add Post</ShowPosts>
-      )}
+        {id === currentUserId && (
+          <ShowPosts onClick={showAddedPostsHandler}>Add Post</ShowPosts>
+        )}
       </ButtonWrapper>
       {id === currentUserId && showAddedPost && !show && (
-        <div>
-          <input
+        <Inner style={{ margin: "1rem 0" }}>
+          <ProfileChatLog
             id="user-new-post-desc"
-            type={"text"}
+            placeholder={"Enter new post"}
+            maxRows={5}
             value={inputValue}
             onChange={(e) => setInputValue(e.target.value)}
           />
@@ -179,55 +161,28 @@ export const ProfilePage = () => {
             onChange={(e) => setProfileImage(e.currentTarget.files![0])}
           />
           <button onClick={sendNewPostHandler}>add</button>
-        </div>
+        </Inner>
       )}
 
-      {/*@ts-ignore*/}
-      {posts && show && loadingPosts && !showAddedPost && posts.map((m) => {
+      <PostsWrapper>
+        {/*@ts-ignore*/}
+        {posts && show && loadingPosts && !showAddedPost && posts.map((m) => {
           return (
-            <div key={m._id}>
-              {m.desc}
-              {m.img && <img src={m.img} alt={"image-post"} />}
-
-              <div id={m._id}>
-                {id === currentUserId && (
-                  <>
-                    <button
-                      onClick={(e) => {
-                        setShowEditPost(!showEditPost);
-                        // @ts-ignore
-                        setButtonClickId(e.target.parentElement.id);
-                      }}
-                    >
-                      Edit post
-                    </button>
-
-                    <button onClick={() => deletePostHandler(m._id)}>
-                      delete
-                    </button>
-                  </>
-                )}
-              </div>
-
-              {showEditPost && m._id === buttonClickId && (
-                <div>
-                  <input
-                    id="user-edit-post-desc"
-                    type={"text"}
-                    value={inputValue}
-                    onChange={(e) => setInputValue(e.target.value)}
-                  />
-                  <input
-                    type={"file"}
-                    id="user-edit-post-image"
-                    onChange={(e) => setProfileImage(e.currentTarget.files![0])}
-                  />
-                  <button onClick={() => editPostHandler(m._id)}>edit</button>
-                </div>
-              )}
-            </div>
+            <Post
+              key={m._id}
+              m={m}
+              showEditPost={showEditPost}
+              setShowEditPost={setShowEditPost}
+              inputValue={inputValue}
+              buttonClickId={buttonClickId}
+              profileImage={profileImage}
+              setProfileImage={setProfileImage}
+              setInputValue={setInputValue}
+              setButtonClickId={setButtonClickId}
+            />
           );
         })}
+      </PostsWrapper>
 
       <ErrorSnackbar />
     </Wrapper>

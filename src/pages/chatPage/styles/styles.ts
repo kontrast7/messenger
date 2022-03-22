@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from "styled-components/macro";
 import TextareaAutosize from "react-textarea-autosize";
 
 export const Wrapper = styled.div`

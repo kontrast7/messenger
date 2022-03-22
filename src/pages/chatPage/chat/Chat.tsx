@@ -11,7 +11,6 @@ import { deleteMessageType } from "../../../api/api";
 import { deleteMessageById } from "../../../bll/reducer/messageReducer";
 import { useDispatch } from "react-redux";
 import { getCurrentUserId } from "../../../utils/getCurrentUserId";
-import { InfoInner } from "./styles/styles";
 import { DeleteButton } from "./styles/styles";
 import { hoursMinutesDateParse } from "../../../utils/parseDate";
 

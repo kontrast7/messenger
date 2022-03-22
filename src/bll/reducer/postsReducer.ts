@@ -1,15 +1,7 @@
 import { Dispatch } from "redux";
-import {
-  createNewPostsType,
-  deletePostType,
-  postsApi,
-  usersApi,
-} from "../../api/api";
+import { createNewPostsType, deletePostType, postsApi } from "../../api/api";
 import { RootAppStateType } from "../redux/store";
-import {
-  changeStatus,
-  setIsLoadingPosts,
-} from "./appReducer";
+import { changeStatus, setIsLoadingPosts } from "./appReducer";
 import { serverErrorHandling } from "../../utils/serverHandleError";
 import { resizeFile } from "../../utils/resizeFile";
 
@@ -43,13 +35,14 @@ export const getAllPostsUser = (username: string) => (dispatch: Dispatch) => {
 
 export const sendNewPostTC =
   (payload: createNewPostsType) => (dispatch: Dispatch) => {
+    dispatch(changeStatus("loading"));
     if (payload.img) {
       resizeFile(payload.img).then((res) => {
         payload.img = res;
 
         postsApi
           .createNewPosts(payload)
-          .then((res) => {
+          .then(() => {
             dispatch(changeStatus("completed"));
           })
           .catch((err) => {
@@ -59,7 +52,7 @@ export const sendNewPostTC =
     } else {
       postsApi
         .createNewPosts(payload)
-        .then((res) => {
+        .then(() => {
           dispatch(changeStatus("completed"));
         })
         .catch((err) => {
@@ -71,13 +64,14 @@ export const sendNewPostTC =
 export const editPostTC =
   (payload: createNewPostsType, idPost: string) =>
   (dispatch: any, getState: () => RootAppStateType) => {
+    dispatch(changeStatus("loading"));
     const username = getState().users[0].username;
     if (payload.img) {
       resizeFile(payload.img).then((res) => {
         payload.img = res;
         postsApi
           .editPost(payload, idPost)
-          .then((res) => {
+          .then(() => {
             dispatch(changeStatus("completed"));
             dispatch(getAllPostsUser(username));
           })
@@ -88,7 +82,7 @@ export const editPostTC =
     } else {
       postsApi
         .editPost(payload, idPost)
-        .then((res) => {
+        .then(() => {
           dispatch(changeStatus("completed"));
           dispatch(getAllPostsUser(username));
         })
@@ -101,20 +95,31 @@ export const editPostTC =
 export const deletePostTC =
   (idPost: string, payload: deletePostType) =>
   (dispatch: any, getState: () => RootAppStateType) => {
+    dispatch(changeStatus("loading"));
     const username = getState().users[0].username;
-    postsApi.deletePost(idPost, payload).then((res) => {
-      dispatch(getAllPostsUser(username));
-    });
+    postsApi
+      .deletePost(idPost, payload)
+      .then(() => {
+        dispatch(changeStatus("completed"));
+        dispatch(getAllPostsUser(username));
+      })
+      .catch((err) => {
+        serverErrorHandling(err, dispatch);
+      });
   };
 
-export const getPostsTapeTC = (id: string) => (dispatch: any, getState: () => RootAppStateType) => {
+export const getPostsTapeTC = (id: string) => (dispatch: any) => {
+  dispatch(changeStatus("loading"));
   postsApi
     .getTimeLinePosts(id)
     .then((res) => {
-      dispatch(setAllPosts(res.data))
-      console.log(res.data)
+      dispatch(setAllPosts(res.data));
+      dispatch(changeStatus("completed"));
+    })
+    .catch((err) => {
+      serverErrorHandling(err, dispatch);
     });
-}
+};
 
 // Types
 export type initStatePropsType = {
@@ -124,6 +129,6 @@ export type initStatePropsType = {
   desc: string;
   createdAt: string;
   updatedAt: string;
-  img?: string
+  img?: string;
 };
 type ActionType = ReturnType<typeof setAllPosts>;
