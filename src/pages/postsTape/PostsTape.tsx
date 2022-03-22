@@ -19,11 +19,12 @@ import {
   Description,
 } from "./post/styles/styles";
 //@ts-ignore
-import defaultUserIcon from "../../assets/images/icons/default-user-icon.svg";
+import defaultUserIcon from "../../assets/images/icons/default-user-icon-black.svg";
 import { CreatedInfo } from "./post/styles/styles";
 import { CreatedBy } from "./post/styles/styles";
 import { selectIsLoggedIn } from "../../bll/selector/selectors";
-import { routes } from "../../bll/routes/routes"
+import { routes } from "../../bll/routes/routes";
+import { dayMonthYearDateParse } from "../../utils/parseDate";
 
 export const PostsTape = () => {
   const currentUserId = getCurrentUserId();
@@ -54,8 +55,10 @@ export const PostsTape = () => {
                   <InfoWrapper>
                     <Avatar src={us.profilePicture} alt={"Avatar Icon"} />
                     <CreatedInfo>
-                      <CratedDate>Created: 12.00</CratedDate>
-                      <CreatedBy>Created by: Makss</CreatedBy>
+                      <CratedDate>
+                        Created: {dayMonthYearDateParse(p.updatedAt)}
+                      </CratedDate>
+                      <CreatedBy>Created by: {us.username}</CreatedBy>
                     </CreatedInfo>
                   </InfoWrapper>
                 </Username>
@@ -71,8 +74,12 @@ export const PostsTape = () => {
                       alt={"Avatar Icon"}
                     />
                     <CreatedInfo>
-                      <CratedDate>Created: 12.00</CratedDate>
-                      <CreatedBy>Created by: Makss</CreatedBy>
+                      <CratedDate>
+                        Created: {dayMonthYearDateParse(p.updatedAt)}
+                      </CratedDate>
+                      <CreatedBy>
+                        Created by: {currentUserLs && currentUserLs.username}
+                      </CreatedBy>
                     </CreatedInfo>
                   </InfoWrapper>
                 </Username>

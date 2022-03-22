@@ -1,4 +1,3 @@
-import { ReactChildren } from "react";
 import React from "react";
 import { Inner } from "./styles/styles";
 

@@ -5,15 +5,23 @@ import { Container } from "../../styles/global";
 import logo from "../../assets/images/icons/white-logo.svg";
 import { Link } from "react-router-dom";
 import { routes } from "../../bll/routes/routes";
+import { useSelector } from "react-redux";
+import { selectIsLoggedIn } from "../../bll/selector/selectors";
 
 export const Header = () => {
+  const isLoggedIn = useSelector(selectIsLoggedIn);
+
   return (
     <Wrapper>
       <Container>
         <Inner>
-          <Link to={routes.postsTape}>
+          {isLoggedIn ? (
+            <Link to={routes.postsTape}>
+              <Logo src={logo} alt="Logotype" />
+            </Link>
+          ) : (
             <Logo src={logo} alt="Logotype" />
-          </Link>
+          )}
         </Inner>
       </Container>
     </Wrapper>

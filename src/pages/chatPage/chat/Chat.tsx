@@ -13,6 +13,7 @@ import { useDispatch } from "react-redux";
 import { getCurrentUserId } from "../../../utils/getCurrentUserId";
 import { InfoInner } from "./styles/styles";
 import { DeleteButton } from "./styles/styles";
+import { hoursMinutesDateParse } from "../../../utils/parseDate";
 
 export const Chat = ({ myChat, message }: ChatPropsType) => {
   const dispatch = useDispatch();
@@ -35,14 +36,18 @@ export const Chat = ({ myChat, message }: ChatPropsType) => {
           <InfoWrapper>
             <DeleteButton onClick={deleteMessageHandler}>x</DeleteButton>
             <Text>{message.text}</Text>
-            <SentMessageTime>12:00</SentMessageTime>
+            <SentMessageTime>
+              {hoursMinutesDateParse(message.createdAt)}
+            </SentMessageTime>
           </InfoWrapper>
         </SentMessage>
       ) : (
         <ReceivedMessage>
           <InfoWrapper>
             <Text>{message.text}</Text>
-            <ReceivedMessageTime>16:13</ReceivedMessageTime>
+            <ReceivedMessageTime>
+              {hoursMinutesDateParse(message.createdAt)}
+            </ReceivedMessageTime>
           </InfoWrapper>
         </ReceivedMessage>
       )}

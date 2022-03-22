@@ -8,6 +8,7 @@ export const Wrapper = styled.div`
   justify-content: space-between;
   padding-top: 2rem;
   word-break: break-all;
+  gap: 1rem;
 `;
 
 export const Content = styled.div`

@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { Follow } from "../../contactsPage/contact/styles/styles";
+import React from "react";
 
 export const Wrapper = styled.section`
   padding-top: 7%;
@@ -29,14 +30,14 @@ export const ButtonWrapper = styled.div`
   display: flex;
   justify-content: center;
   width: 100%;
-  gap: 2.5rem;
+  gap: 1rem;
 
   button {
-    width: 40%;
+    width: 43%;
   }
 
   a {
-    width: 40%;
+    width: 43%;
   }
 `;
 
