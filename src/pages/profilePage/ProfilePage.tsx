@@ -3,12 +3,12 @@ import { useParams, Navigate } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
 import {
   followUnFollowUserTC,
-  setCurrentProfileTC,
+  setCurrentProfileTC
 } from "../../bll/reducer/usersReducer";
 import {
   selectCurrentUserPosts,
   selectIsLoadingPosts,
-  selectUsersAll,
+  selectUsersAll
 } from "../../bll/selector/selectors";
 import { Spinner } from "../../components/spinner/spinner";
 import { ErrorSnackbar } from "../../components/errorSnackbar/ErrorSnackbar";
@@ -18,7 +18,7 @@ import { Follow, GoToMessages } from "../contactsPage/contact/styles/styles";
 import {
   changeInitialized,
   setIsLoadingPosts,
-  setIsMessageAC,
+  setIsMessageAC
 } from "../../bll/reducer/appReducer";
 import {
   Wrapper,
@@ -29,12 +29,12 @@ import {
   InfoWrapper,
   City,
   Description,
-  Email,
+  Email
 } from "./styles/styles";
 import { getCurrentUserId } from "../../utils/getCurrentUserId";
 import { ShowPosts } from "./styles/styles";
 import { selectIsLoggedIn } from "../../bll/selector/selectors";
-import { getAllPostsUser, sendNewPostTC } from "../../bll/reducer/postsReducer";
+import { editPostTC, getAllPostsUser, sendNewPostTC } from "../../bll/reducer/postsReducer";
 import { createNewPostsType } from "../../api/api";
 import { Input } from "../../components/common/input/styles";
 //@ts-ignore
@@ -42,11 +42,15 @@ import messageIcon from "../../assets/images/icons/message-icon.svg";
 //@ts-ignore
 import defaultUserIcon from "../../assets/images/icons/default-user-icon.svg";
 
+
 export const ProfilePage = () => {
   const [show, setShow] = useState(false);
   const [showAddedPost, setShowAddedPost] = useState(false);
+  const [showEditPost, setShowEditPost] = useState(false);
   const [inputValue, setInputValue] = useState("");
   const [profileImage, setProfileImage] = useState<Blob>();
+  const [buttonClickId, setButtonClickId] = useState("");
+
   const dispatch = useDispatch();
   const { id } = useParams();
   const isLoggedIn = useSelector(selectIsLoggedIn);
@@ -56,14 +60,6 @@ export const ProfilePage = () => {
   const currentUserId = getCurrentUserId();
   let user = users.filter((u) => u._id === id)[0];
 
-  const followUserHandler = (id: string, action: "follow" | "unfollow") => {
-    dispatch(followUnFollowUserTC(id, action, currentUserId));
-
-    if (action === "follow") {
-      dispatch(createChatRoomTC({ id, currentUserId }));
-    }
-  };
-
   useEffect(() => {
     id && dispatch(setCurrentProfileTC(id));
     dispatch(changeInitialized(false));
@@ -72,22 +68,42 @@ export const ProfilePage = () => {
     setShow(false);
   }, [id]);
 
+  const followUserHandler = (id: string, action: "follow" | "unfollow") => {
+    dispatch(followUnFollowUserTC(id, action, currentUserId));
+
+    if (action === "follow") {
+      dispatch(createChatRoomTC({ id, currentUserId }));
+    }
+  };
   const showPostsHandler = () => {
     user && dispatch(getAllPostsUser(user.username));
     setShow(!show);
     setShowAddedPost(false);
+    setShowEditPost(false);
   };
   const showAddedPostsHandler = () => {
     setShowAddedPost(!showAddedPost);
     setShow(false);
+    setShowEditPost(false);
   };
   const sendNewPostHandler = () => {
     const payload: createNewPostsType = {
       userId: currentUserId,
-      desc: inputValue,
+      desc: inputValue
     };
     profileImage && (payload.img = profileImage);
     dispatch(sendNewPostTC(payload));
+    setInputValue("");
+  };
+
+  const editPostHandler = (idPost: string) => {
+    const payload: createNewPostsType = {
+      userId: currentUserId
+    };
+    inputValue && (payload.desc = inputValue);
+    profileImage && (payload.img = profileImage);
+    dispatch(editPostTC(payload, idPost));
+    setShowEditPost(false);
     setInputValue("");
   };
 
@@ -138,17 +154,17 @@ export const ProfilePage = () => {
 
       {id === currentUserId && showAddedPost && !show && (
         <div>
-          <Input
+          <input
             id="user-new-post-desc"
-            label="Enter your text"
+            // label="Enter your text"
             type={"text"}
             value={inputValue}
             onChange={(e) => setInputValue(e.target.value)}
           />
-          <Input
+          <input
             type={"file"}
             id="user-new-post-image"
-            label="Profile Image"
+            // label="Profile Image"
             onChange={(e) => setProfileImage(e.currentTarget.files![0])}
           />
           <button onClick={sendNewPostHandler}>add</button>
@@ -157,11 +173,38 @@ export const ProfilePage = () => {
 
       {/*@ts-ignore*/}
       {posts && show && loadingPosts && !showAddedPost && posts.map((m) => {
-          return <div key={m._id}>
-            {m.desc}
-            {m.img && <img src={m.img} alt={"image-post"}/>}
-          </div>;
-        })}
+        return <div key={m._id}>
+          {m.desc}
+          {m.img && <img src={m.img} alt={"image-post"} />}
+
+          <div id={m._id}>
+          {id === currentUserId && <button onClick={(e)=>{
+            setShowEditPost(!showEditPost)
+            // @ts-ignore
+            setButtonClickId(e.target.parentElement.id)
+          }}>Edit post</button> }
+          </div>
+
+
+          {showEditPost && m._id === buttonClickId && <div>
+            <input
+              id="user-edit-post-desc"
+              // label="Enter your text"
+              type={"text"}
+              value={inputValue}
+              onChange={(e) => setInputValue(e.target.value)}
+            />
+            <input
+              type={"file"}
+              id="user-edit-post-image"
+              // label="Profile Image"
+              onChange={(e) => setProfileImage(e.currentTarget.files![0])}
+            />
+            <button onClick={() => editPostHandler(m._id)}>edit</button>
+          </div>}
+
+        </div>;
+      })}
 
       <ErrorSnackbar />
     </Wrapper>

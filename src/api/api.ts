@@ -63,6 +63,9 @@ export const postsApi = {
   createNewPosts: (payload: createNewPostsType) => {
     return instance.post(`/posts/`, {...payload});
   },
+  editPost: (payload: createNewPostsType, idPost: string) => {
+    return instance.put(`/posts/${idPost}`, {...payload});
+  },
 };
 
 export type registerUserType = {
@@ -88,6 +91,6 @@ export type updateUserType = {
 };
 export type createNewPostsType = {
   userId: string;
-  desc: string;
+  desc?: string;
   img?: any;
 };

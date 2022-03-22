@@ -71,6 +71,31 @@ export const sendNewPostTC =
     }
   };
 
+export const editPostTC =
+  (payload: createNewPostsType, idPost: string) => (dispatch: Dispatch) => {
+    if (payload.img) {
+      resizeFile(payload.img).then((res) => {
+        payload.img = res;
+        postsApi
+          .editPost(payload, idPost)
+          .then((res) => {
+            dispatch(changeStatus("completed"));
+          })
+          .catch((err) => {
+            serverErrorHandling(err, dispatch);
+          });
+      });
+    } else {
+      postsApi
+        .editPost(payload, idPost)
+        .then((res) => {
+          dispatch(changeStatus("completed"));
+        })
+        .catch((err) => {
+          serverErrorHandling(err, dispatch);
+        });
+    }
+  };
 // Types
 export type initStatePropsType = {
   _id: string;
