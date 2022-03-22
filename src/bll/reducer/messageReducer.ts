@@ -2,6 +2,10 @@ import { Dispatch } from "redux";
 import { messagesApi, sendMessageType } from "../../api/api";
 import { changeStatus } from "./appReducer";
 import { serverErrorHandling } from "../../utils/serverHandleError";
+import { deleteMessageType } from "../../api/api";
+import { ThunkDispatch } from "redux-thunk";
+import { RootAppStateType } from "../redux/store";
+import { changeStatusType } from "./appReducer"
 
 const initState: initStatePropsTypeMessage[] = [];
 
@@ -59,6 +63,21 @@ export const getMessagesByChatId = (chatId: string) => (dispatch: Dispatch) => {
       serverErrorHandling(err, dispatch);
     });
 };
+
+export const deleteMessageById =
+  (payload: deleteMessageType) =>
+  (dispatch: ThunkDispatch<RootAppStateType, any, changeStatusType>) => {
+    dispatch(changeStatus("loading"));
+    messagesApi
+      .deleteMessage(payload)
+      .then((res) => {
+        dispatch(changeStatus("completed"));
+        dispatch(getMessagesByChatId(payload.chatroomId));
+      })
+      .catch((err) => {
+        serverErrorHandling(err, dispatch);
+      });
+  };
 
 // Types
 export type initStatePropsTypeMessage = {

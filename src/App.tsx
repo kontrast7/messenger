@@ -18,15 +18,12 @@ function App() {
   const themeState = useSelector(selectTheme);
   return (
     <ThemeProvider
-      theme={localStorage.getItem("theme") === "dark" ? dark : light}
+      theme={localStorage.getItem("theme") === "light" ? light : dark}
     >
       <PageWrapper>
         <GlobalStyles />
         <Header />
         <PageHolder />
-        {/*<button onClick={() => changeTheme(themeState, dispatch)}>*/}
-        {/*  Change*/}
-        {/*</button>*/}
         {isLoggedIn && <Navigation />}
       </PageWrapper>
     </ThemeProvider>

@@ -54,9 +54,11 @@ export const messagesApi = {
   sendMessage: (payload: sendMessageType) => {
     return instance.post(`/messages`, { ...payload });
   },
-  deleteMessage: (idMessage: string, userId: string) => {
-    return instance.delete(`/messages/delete/${idMessage}`, {data: { userId }})
-  }
+  deleteMessage: ({ idMessage, userId }: deleteMessageType) => {
+    return instance.delete(`/messages/delete/${idMessage}`, {
+      data: { userId },
+    });
+  },
 };
 
 export const postsApi = {
@@ -105,4 +107,10 @@ export type createNewPostsType = {
 };
 export type deletePostType = {
   userId: string;
+};
+
+export type deleteMessageType = {
+  idMessage: string;
+  userId: string;
+  chatroomId: string;
 };
