@@ -103,6 +103,7 @@ export const ProfilePage = () => {
     inputValue && (payload.desc = inputValue);
     profileImage && (payload.img = profileImage);
     dispatch(editPostTC(payload, idPost));
+    setProfileImage(undefined);
     setShowEditPost(false);
     setInputValue("");
   };
@@ -189,7 +190,6 @@ export const ProfilePage = () => {
           {showEditPost && m._id === buttonClickId && <div>
             <input
               id="user-edit-post-desc"
-              // label="Enter your text"
               type={"text"}
               value={inputValue}
               onChange={(e) => setInputValue(e.target.value)}
@@ -197,7 +197,6 @@ export const ProfilePage = () => {
             <input
               type={"file"}
               id="user-edit-post-image"
-              // label="Profile Image"
               onChange={(e) => setProfileImage(e.currentTarget.files![0])}
             />
             <button onClick={() => editPostHandler(m._id)}>edit</button>
