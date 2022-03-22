@@ -42,6 +42,7 @@ export const DeleteButton = styled.div`
   top: -17px;
   font-size: 0.8rem;
   color: #ce2828;
+  cursor: pointer;
 `;
 
 export const SentMessageTime = styled.p`
