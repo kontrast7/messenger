@@ -38,7 +38,6 @@ export const InfoInner = styled.div`
 
 export const DeleteButton = styled.div`
   position: absolute;
-  left: -3px;
   top: -17px;
   font-size: 0.8rem;
   color: #ce2828;

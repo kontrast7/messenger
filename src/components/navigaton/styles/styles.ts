@@ -38,6 +38,7 @@ export const Avatar = styled.img`
   object-fit: cover;
   line-height: 0;
   font-size: 0;
+  border-radius: 50%;
 
   :active {
     transform: scale(0.9);
