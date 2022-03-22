@@ -21,6 +21,7 @@ import { SearchInput } from "../../components/common/searchInput/styles";
 import { ContactsWrapper } from "./styles/styles";
 import { Wrapper } from "./styles/styles";
 import { setIsMessageAC } from "../../bll/reducer/appReducer";
+import { onEnterPress } from "../../utils/onEnter";
 
 export const ContactsPage = () => {
   const dispatch = useDispatch();
@@ -33,7 +34,7 @@ export const ContactsPage = () => {
 
   useEffect(() => {
     isLoggedIn && dispatch(setAllUsersTC(currentUserId));
-    dispatch(setIsMessageAC(false))
+    dispatch(setIsMessageAC(false));
   }, []);
 
   const searchByName = () => {
@@ -43,12 +44,13 @@ export const ContactsPage = () => {
   };
 
   if (!isLoggedIn) return <Navigate to={routes.login} />;
-  if (status === "loading") return <Spinner />
-  if (!isInitialized) return <Spinner />
+  if (status === "loading") return <Spinner />;
+  if (!isInitialized) return <Spinner />;
 
   return (
     <Wrapper>
       <SearchInput
+        onKeyPress={(e) => onEnterPress(e, searchByName)}
         placeholder={"Search..."}
         value={input}
         onChange={(e) => setInput(e.target.value)}

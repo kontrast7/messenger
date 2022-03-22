@@ -9,6 +9,7 @@ import { ErrorSnackbar } from "../../../components/errorSnackbar/ErrorSnackbar";
 import React from "react";
 import { InfoWrapper, ChatWithUser, AvatarLink } from "./styles/styles";
 import { getCurrentUserId } from "../../../utils/getCurrentUserId";
+import { InfoInner } from "./styles/styles";
 
 export const Message = ({ contact }: MessagePropsType) => {
   const currentUserId = getCurrentUserId();
@@ -16,19 +17,22 @@ export const Message = ({ contact }: MessagePropsType) => {
   return (
     <Wrapper>
       <Content>
-        {/*<AvatarLink to={`/user/${contact._id}`}>*/}
-        <Avatar
-          src={
-            contact.profilePicture ? contact.profilePicture : defaultUserIcon
-          }
-          alt={"Avatar"}
-        />
-        {/*</AvatarLink>*/}
+        <AvatarLink to={`/user/${contact._id}`}>
+          <Avatar
+            src={
+              contact.profilePicture ? contact.profilePicture : defaultUserIcon
+            }
+            alt={"Avatar"}
+          />
+        </AvatarLink>
+
         <InfoWrapper>
           <Username to={`/chat/${currentUserId}/${contact._id}`}>
-            {contact.username}
+            <InfoInner>
+              {contact.username}
+              <ChatWithUser>Chat with {contact.username}...</ChatWithUser>
+            </InfoInner>
           </Username>
-          <ChatWithUser>Chat with {contact.username}...</ChatWithUser>
         </InfoWrapper>
       </Content>
       <ErrorSnackbar />

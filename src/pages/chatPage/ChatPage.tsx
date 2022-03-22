@@ -17,6 +17,7 @@ import messageIcon from "../../assets/images/icons/message-icon.svg";
 import { Chat } from "./chat/Chat";
 import { useRef } from "react";
 import { selectIsLoggedIn } from "../../bll/selector/selectors";
+import { onEnterPress } from "../../utils/onEnter"
 
 export const ChatPage = () => {
   const [input, setInput] = useState("");
@@ -76,6 +77,7 @@ export const ChatPage = () => {
       </Content>
       <ControlPanel>
         <ChatLog
+          onKeyPress={(e) => onEnterPress(e, sendMessageHandler)}
           placeholder="Write"
           maxRows={8}
           value={input}
