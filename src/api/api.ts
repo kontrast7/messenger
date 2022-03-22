@@ -54,6 +54,9 @@ export const messagesApi = {
   sendMessage: (payload: sendMessageType) => {
     return instance.post(`/messages`, { ...payload });
   },
+  deleteMessage: (idMessage: string, userId: string) => {
+    return instance.delete(`/messages/delete/${idMessage}`, {data: { userId }})
+  }
 };
 
 export const postsApi = {
@@ -61,10 +64,16 @@ export const postsApi = {
     return instance.get(`/posts/profile/${username}`);
   },
   createNewPosts: (payload: createNewPostsType) => {
-    return instance.post(`/posts/`, {...payload});
+    return instance.post(`/posts/`, { ...payload });
   },
   editPost: (payload: createNewPostsType, idPost: string) => {
-    return instance.put(`/posts/${idPost}`, {...payload});
+    return instance.put(`/posts/${idPost}`, { ...payload });
+  },
+  getTimeLinePosts: (id: string) => {
+    return instance.get(`/posts/timeline/${id}`);
+  },
+  deletePost: (idPost: string, payload: deletePostType) => {
+    return instance.delete(`/posts/${idPost}`, { data: { ...payload } });
   },
 };
 
@@ -93,4 +102,7 @@ export type createNewPostsType = {
   userId: string;
   desc?: string;
   img?: any;
+};
+export type deletePostType = {
+  userId: string;
 };

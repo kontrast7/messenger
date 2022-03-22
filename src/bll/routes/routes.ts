@@ -7,5 +7,6 @@ export const routes = {
   chatPage: "/chat/:currentUserId/:id",
   editProfile: "/edit",
   messenger: "/messenger",
+  postsTape: "/posts",
   home: "/",
 };

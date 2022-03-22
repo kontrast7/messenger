@@ -54,7 +54,6 @@ export const setAllUsersTC = (myId: string) => (dispatch: Dispatch) => {
     .catch((err) => {
       serverErrorHandling(err, dispatch);
     })
-    .finally(() => {});
 };
 export const followUnFollowUserTC =
   (id: string, action: "follow" | "unfollow", currentUserId: string) =>

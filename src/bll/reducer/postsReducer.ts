@@ -1,15 +1,12 @@
 import { Dispatch } from "redux";
 import {
-  chatRoomsApi,
   createNewPostsType,
+  deletePostType,
   postsApi,
   usersApi,
 } from "../../api/api";
-import { getMessagesByChatId } from "./messageReducer";
-import { ThunkDispatch } from "redux-thunk";
 import { RootAppStateType } from "../redux/store";
 import {
-  changeCurrentUser,
   changeStatus,
   setIsLoadingPosts,
 } from "./appReducer";
@@ -72,7 +69,9 @@ export const sendNewPostTC =
   };
 
 export const editPostTC =
-  (payload: createNewPostsType, idPost: string) => (dispatch: Dispatch) => {
+  (payload: createNewPostsType, idPost: string) =>
+  (dispatch: any, getState: () => RootAppStateType) => {
+    const username = getState().users[0].username;
     if (payload.img) {
       resizeFile(payload.img).then((res) => {
         payload.img = res;
@@ -80,6 +79,7 @@ export const editPostTC =
           .editPost(payload, idPost)
           .then((res) => {
             dispatch(changeStatus("completed"));
+            dispatch(getAllPostsUser(username));
           })
           .catch((err) => {
             serverErrorHandling(err, dispatch);
@@ -90,12 +90,32 @@ export const editPostTC =
         .editPost(payload, idPost)
         .then((res) => {
           dispatch(changeStatus("completed"));
+          dispatch(getAllPostsUser(username));
         })
         .catch((err) => {
           serverErrorHandling(err, dispatch);
         });
     }
   };
+
+export const deletePostTC =
+  (idPost: string, payload: deletePostType) =>
+  (dispatch: any, getState: () => RootAppStateType) => {
+    const username = getState().users[0].username;
+    postsApi.deletePost(idPost, payload).then((res) => {
+      dispatch(getAllPostsUser(username));
+    });
+  };
+
+export const getPostsTapeTC = (id: string) => (dispatch: any, getState: () => RootAppStateType) => {
+  postsApi
+    .getTimeLinePosts(id)
+    .then((res) => {
+      dispatch(setAllPosts(res.data))
+      console.log(res.data)
+    });
+}
+
 // Types
 export type initStatePropsType = {
   _id: string;
@@ -104,5 +124,6 @@ export type initStatePropsType = {
   desc: string;
   createdAt: string;
   updatedAt: string;
+  img?: string
 };
 type ActionType = ReturnType<typeof setAllPosts>;

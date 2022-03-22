@@ -34,9 +34,8 @@ import {
 import { getCurrentUserId } from "../../utils/getCurrentUserId";
 import { ShowPosts } from "./styles/styles";
 import { selectIsLoggedIn } from "../../bll/selector/selectors";
-import { editPostTC, getAllPostsUser, sendNewPostTC } from "../../bll/reducer/postsReducer";
-import { createNewPostsType } from "../../api/api";
-import { Input } from "../../components/common/input/styles";
+import { deletePostTC, editPostTC, getAllPostsUser, sendNewPostTC } from "../../bll/reducer/postsReducer";
+import { createNewPostsType, deletePostType } from "../../api/api";
 //@ts-ignore
 import messageIcon from "../../assets/images/icons/message-icon.svg";
 //@ts-ignore
@@ -58,7 +57,7 @@ export const ProfilePage = () => {
   const loadingPosts = useSelector(selectIsLoadingPosts);
   const posts = useSelector(selectCurrentUserPosts);
   const currentUserId = getCurrentUserId();
-  let user = users.filter((u) => u._id === id)[0];
+  const user = users.filter((u) => u._id === id)[0];
 
   useEffect(() => {
     id && dispatch(setCurrentProfileTC(id));
@@ -94,8 +93,9 @@ export const ProfilePage = () => {
     profileImage && (payload.img = profileImage);
     dispatch(sendNewPostTC(payload));
     setInputValue("");
+    setProfileImage(undefined);
+    setShowAddedPost(false)
   };
-
   const editPostHandler = (idPost: string) => {
     const payload: createNewPostsType = {
       userId: currentUserId
@@ -107,6 +107,12 @@ export const ProfilePage = () => {
     setShowEditPost(false);
     setInputValue("");
   };
+  const deletePostHandler = (idPost: string) => {
+    const payload: deletePostType = {
+      userId: currentUserId
+    }
+     dispatch(deletePostTC(idPost, payload))
+  }
 
   if (!user) return <Spinner />;
   if (!isLoggedIn) return <Navigate to={routes.login} />;
@@ -179,11 +185,25 @@ export const ProfilePage = () => {
           {m.img && <img src={m.img} alt={"image-post"} />}
 
           <div id={m._id}>
-          {id === currentUserId && <button onClick={(e)=>{
+          {id === currentUserId &&
+          <>
+
+          <button onClick={(e)=>{
             setShowEditPost(!showEditPost)
             // @ts-ignore
             setButtonClickId(e.target.parentElement.id)
-          }}>Edit post</button> }
+          }}>Edit post</button>
+
+
+
+            <button onClick={()=> deletePostHandler(m._id)}>
+              delete
+            </button>
+
+
+          </>
+            }
+
           </div>
 
 
