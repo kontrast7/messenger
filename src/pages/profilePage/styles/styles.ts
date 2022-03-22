@@ -1,7 +1,6 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { Follow } from "../../contactsPage/contact/styles/styles";
-import React from "react";
 
 export const Wrapper = styled.section`
   padding-top: 7%;
