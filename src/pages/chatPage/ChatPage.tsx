@@ -19,7 +19,8 @@ import { Chat } from "./chat/Chat";
 import { useRef } from "react";
 import { io } from "socket.io-client";
 import { selectIsLoggedIn } from "../../bll/selector/selectors";
-import { onEnterPress } from "../../utils/onEnter"
+import { onEnterPress } from "../../utils/onEnter";
+
 
 export const ChatPage = () => {
   const [input, setInput] = useState("");
@@ -34,7 +35,8 @@ export const ChatPage = () => {
   const socket = useRef();
   useEffect(() => {
     //@ts-ignore
-    socket.current = io("ws://socialmess.herokuapp.com:8900");
+    socket.current = io("https://messenger-socket.herokuapp.com/");
+    // socket.current = io("localhost:8800");
     //@ts-ignore
     socket.current.on("getMessage", (data) => {
       console.log(data);
@@ -42,7 +44,7 @@ export const ChatPage = () => {
         //@ts-ignore
         sender: data.senderId,
         text: data.text,
-        createdAt: Date.now(),
+        createdAt: Date.now()
       });
     });
   }, []);
@@ -73,13 +75,13 @@ export const ChatPage = () => {
       const payload = {
         conversationId: chatRoomId[0]._id,
         sender: currentUserIdLs,
-        text: input,
+        text: input
       };
       //@ts-ignore
       socket.current.emit("sendMessage", {
         senderId: currentUserIdLs,
         receiverId: id,
-        text: input,
+        text: input
       });
 
       dispatch(createMessageTC(payload));
