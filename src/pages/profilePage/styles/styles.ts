@@ -1,13 +1,16 @@
-import styled from "styled-components";
+import styled from "styled-components/macro";
 import { Link } from "react-router-dom";
 import { Follow } from "../../contactsPage/contact/styles/styles";
-import React from "react";
+import { ChatLog } from "../../chatPage/styles/styles";
 
 export const Wrapper = styled.section`
+  height: calc(100vh - 131px);
   padding-top: 7%;
   display: flex;
   flex-direction: column;
   align-items: center;
+  overflow-y: scroll;
+  overflow-x: hidden;
 `;
 
 export const Avatar = styled.img`
@@ -48,6 +51,7 @@ export const InfoWrapper = styled.div`
   gap: 0.5em;
   margin: 7% 0;
   width: 90%;
+  word-break: break-word;
 `;
 
 export const Description = styled.p``;
@@ -74,4 +78,21 @@ export const EditProfile = styled(Link)`
   border-radius: 10px;
   border: none;
   cursor: pointer;
+`;
+
+export const ProfileChatLog = styled(ChatLog)`
+  color: #000;
+  background-color: white;
+
+  ::placeholder {
+    color: black;
+  }
+`;
+
+export const PostsWrapper = styled.div`
+  width: 90%;
+  display: flex;
+  flex-direction: column;
+  margin: 1rem 0;
+  gap: 1rem;
 `;

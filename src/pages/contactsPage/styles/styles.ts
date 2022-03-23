@@ -1,11 +1,17 @@
 import styled from "styled-components";
 
 export const Wrapper = styled.div`
-  margin-top: 20%;
+  height: calc(100vh - 131px);
+  overflow-y: scroll;
+  overflow-x: hidden;
+  
+  ::-webkit-scrollbar {
+    display: none;
+  }
 `;
 
 export const ContactsWrapper = styled.div`
-  margin-top: 3.875em;
+  margin-top: 2em;
   display: flex;
   flex-direction: column;
   gap: 25px;

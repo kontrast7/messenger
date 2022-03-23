@@ -9,4 +9,8 @@ export const Wrapper = styled.div`
   height: calc(100vh - 131px);
   overflow-x: hidden;
   overflow-y: scroll;
+  
+  ::-webkit-scrollbar {
+    display: none;
+  }
 `;

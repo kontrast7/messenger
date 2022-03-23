@@ -7,11 +7,18 @@ interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   onClick: () => void;
 }
 
+export const InputWrapper = styled.div`
+  position: sticky;
+  top: -15px;
+  background-color: ${({ theme }) => theme.colors.background};
+  padding: 2rem 0;
+  z-index: 10;
+`;
+
 export const InputGroup = styled.div`
   position: relative;
   width: 100%;
   height: 40px;
-  width: 100%;
   overflow: hidden;
   border-radius: 10px;
   background-color: ${({ theme }) => theme.colors.searchbar};
@@ -57,16 +64,18 @@ export const SearchInput: React.FC<InputProps> = ({
   onKeyPress,
 }) => {
   return (
-    <InputGroup>
-      <InputField
-        value={value}
-        onChange={onChange}
-        placeholder={placeholder}
-        onKeyPress={onKeyPress}
-      />
-      <InputButton onClick={onClick}>
-        <img src={searchLogo} alt="Search button" />
-      </InputButton>
-    </InputGroup>
+    <InputWrapper>
+      <InputGroup>
+        <InputField
+          value={value}
+          onChange={onChange}
+          placeholder={placeholder}
+          onKeyPress={onKeyPress}
+        />
+        <InputButton onClick={onClick}>
+          <img src={searchLogo} alt="Search button" />
+        </InputButton>
+      </InputGroup>
+    </InputWrapper>
   );
 };

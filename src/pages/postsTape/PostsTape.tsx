@@ -53,7 +53,12 @@ export const PostsTape = () => {
               {us ? (
                 <Username to={`/user/${p.userId}`}>
                   <InfoWrapper>
-                    <Avatar src={us.profilePicture} alt={"Avatar Icon"} />
+                    <Avatar
+                      src={
+                        us.profilePicture ? us.profilePicture : defaultUserIcon
+                      }
+                      alt={"Avatar Icon"}
+                    />
                     <CreatedInfo>
                       <CratedDate>
                         Created: {dayMonthYearDateParse(p.updatedAt)}
