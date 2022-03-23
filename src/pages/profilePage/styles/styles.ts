@@ -11,6 +11,10 @@ export const Wrapper = styled.section`
   align-items: center;
   overflow-y: scroll;
   overflow-x: hidden;
+  
+  ::-webkit-scrollbar {
+    display: none;
+  }
 `;
 
 export const Avatar = styled.img`
@@ -78,6 +82,7 @@ export const EditProfile = styled(Link)`
   border-radius: 10px;
   border: none;
   cursor: pointer;
+  padding: 10px;
 `;
 
 export const ProfileChatLog = styled(ChatLog)`
