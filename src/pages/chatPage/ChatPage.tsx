@@ -19,7 +19,7 @@ import { Chat } from "./chat/Chat";
 import { useRef } from "react";
 import { io } from "socket.io-client";
 import { selectIsLoggedIn } from "../../bll/selector/selectors";
-import { onEnterPress } from "../../utils/onEnter"
+import { onEnterPress } from "../../utils/onEnter";
 
 export const ChatPage = () => {
   const [input, setInput] = useState("");
@@ -34,7 +34,7 @@ export const ChatPage = () => {
   const socket = useRef();
   useEffect(() => {
     //@ts-ignore
-    socket.current = io("ws://localhost:8900");
+    socket.current = io("https://messenger-socket.herokuapp.com/");
     //@ts-ignore
     socket.current.on("getMessage", (data) => {
       console.log(data);
