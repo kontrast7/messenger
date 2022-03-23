@@ -11,6 +11,8 @@ export const messageReducer = (state = initState, action: ActionType) => {
       return [...action.data];
     case "APP/CHAT/ADD-LAST-MESSAGE":
       return [...state, action.data];
+    case "APP/CHAT/ADD_MESSAGE":
+      return [...state, action.data]
     default:
       return state;
   }
@@ -20,6 +22,12 @@ export const messageReducer = (state = initState, action: ActionType) => {
 export const setAllMessages = (data: initStatePropsTypeMessage[]) => {
   return {
     type: "APP/CHAT/ADDED_MESSAGE",
+    data,
+  } as const;
+};
+export const setMessage = (data: any) => {
+  return {
+    type: "APP/CHAT/ADD_MESSAGE",
     data,
   } as const;
 };
@@ -72,4 +80,5 @@ export type initStatePropsTypeMessage = {
 };
 type ActionType =
   | ReturnType<typeof setAllMessages>
-  | ReturnType<typeof addLastMessage>;
+  | ReturnType<typeof addLastMessage>
+  | ReturnType<typeof setMessage>

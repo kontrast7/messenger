@@ -3,7 +3,6 @@ import {
   createNewPostsType,
   deletePostType,
   postsApi,
-  usersApi,
 } from "../../api/api";
 import { RootAppStateType } from "../redux/store";
 import {
