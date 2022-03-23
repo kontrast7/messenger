@@ -34,7 +34,7 @@ export const ChatPage = () => {
   const socket = useRef();
   useEffect(() => {
     //@ts-ignore
-    socket.current = io("ws://localhost:8900");
+    socket.current = io("ws://socialmess.herokuapp.com:8900");
     //@ts-ignore
     socket.current.on("getMessage", (data) => {
       console.log(data);
