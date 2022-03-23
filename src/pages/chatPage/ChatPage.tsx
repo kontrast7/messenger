@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useParams, Navigate } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
 import { getChatRoomTC } from "../../bll/reducer/roomsReducer";
-import { addLastMessage, createMessageTC, setMessage } from "../../bll/reducer/messageReducer";
+import { createMessageTC, setMessage } from "../../bll/reducer/messageReducer";
 import { Spinner } from "../../components/spinner/spinner";
 import { selectChatRoom, selectMessages } from "../../bll/selector/selectors";
 import { getCurrentUserId } from "../../utils/getCurrentUserId";
@@ -21,72 +21,65 @@ import { io } from "socket.io-client";
 import { selectIsLoggedIn } from "../../bll/selector/selectors";
 import { onEnterPress } from "../../utils/onEnter";
 
-
 export const ChatPage = () => {
+  const messages = useSelector(selectMessages);
+  const chatRoomId = useSelector(selectChatRoom);
   const [input, setInput] = useState("");
   const { currentUserId, id } = useParams();
   const currentUserIdLs = getCurrentUserId();
   const dispatch = useDispatch();
   const status = useSelector(selectStatus);
   const isLoggedIn = useSelector(selectIsLoggedIn);
-  const messages = useSelector(selectMessages);
-  const chatRoomId = useSelector(selectChatRoom);
+
   //WS
-  const [arrivalMessage, serArrivalMessage] = useState(null);
   const socket = useRef();
   useEffect(() => {
     //@ts-ignore
     socket.current = io("https://messenger-socket.herokuapp.com/");
-    // socket.current = io("localhost:8800");
     //@ts-ignore
     socket.current.on("getMessage", (data) => {
-      console.dir("getMessage", data);
-      serArrivalMessage({
-        //@ts-ignore
+      const payload = {
         sender: data.senderId,
         text: data.text,
-        createdAt: Date.now()
-      });
+        createdAt: Date.now(),
+      };
+
+      dispatch(setMessage(payload));
     });
   }, []);
 
   useEffect(() => {
-    arrivalMessage && dispatch(addLastMessage(arrivalMessage));
-    console.log(arrivalMessage)
-  }, [arrivalMessage]);
-
-  useEffect(() => {
     //@ts-ignore
     socket.current.emit("addUser", currentUserIdLs);
+    console.log(`current Local Id: `, currentUserIdLs);
     //@ts-ignore
     socket.current.on("getUsers", (users) => {
-      console.log(users);
+      console.log(`users`, users);
     });
-  }, [currentUserIdLs, chatRoomId[0]._id]);
+  }, [currentUserId]);
   // END
 
   useEffect(() => {
     dispatch(getChatRoomTC(id!, currentUserIdLs));
   }, []);
 
-
-
   const sendMessageHandler = () => {
-    if (input.length !== 0) {
+    if (input.length && input.trim().length !== 0) {
       const payload = {
         conversationId: chatRoomId[0]._id,
         sender: currentUserIdLs,
-        text: input
+        text: input,
       };
-      dispatch(createMessageTC(payload));
       //@ts-ignore
       socket.current.emit("sendMessage", {
         senderId: currentUserIdLs,
         receiverId: id,
-        text: input
+        text: input,
       });
+
+      dispatch(createMessageTC(payload));
+      setInput("")
     }
-    setInput("");
   };
 
   const scrollItem = useRef<HTMLDivElement>(null);
@@ -118,7 +111,6 @@ export const ChatPage = () => {
       </Content>
       <ControlPanel>
         <ChatLog
-          onKeyPress={(e) => onEnterPress(e, sendMessageHandler)}
           placeholder="Write"
           maxRows={8}
           value={input}

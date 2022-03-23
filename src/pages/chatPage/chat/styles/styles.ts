@@ -29,13 +29,6 @@ export const InfoWrapper = styled.div`
   gap: 3px;
 `;
 
-export const InfoInner = styled.div`
-  display: flex;
-  flex-direction: row-reverse;
-  justify-content: space-between;
-  align-items: end;
-`;
-
 export const DeleteButton = styled.div`
   position: absolute;
   top: -17px;

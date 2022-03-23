@@ -11,6 +11,12 @@ import { ButtonWrapper } from "./styles/styles";
 import { Content } from "./styles/styles";
 import { CratedDate } from "../../postsTape/post/styles/styles";
 import { dayMonthYearDateParse } from "../../../utils/parseDate";
+import { DeletePost } from "./styles/styles";
+import { EditButton } from "./styles/styles";
+import { EditContentWrapper } from "./styles/styles";
+import { SaveButton } from "./styles/styles";
+import { PostInputEdit } from "./styles/styles";
+import { MainButtonsWrapper } from "./styles/styles";
 
 export const Post = ({
   m,
@@ -28,8 +34,6 @@ export const Post = ({
   const dispatch = useDispatch();
 
   const editPostHandler = (idPost: string) => {
-    debugger;
-
     const payload: createNewPostsType = {
       userId: currentUserId,
     };
@@ -57,7 +61,7 @@ export const Post = ({
           <div id={m._id}>
             {id === currentUserId && (
               <>
-                <button
+                <EditButton
                   onClick={(e) => {
                     setShowEditPost(!showEditPost);
                     // @ts-ignore
@@ -65,18 +69,21 @@ export const Post = ({
                   }}
                 >
                   Edit post
-                </button>
+                </EditButton>
 
-                <button onClick={() => deletePostHandler(m._id)}>delete</button>
+                <DeletePost onClick={() => deletePostHandler(m._id)}>
+                  x
+                </DeletePost>
               </>
             )}
           </div>
 
           {showEditPost && m._id === buttonClickId && (
-            <div>
-              <input
+            <EditContentWrapper>
+              <PostInputEdit
+                placeholder={"Enter new post text"}
                 id="user-edit-post-desc"
-                type={"text"}
+                maxRows={7}
                 value={inputValue}
                 onChange={(e) => setInputValue(e.target.value)}
               />
@@ -85,11 +92,13 @@ export const Post = ({
                 id="user-edit-post-image"
                 onChange={(e) => setProfileImage(e.currentTarget.files![0])}
               />
-              <button onClick={() => editPostHandler(m._id)}>edit</button>
-            </div>
+              <SaveButton onClick={() => editPostHandler(m._id)}>
+                Save
+              </SaveButton>
+            </EditContentWrapper>
           )}
         </ButtonWrapper>
-        <CratedDate>Created: {dayMonthYearDateParse(m.createdAt)}</CratedDate>
+        {/*<CratedDate>Created: {dayMonthYearDateParse(m.createdAt)}</CratedDate>*/}
       </Content>
     </Wrapper>
   );

@@ -30,6 +30,7 @@ export const setAllMessages = (data: initStatePropsTypeMessage[]) => {
   } as const;
 };
 export const setMessage = (data: any) => {
+
   return {
     type: "APP/CHAT/ADD_MESSAGE",
     data,

@@ -31,7 +31,6 @@ export const Navigation = () => {
   const currentLoggedInUser = useSelector(selectCurrentLoggedInUser);
   const currentUser = useSelector(selectCurrentUserStateApp);
   useEffect(() => {
-    console.log("currentUser");
     dispatch(changeCurrentUser(currentUserLs));
   }, [currentUserLsPic, currentLoggedInUser, dispatch]);
 
