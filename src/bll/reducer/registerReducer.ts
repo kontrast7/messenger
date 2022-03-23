@@ -4,9 +4,7 @@ import { registerUserType } from "../../api/api";
 import { changeStatus } from "./appReducer";
 import { setIsRegisteredInAC } from "./appReducer";
 import { serverErrorHandling } from "../../utils/serverHandleError";
-import { useNavigate } from "react-router-dom";
 import { routes } from "../routes/routes";
-import React from "react";
 
 const initState: initStatePropsType = {};
 

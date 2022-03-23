@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useParams, Navigate } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
 import { getChatRoomTC } from "../../bll/reducer/roomsReducer";
-import { createMessageTC } from "../../bll/reducer/messageReducer";
+import { createMessageTC, setMessage } from "../../bll/reducer/messageReducer";
 import { Spinner } from "../../components/spinner/spinner";
 import { selectChatRoom, selectMessages } from "../../bll/selector/selectors";
 import { getCurrentUserId } from "../../utils/getCurrentUserId";
@@ -12,10 +12,12 @@ import { ErrorSnackbar } from "../../components/errorSnackbar/ErrorSnackbar";
 import { Wrapper, ControlPanel, Content } from "./styles/styles";
 import { ChatLog } from "./styles/styles";
 import { SendMessage } from "./styles/styles";
+
 //@ts-ignore
 import messageIcon from "../../assets/images/icons/message-icon.svg";
 import { Chat } from "./chat/Chat";
 import { useRef } from "react";
+import { io } from "socket.io-client";
 import { selectIsLoggedIn } from "../../bll/selector/selectors";
 import { onEnterPress } from "../../utils/onEnter"
 
@@ -27,6 +29,38 @@ export const ChatPage = () => {
   const status = useSelector(selectStatus);
   const isLoggedIn = useSelector(selectIsLoggedIn);
 
+  //WS
+  const [arrivalMessage, serArrivalMessage] = useState(null);
+  const socket = useRef();
+  useEffect(() => {
+    //@ts-ignore
+    socket.current = io("ws://localhost:8900");
+    //@ts-ignore
+    socket.current.on("getMessage", (data) => {
+      console.log(data);
+      serArrivalMessage({
+        //@ts-ignore
+        sender: data.senderId,
+        text: data.text,
+        createdAt: Date.now(),
+      });
+    });
+  }, []);
+
+  useEffect(() => {
+    arrivalMessage && dispatch(setMessage(arrivalMessage));
+  }, [arrivalMessage]);
+
+  useEffect(() => {
+    //@ts-ignore
+    socket.current.emit("addUser", currentUserIdLs);
+    //@ts-ignore
+    socket.current.on("getUsers", (users) => {
+      console.log(users);
+    });
+  }, [currentUserId]);
+  // END
+
   useEffect(() => {
     dispatch(getChatRoomTC(id!, currentUserIdLs));
   }, []);
@@ -36,13 +70,19 @@ export const ChatPage = () => {
 
   const sendMessageHandler = () => {
     if (input.length !== 0) {
-      dispatch(
-        createMessageTC({
-          conversationId: chatRoomId[0]._id,
-          sender: currentUserIdLs,
-          text: input,
-        })
-      );
+      const payload = {
+        conversationId: chatRoomId[0]._id,
+        sender: currentUserIdLs,
+        text: input,
+      };
+      //@ts-ignore
+      socket.current.emit("sendMessage", {
+        senderId: currentUserIdLs,
+        receiverId: id,
+        text: input,
+      });
+
+      dispatch(createMessageTC(payload));
     }
     setInput("");
   };
@@ -57,7 +97,6 @@ export const ChatPage = () => {
 
   if (!messages) return <Spinner />;
   if (!isLoggedIn) return <Navigate to={routes.login} />;
-  if (status === "loading") return <Spinner />;
   if (currentUserId !== currentUserIdLs)
     return <Navigate to={routes.pageNotFound} />;
 
@@ -73,7 +112,7 @@ export const ChatPage = () => {
             />
           );
         })}
-        <div ref={scrollItem}></div>
+        <div ref={scrollItem} />
       </Content>
       <ControlPanel>
         <ChatLog

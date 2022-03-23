@@ -25,6 +25,7 @@ export const addedChatRoomAC = (data: initStatePropsType) => {
   } as const;
 };
 
+
 //Thunk
 export const createChatRoomTC = (payload: any) => (dispatch: Dispatch) => {
   dispatch(changeStatus("loading"));
