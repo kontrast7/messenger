@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useParams, Navigate } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
 import { getChatRoomTC } from "../../bll/reducer/roomsReducer";
-import { createMessageTC, setMessage } from "../../bll/reducer/messageReducer";
+import { addLastMessage, createMessageTC, setMessage } from "../../bll/reducer/messageReducer";
 import { Spinner } from "../../components/spinner/spinner";
 import { selectChatRoom, selectMessages } from "../../bll/selector/selectors";
 import { getCurrentUserId } from "../../utils/getCurrentUserId";
@@ -29,7 +29,8 @@ export const ChatPage = () => {
   const dispatch = useDispatch();
   const status = useSelector(selectStatus);
   const isLoggedIn = useSelector(selectIsLoggedIn);
-
+  const messages = useSelector(selectMessages);
+  const chatRoomId = useSelector(selectChatRoom);
   //WS
   const [arrivalMessage, serArrivalMessage] = useState(null);
   const socket = useRef();
@@ -39,7 +40,7 @@ export const ChatPage = () => {
     // socket.current = io("localhost:8800");
     //@ts-ignore
     socket.current.on("getMessage", (data) => {
-      console.log(data);
+      console.dir("getMessage", data);
       serArrivalMessage({
         //@ts-ignore
         sender: data.senderId,
@@ -50,7 +51,8 @@ export const ChatPage = () => {
   }, []);
 
   useEffect(() => {
-    arrivalMessage && dispatch(setMessage(arrivalMessage));
+    arrivalMessage && dispatch(addLastMessage(arrivalMessage));
+    console.log(arrivalMessage)
   }, [arrivalMessage]);
 
   useEffect(() => {
@@ -60,15 +62,14 @@ export const ChatPage = () => {
     socket.current.on("getUsers", (users) => {
       console.log(users);
     });
-  }, [currentUserId]);
+  }, [currentUserIdLs, chatRoomId[0]._id]);
   // END
 
   useEffect(() => {
     dispatch(getChatRoomTC(id!, currentUserIdLs));
   }, []);
 
-  const messages = useSelector(selectMessages);
-  const chatRoomId = useSelector(selectChatRoom);
+
 
   const sendMessageHandler = () => {
     if (input.length !== 0) {
@@ -77,14 +78,13 @@ export const ChatPage = () => {
         sender: currentUserIdLs,
         text: input
       };
+      dispatch(createMessageTC(payload));
       //@ts-ignore
       socket.current.emit("sendMessage", {
         senderId: currentUserIdLs,
         receiverId: id,
         text: input
       });
-
-      dispatch(createMessageTC(payload));
     }
     setInput("");
   };
