@@ -17,6 +17,15 @@ import { EditContentWrapper } from "./styles/styles";
 import { SaveButton } from "./styles/styles";
 import { PostInputEdit } from "./styles/styles";
 import { MainButtonsWrapper } from "./styles/styles";
+import { InfoWrapper } from "./styles/styles";
+import { LikeIcon } from "./styles/styles";
+import { Like } from "./styles/styles";
+import { LikeWrapper } from "./styles/styles";
+import { reactOnPost } from "../../../bll/reducer/postsReducer";
+//@ts-ignore
+import likeLike from "../../../assets/images/icons/like-red-icon.svg";
+//@ts-ignore
+import darkLike from "../../../assets/images/icons/like-dark-icon.svg";
 
 export const Post = ({
   m,
@@ -32,6 +41,7 @@ export const Post = ({
   const { id } = useParams();
   const currentUserId = getCurrentUserId();
   const dispatch = useDispatch();
+  const myLike = m.likes.find((likeId: string) => likeId === currentUserId);
 
   const editPostHandler = (idPost: string) => {
     const payload: createNewPostsType = {
@@ -49,6 +59,10 @@ export const Post = ({
       userId: currentUserId,
     };
     dispatch(deletePostTC(idPost, payload));
+  };
+
+  const likePostHandler = () => {
+    dispatch(reactOnPost(m._id, currentUserId));
   };
 
   return (
@@ -76,9 +90,21 @@ export const Post = ({
                 </DeletePost>
               </>
             )}
-            <CratedDate>
-              Created: {dayMonthYearDateParse(m.createdAt)}
-            </CratedDate>
+            <InfoWrapper>
+              <CratedDate>
+                Created: {dayMonthYearDateParse(m.createdAt)}
+              </CratedDate>
+              <LikeWrapper>
+                <Like>Likes: {m.likes.length}</Like>
+                <Like>
+                  <LikeIcon
+                    onClick={likePostHandler}
+                    src={myLike ? likeLike : darkLike}
+                    alt="Like / Unlike"
+                  />
+                </Like>
+              </LikeWrapper>
+            </InfoWrapper>
           </MainButtonsWrapper>
 
           {showEditPost && m._id === buttonClickId && (

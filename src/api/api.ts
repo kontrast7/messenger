@@ -77,6 +77,9 @@ export const postsApi = {
   deletePost: (idPost: string, payload: deletePostType) => {
     return instance.delete(`/posts/${idPost}`, { data: { ...payload } });
   },
+  reactOnPost: (postId: string, userId: string) => {
+    return instance.put(`/posts/${postId}/like`, {userId})
+  }
 };
 
 export type registerUserType = {

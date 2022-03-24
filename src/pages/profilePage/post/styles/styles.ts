@@ -54,3 +54,24 @@ export const MainButtonsWrapper = styled.div`
   align-items: center;
   width: 100%;
 `;
+
+export const InfoWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: end;
+  gap: .3em;
+`;
+
+export const LikeWrapper = styled.div`
+  display: flex;
+`
+
+export const Like = styled.p`
+  font-size: .9rem;
+`
+
+export const LikeIcon = styled.img`
+  width: 15px;
+  height: 13px;
+  margin-left: 7px;
+`;
