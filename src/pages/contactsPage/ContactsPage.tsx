@@ -22,6 +22,7 @@ import { ContactsWrapper } from "./styles/styles";
 import { Wrapper } from "./styles/styles";
 import { setIsMessageAC } from "../../bll/reducer/appReducer";
 import { onEnterPress } from "../../utils/onEnter";
+import { NoDataPlaceholder } from "./styles/styles"
 
 export const ContactsPage = () => {
   const dispatch = useDispatch();
@@ -61,6 +62,7 @@ export const ContactsPage = () => {
           usersAll.map((c) => {
             return <Contact key={c._id} contact={c} />;
           })}
+        {usersAll.length === 0 && <NoDataPlaceholder>Sorry no contacts was found...</NoDataPlaceholder>}
       </ContactsWrapper>
       <ErrorSnackbar />
     </Wrapper>

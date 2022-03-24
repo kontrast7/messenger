@@ -90,6 +90,7 @@ export const Post = ({
                 </DeletePost>
               </>
             )}
+            <div></div>
             <InfoWrapper>
               <CratedDate>
                 Created: {dayMonthYearDateParse(m.createdAt)}

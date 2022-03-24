@@ -26,6 +26,9 @@ export const Username = styled(Link)`
   font-size: ${({ theme }) => theme.fontSize.contactName};
   line-height: 1.125rem;
   margin-top: 1px;
+  display: flex;
+  align-items: center;
+  gap: .7rem;
 `;
 
 export const GoToMessages = styled(Link)<GoToMessagesPropsType>`
