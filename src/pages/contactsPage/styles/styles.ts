@@ -16,3 +16,8 @@ export const ContactsWrapper = styled.div`
   flex-direction: column;
   gap: 25px;
 `;
+
+export const NoDataPlaceholder = styled.p`
+  font-size: 1.2rem;
+  text-align: center;
+`

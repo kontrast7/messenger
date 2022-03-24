@@ -15,7 +15,7 @@ export const Content = styled.div`
 `;
 
 export const ButtonWrapper = styled.div`
-  max-width: 100%;
+  width: 100%;
 `;
 
 export const DeletePost = styled(DeleteButton)`
@@ -51,4 +51,6 @@ export const PostInputEdit = styled(ChatLog)``;
 export const MainButtonsWrapper = styled.div`
   display: flex;
   justify-content: space-between;
+  align-items: center;
+  width: 100%;
 `;

@@ -29,6 +29,8 @@ export const CreatedInfo = styled.div`
 export const CratedDate = styled.p`
   font-size: 0.8rem;
   color: ${({ theme }) => theme.colors.receivedMessage};
+  text-align: end;
+  flex: 1;
 `;
 
 export const CreatedBy = styled.p`

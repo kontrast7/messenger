@@ -4,6 +4,7 @@ export const routes = {
   contacts: "/contacts",
   pageNotFound: "/404",
   profilePage: "/user/:id",
+  followers: "/followers",
   chatPage: "/chat/:currentUserId/:id",
   editProfile: "/edit",
   messenger: "/messenger",

@@ -21,8 +21,7 @@ import messageIcon from "../../assets/images/icons/message-icon.svg";
 //@ts-ignore
 import contactsIcon from "../../assets/images/icons/contacts-icon.svg";
 //@ts-ignore
-import exitIcon from "../../assets/images/icons/exit-icon.svg";
-
+import newsIcon from "../../assets/images/icons/news-icon.svg";
 
 export const Navigation = () => {
   const dispatch = useDispatch();
@@ -34,10 +33,6 @@ export const Navigation = () => {
     dispatch(changeCurrentUser(currentUserLs));
   }, [currentUserLsPic, currentLoggedInUser, dispatch]);
 
-  const logoutHandler = () => {
-    localStorage.removeItem("user");
-    dispatch(setIsLoggedInAC(false));
-  };
   if (!currentUser) return <Spinner />;
 
   return (
@@ -59,10 +54,10 @@ export const Navigation = () => {
       </NavigationIcons>
       <NavigationIcons to={routes.messenger}>
         <Avatar src={messageIcon} alt="Message page" />
+      </NavigationIcons>{" "}
+      <NavigationIcons to={routes.postsTape}>
+        <Avatar src={newsIcon} alt="News page" />
       </NavigationIcons>
-      <ExitIcons onClick={logoutHandler}>
-        <Avatar src={exitIcon} alt="Exit page" />
-      </ExitIcons>
     </Wrapper>
   );
 };

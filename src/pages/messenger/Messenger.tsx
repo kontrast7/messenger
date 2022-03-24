@@ -19,6 +19,7 @@ import { Message } from "./message/Message";
 import { setAllUsersTC } from "../../bll/reducer/usersReducer";
 import { searchByNameUserTC } from "../../bll/reducer/usersReducer";
 import { onEnterPress } from "../../utils/onEnter";
+import { NoDataPlaceholder } from "../contactsPage/styles/styles";
 
 export const Messenger = () => {
   const [input, setInput] = useState("");
@@ -36,7 +37,7 @@ export const Messenger = () => {
 
   const searchByName = () => {
     input.length === 0
-      ? dispatch(setAllUsersTC(currentUserId))
+      ? dispatch(setUserFriendsTC(currentUserId))
       : dispatch(searchByNameUserTC(input));
   };
 
@@ -58,6 +59,9 @@ export const Messenger = () => {
           usersAll.map((c) => {
             return <Message contact={c} key={c._id} />;
           })}
+        {usersAll.length === 0 && (
+          <NoDataPlaceholder>Sorry no friends to chat to...</NoDataPlaceholder>
+        )}
       </ContactsWrapper>
       <ErrorSnackbar />
     </Wrapper>
