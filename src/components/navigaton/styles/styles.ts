@@ -55,3 +55,10 @@ export const Avatar = styled.img`
     transform: scale(0.9);
   }
 `;
+
+export const AvatarLink = styled(Link)`
+  width: 45px;
+  height: 45px;
+  object-fit: cover;
+  border-radius: 50%;
+`
