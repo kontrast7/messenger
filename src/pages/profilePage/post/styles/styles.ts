@@ -50,7 +50,7 @@ export const PostInputEdit = styled(ChatLog)``;
 
 export const MainButtonsWrapper = styled.div`
   display: flex;
-  justify-content: space-between;
+  justify-content: end;
   align-items: center;
   width: 100%;
 `;
