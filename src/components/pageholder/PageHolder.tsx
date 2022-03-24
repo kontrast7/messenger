@@ -12,6 +12,7 @@ import { Wrapper } from "./styles/styles";
 import { Container } from "../../styles/global";
 import { Messenger } from "../../pages/messenger/Messenger";
 import { PostsTape } from "../../pages/postsTape/PostsTape";
+import { Followers } from "../../pages/followers/Followers";
 
 export const PageHolder = () => {
   return (
@@ -24,6 +25,7 @@ export const PageHolder = () => {
           <Route path={routes.contacts} element={<ContactsPage />} />
           <Route path={routes.pageNotFound} element={<PageNotFound />} />
           <Route path={routes.profilePage} element={<ProfilePage />} />
+          <Route path={routes.followers} element={<Followers />} />
           <Route path={routes.chatPage} element={<ChatPage />} />
           <Route path={routes.editProfile} element={<UserSettings />} />
           <Route path={routes.messenger} element={<Messenger />} />

@@ -25,6 +25,7 @@ import { CreatedBy } from "./post/styles/styles";
 import { selectIsLoggedIn } from "../../bll/selector/selectors";
 import { routes } from "../../bll/routes/routes";
 import { dayMonthYearDateParse } from "../../utils/parseDate";
+import { NoDataPlaceholder } from "../contactsPage/styles/styles"
 
 export const PostsTape = () => {
   const currentUserId = getCurrentUserId();
@@ -95,6 +96,8 @@ export const PostsTape = () => {
             </Post>
           );
         })}
+      {/*@ts-ignore*/}
+      {posts.length === 0 && <NoDataPlaceholder>No post's was found...</NoDataPlaceholder>}
     </Wrapper>
   );
 };

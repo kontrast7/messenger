@@ -43,7 +43,12 @@ import defaultUserIcon from "../../assets/images/icons/default-user-icon.svg";
 import { Inner } from "../postsTape/post/styles/styles";
 import { ProfileChatLog } from "./styles/styles";
 import { Post } from "./post/Post";
-import { PostsWrapper } from "./styles/styles"
+import { PostsWrapper } from "./styles/styles";
+import { NoDataPlaceholder } from "../contactsPage/styles/styles";
+import { AvatarHolder } from "./styles/styles";
+import { EditButton } from "./post/styles/styles";
+import { Link } from "react-router-dom";
+import { FollowWrapper } from "./styles/styles";
 
 export const ProfilePage = () => {
   const [show, setShow] = useState(false);
@@ -105,11 +110,23 @@ export const ProfilePage = () => {
 
   return (
     <Wrapper>
-      <Avatar
-        src={user.profilePicture ? user.profilePicture : defaultUserIcon}
-        alt={"photo"}
-      />
+      <AvatarHolder>
+        <Avatar
+          src={user.profilePicture ? user.profilePicture : defaultUserIcon}
+          alt={"photo"}
+        />
+      </AvatarHolder>
       <UserName>{user.username}</UserName>
+
+      <FollowWrapper>
+        {user.followers.length !== 0 ? (
+          <Link to={routes.followers}>Followers: {user.followers.length}</Link>
+        ) : (
+          <div>Followers: {user.followers.length}</div>
+        )}
+        <Link to={routes.messenger}>Following: {user.followings.length}</Link>
+      </FollowWrapper>
+
       {id === currentUserId ? (
         <EditProfile to={routes.editProfile}>Edit Profile</EditProfile>
       ) : (
@@ -160,28 +177,32 @@ export const ProfilePage = () => {
             id="user-new-post-image"
             onChange={(e) => setProfileImage(e.currentTarget.files![0])}
           />
-          <button onClick={sendNewPostHandler}>add</button>
+          <EditButton onClick={sendNewPostHandler}>add</EditButton>
         </Inner>
       )}
 
       <PostsWrapper>
         {/*@ts-ignore*/}
         {posts && show && loadingPosts && !showAddedPost && posts.map((m) => {
-          return (
-            <Post
-              key={m._id}
-              m={m}
-              showEditPost={showEditPost}
-              setShowEditPost={setShowEditPost}
-              inputValue={inputValue}
-              buttonClickId={buttonClickId}
-              profileImage={profileImage}
-              setProfileImage={setProfileImage}
-              setInputValue={setInputValue}
-              setButtonClickId={setButtonClickId}
-            />
-          );
-        })}
+            return (
+              <Post
+                key={m._id}
+                m={m}
+                showEditPost={showEditPost}
+                setShowEditPost={setShowEditPost}
+                inputValue={inputValue}
+                buttonClickId={buttonClickId}
+                profileImage={profileImage}
+                setProfileImage={setProfileImage}
+                setInputValue={setInputValue}
+                setButtonClickId={setButtonClickId}
+              />
+            );
+          })}
+        {/*@ts-ignore*/}
+        {posts.length === 0 && show && loadingPosts && !showAddedPost && (
+          <NoDataPlaceholder>No post's was found...</NoDataPlaceholder>
+        )}
       </PostsWrapper>
 
       <ErrorSnackbar />

@@ -58,7 +58,7 @@ export const Post = ({
       {m.img && <img src={m.img} alt={"image-post"} />}
       <Content>
         <ButtonWrapper>
-          <div id={m._id}>
+          <MainButtonsWrapper id={m._id}>
             {id === currentUserId && (
               <>
                 <EditButton
@@ -76,7 +76,10 @@ export const Post = ({
                 </DeletePost>
               </>
             )}
-          </div>
+            <CratedDate>
+              Created: {dayMonthYearDateParse(m.createdAt)}
+            </CratedDate>
+          </MainButtonsWrapper>
 
           {showEditPost && m._id === buttonClickId && (
             <EditContentWrapper>
@@ -98,7 +101,6 @@ export const Post = ({
             </EditContentWrapper>
           )}
         </ButtonWrapper>
-        {/*<CratedDate>Created: {dayMonthYearDateParse(m.createdAt)}</CratedDate>*/}
       </Content>
     </Wrapper>
   );

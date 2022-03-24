@@ -11,7 +11,8 @@ export const Wrapper = styled.section`
   align-items: center;
   overflow-y: scroll;
   overflow-x: hidden;
-  
+  gap: .3em;
+
   ::-webkit-scrollbar {
     display: none;
   }
@@ -23,6 +24,13 @@ export const Avatar = styled.img`
   border-radius: 50%;
   object-fit: cover;
   margin-bottom: 0.5em;
+`;
+
+export const AvatarHolder = styled.div`
+  width: 190px;
+  height: 190px;
+  border-radius: 50%;
+  margin-bottom: 1rem;
 `;
 
 export const UserName = styled.h1`
@@ -47,6 +55,16 @@ export const ButtonWrapper = styled.div`
     width: 43%;
   }
 `;
+
+export const FollowWrapper = styled.div`
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1rem;
+  
+  a {
+    color: white;
+  }
+`
 
 export const InfoWrapper = styled.div`
   display: flex;
