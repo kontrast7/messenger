@@ -49,14 +49,14 @@ export const Navigation = () => {
           />
         </NavigationIcons>
       )}
+      <NavigationIcons to={routes.postsTape}>
+        <Avatar src={newsIcon} alt="News page" />
+      </NavigationIcons>
       <NavigationIcons to={routes.contacts}>
         <Avatar src={contactsIcon} alt="Contacts page" />
       </NavigationIcons>
       <NavigationIcons to={routes.messenger}>
         <Avatar src={messageIcon} alt="Message page" />
-      </NavigationIcons>{" "}
-      <NavigationIcons to={routes.postsTape}>
-        <Avatar src={newsIcon} alt="News page" />
       </NavigationIcons>
     </Wrapper>
   );

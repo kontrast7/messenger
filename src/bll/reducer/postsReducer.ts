@@ -11,6 +11,29 @@ export const postsReducer = (state = initState, action: ActionType) => {
   switch (action.type) {
     case "APP/POSTS/SET-ALL-POSTS":
       return action.data;
+    case "POSTS/TOGGLE-POST-LIKE": {
+      const stateCopy = [...state];
+      const currentPost = stateCopy.find((post) => post._id === action.postId);
+      //@ts-ignore
+      if (currentPost.likes.includes(action.userId)) {
+        //@ts-ignore
+        const temp = currentPost.likes.filter(
+          (userId) => userId !== action.userId
+        );
+
+        const state = stateCopy.find((post) => post._id === action.postId);
+
+        //@ts-ignore
+        state.likes = temp;
+      } else {
+        //@ts-ignore
+        currentPost.likes.push(action.userId);
+      }
+      //@ts-ignore
+      // return state.filter((item) => item._id === action.postId && item.likes.includes(action.userId) ? item.likes.splice(action.userId) : item.likes.push(action.userId))
+
+      return stateCopy;
+    }
     default:
       return state;
   }
@@ -22,6 +45,10 @@ const setAllPosts = (data: initStatePropsType) => {
     type: "APP/POSTS/SET-ALL-POSTS",
     data,
   } as const;
+};
+
+export const togglePostLike = (postId: string, userId: string) => {
+  return { type: "POSTS/TOGGLE-POST-LIKE", postId, userId } as const;
 };
 
 //Thunk
@@ -121,6 +148,20 @@ export const getPostsTapeTC = (id: string) => (dispatch: any) => {
     });
 };
 
+export const reactOnPost =
+  (postId: string, userId: string) => (dispatch: Dispatch) => {
+    dispatch(changeStatus("loading"));
+    return postsApi
+      .reactOnPost(postId, userId)
+      .then((res) => {
+        dispatch(changeStatus("completed"));
+        dispatch(togglePostLike(postId, userId));
+      })
+      .catch((err) => {
+        serverErrorHandling(err, dispatch);
+      });
+  };
+
 // Types
 export type initStatePropsType = {
   _id: string;
@@ -131,4 +172,6 @@ export type initStatePropsType = {
   updatedAt: string;
   img?: string;
 };
-type ActionType = ReturnType<typeof setAllPosts>;
+type ActionType =
+  | ReturnType<typeof setAllPosts>
+  | ReturnType<typeof togglePostLike>;

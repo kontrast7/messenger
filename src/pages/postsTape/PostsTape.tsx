@@ -26,6 +26,19 @@ import { selectIsLoggedIn } from "../../bll/selector/selectors";
 import { routes } from "../../bll/routes/routes";
 import { dayMonthYearDateParse } from "../../utils/parseDate";
 import { NoDataPlaceholder } from "../contactsPage/styles/styles"
+import { reactOnPost } from "../../bll/reducer/postsReducer"
+// @ts-ignore
+import lightLike from "../../assets/images/icons/like-red-icon.svg"
+// @ts-ignore
+import darkLike from "../../assets/images/icons/like-dark-icon.svg"
+import { PostInner } from "../contactsPage/contact/styles/styles"
+import { Like } from "../profilePage/post/styles/styles"
+import { LikeIcon } from "../profilePage/post/styles/styles"
+// @ts-ignore
+import likeLike from "../../assets/images/icons/like-red-icon.svg"
+import { LikeWrapper } from "../profilePage/post/styles/styles"
+import { AvatarLink } from "../../components/navigaton/styles/styles"
+
 
 export const PostsTape = () => {
   const currentUserId = getCurrentUserId();
@@ -40,6 +53,11 @@ export const PostsTape = () => {
     dispatch(setUserFriendsTC(currentUserId));
   }, []);
 
+  const likePostHandler = (postId: string) => {
+    dispatch(reactOnPost(postId, currentUserId));
+  };
+
+
   if (!isLoggedIn) return <Navigate to={routes.login} />;
 
   return (
@@ -49,28 +67,43 @@ export const PostsTape = () => {
           const us = users.find((u) => {
             return u._id === p.userId && u;
           });
-          return (
+        const myLike = p.likes.find((likeId: string) => likeId === currentUserId);
+
+        return (
             <Post key={p._id}>
               {us ? (
-                <Username to={`/user/${p.userId}`}>
+                <PostInner >
                   <InfoWrapper>
+                    <AvatarLink to={`/user/${p.userId}`}>
                     <Avatar
                       src={
                         us.profilePicture ? us.profilePicture : defaultUserIcon
                       }
                       alt={"Avatar Icon"}
                     />
+                    </AvatarLink>
                     <CreatedInfo>
                       <CratedDate>
                         Created: {dayMonthYearDateParse(p.updatedAt)}
                       </CratedDate>
                       <CreatedBy>Created by: {us.username}</CreatedBy>
+                      <LikeWrapper>
+                        <Like>Likes: {p.likes.length}</Like>
+                        <Like>
+                          <LikeIcon
+                            onClick={() => likePostHandler(p._id)}
+                            src={myLike ? likeLike : darkLike}
+                            alt="Like / Unlike"
+                          />
+                        </Like>
+                      </LikeWrapper>
                     </CreatedInfo>
                   </InfoWrapper>
-                </Username>
+                </PostInner>
               ) : (
-                <Username to={`/user/${p.userId}`}>
                   <InfoWrapper>
+                    {/*//@ts-ignore*/}
+                    <AvatarLink to={`/user/${currentUserId}`}>
                     <Avatar
                       src={
                         currentUserLs.profilePicture
@@ -79,6 +112,7 @@ export const PostsTape = () => {
                       }
                       alt={"Avatar Icon"}
                     />
+                    </AvatarLink>
                     <CreatedInfo>
                       <CratedDate>
                         Created: {dayMonthYearDateParse(p.updatedAt)}
@@ -86,9 +120,18 @@ export const PostsTape = () => {
                       <CreatedBy>
                         Created by: {currentUserLs && currentUserLs.username}
                       </CreatedBy>
+                      <LikeWrapper>
+                        <Like>Likes: {p.likes.length}</Like>
+                        <Like>
+                          <LikeIcon
+                            onClick={() => likePostHandler(p._id)}
+                            src={myLike ? likeLike : darkLike}
+                            alt="Like / Unlike"
+                          />
+                        </Like>
+                      </LikeWrapper>
                     </CreatedInfo>
                   </InfoWrapper>
-                </Username>
               )}
 
               <Description>{p.desc}</Description>

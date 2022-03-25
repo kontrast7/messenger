@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from "styled-components/macro";
 import { Link } from "react-router-dom";
 import React from "react";
 
@@ -13,16 +13,22 @@ export const Content = styled.div`
   cursor: pointer;
 `;
 
-export const Username = styled(Link)`
+export const PostInner = styled.div`
   display: flex;
   align-items: center;
-  gap: .8em;
+  gap: 0.8em;
   letter-spacing: 1px;
+`;
+
+export const Username = styled(Link)`
   text-transform: capitalize;
   color: ${({ theme }) => theme.colors.inputColor};
   font-size: ${({ theme }) => theme.fontSize.contactName};
   line-height: 1.125rem;
   margin-top: 1px;
+  display: flex;
+  align-items: center;
+  gap: .7rem;
 `;
 
 export const GoToMessages = styled(Link)<GoToMessagesPropsType>`
@@ -53,10 +59,10 @@ export const Follow = styled.button`
   border-radius: 10px;
   border: none;
   cursor: pointer;
-  
+
   :hover {
     background-color: ${({ theme }) => theme.colors.accentColor};
-    opacity: .9;
+    opacity: 0.9;
   }
 `;
 
