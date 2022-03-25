@@ -92,7 +92,8 @@ export const PostsTape = () => {
                 </PostInner>
               ) : (
                   <InfoWrapper>
-                    <AvatarLink to={`/user/${currentUserId}`}>
+                    {/*//@ts-ignore*/}
+                    <AvatarLink to={`/user/${us.userId}`}>
                     <Avatar
                       src={
                         currentUserLs.profilePicture
