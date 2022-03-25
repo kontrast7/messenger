@@ -7,7 +7,9 @@ import { updateUserByIdTC } from "../../bll/reducer/usersReducer";
 import { getCurrentUserId } from "../../utils/getCurrentUserId";
 import { updateUserType } from "../../api/api";
 import { useNavigate } from "react-router-dom";
-import { useEffect } from "react"
+import { useEffect } from "react";
+import { InputFile } from "../../components/common/inputFile/styles";
+import { InputFileWrapper } from "./styles/styles";
 
 export const UserSettings = () => {
   const dispatch = useDispatch();
@@ -55,12 +57,12 @@ export const UserSettings = () => {
         id="user-settings-city"
         label="City"
       />
-      <Input
-        type={"file"}
-        id="user-settings-profile-image"
-        label="Profile Image"
-        onChange={(e) => setProfileImage(e.currentTarget.files![0])}
-      />
+      <InputFileWrapper>
+        <InputFile
+          title="Choose avatar"
+          onChange={(e) => setProfileImage(e.currentTarget.files![0])}
+        />
+      </InputFileWrapper>
       <LoginButton onClick={handleUpdateRequest}>Change</LoginButton>
     </Wrapper>
   );

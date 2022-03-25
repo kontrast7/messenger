@@ -26,6 +26,8 @@ import { reactOnPost } from "../../../bll/reducer/postsReducer";
 import likeLike from "../../../assets/images/icons/like-red-icon.svg";
 //@ts-ignore
 import darkLike from "../../../assets/images/icons/like-dark-icon.svg";
+import { InputFileWrapper } from "../styles/styles"
+import { InputFile } from "../../../components/common/inputFile/styles"
 
 export const Post = ({
   m,
@@ -117,11 +119,12 @@ export const Post = ({
                 value={inputValue}
                 onChange={(e) => setInputValue(e.target.value)}
               />
-              <input
-                type={"file"}
-                id="user-edit-post-image"
-                onChange={(e) => setProfileImage(e.currentTarget.files![0])}
-              />
+              <InputFileWrapper>
+                <InputFile
+                  title="Chose image"
+                  onChange={(e) => setProfileImage(e.currentTarget.files![0])}
+                />
+              </InputFileWrapper>
               <SaveButton onClick={() => editPostHandler(m._id)}>
                 Save
               </SaveButton>

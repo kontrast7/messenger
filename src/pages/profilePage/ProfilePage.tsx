@@ -49,6 +49,9 @@ import { AvatarHolder } from "./styles/styles";
 import { EditButton } from "./post/styles/styles";
 import { Link } from "react-router-dom";
 import { FollowWrapper } from "./styles/styles";
+import { PostInner } from "./styles/styles"
+import { InputFile } from "../../components/common/inputFile/styles"
+import { InputFileWrapper } from "./styles/styles"
 
 export const ProfilePage = () => {
   const [show, setShow] = useState(false);
@@ -164,7 +167,7 @@ export const ProfilePage = () => {
         )}
       </ButtonWrapper>
       {id === currentUserId && showAddedPost && !show && (
-        <Inner style={{ margin: "1rem 0" }}>
+        <PostInner style={{ margin: "1rem 0" }}>
           <ProfileChatLog
             id="user-new-post-desc"
             placeholder={"Enter new post"}
@@ -172,13 +175,14 @@ export const ProfilePage = () => {
             value={inputValue}
             onChange={(e) => setInputValue(e.target.value)}
           />
-          <input
-            type={"file"}
-            id="user-new-post-image"
+          <InputFileWrapper>
+          <InputFile
+            title="Chose image"
             onChange={(e) => setProfileImage(e.currentTarget.files![0])}
           />
+          </InputFileWrapper>
           <EditButton onClick={sendNewPostHandler}>add</EditButton>
-        </Inner>
+        </PostInner>
       )}
 
       <PostsWrapper>
