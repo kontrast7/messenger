@@ -12,3 +12,9 @@ export const Wrapper = styled.section`
   gap: 1.5rem;
 `;
 
+export const InputFileWrapper = styled.div`
+  width: 75%;
+  display: flex;
+  justify-content: flex-end;
+`
+

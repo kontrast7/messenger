@@ -2,6 +2,7 @@ import styled from "styled-components/macro";
 import { Link } from "react-router-dom";
 import { Follow } from "../../contactsPage/contact/styles/styles";
 import { ChatLog } from "../../chatPage/styles/styles";
+import { Inner } from "../../postsTape/post/styles/styles"
 
 export const Wrapper = styled.section`
   height: calc(100vh - 131px);
@@ -119,3 +120,13 @@ export const PostsWrapper = styled.div`
   margin: 1rem 0;
   gap: 1rem;
 `;
+
+export const PostInner = styled(Inner)`
+  width: 90%;
+`
+
+export const InputFileWrapper = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+`
