@@ -74,7 +74,7 @@ export const PostsTape = () => {
               {us ? (
                 <PostInner >
                   <InfoWrapper>
-                    <AvatarLink to={`/user/${currentUserId}`}>
+                    <AvatarLink to={`/user/${p.userId}`}>
                     <Avatar
                       src={
                         us.profilePicture ? us.profilePicture : defaultUserIcon
@@ -87,13 +87,23 @@ export const PostsTape = () => {
                         Created: {dayMonthYearDateParse(p.updatedAt)}
                       </CratedDate>
                       <CreatedBy>Created by: {us.username}</CreatedBy>
+                      <LikeWrapper>
+                        <Like>Likes: {p.likes.length}</Like>
+                        <Like>
+                          <LikeIcon
+                            onClick={() => likePostHandler(p._id)}
+                            src={myLike ? likeLike : darkLike}
+                            alt="Like / Unlike"
+                          />
+                        </Like>
+                      </LikeWrapper>
                     </CreatedInfo>
                   </InfoWrapper>
                 </PostInner>
               ) : (
                   <InfoWrapper>
                     {/*//@ts-ignore*/}
-                    <AvatarLink to={`/user/${us.userId}`}>
+                    <AvatarLink to={`/user/${currentUserId}`}>
                     <Avatar
                       src={
                         currentUserLs.profilePicture
