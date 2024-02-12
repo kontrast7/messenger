@@ -14,10 +14,10 @@ export const postsReducer = (state = initState, action: ActionType) => {
     case "POSTS/TOGGLE-POST-LIKE": {
       const stateCopy = [...state];
       const currentPost = stateCopy.find((post) => post._id === action.postId);
-      //@ts-ignore
-      if (currentPost.likes.includes(action.userId)) {
         //@ts-ignore
-        const temp = currentPost.likes.filter(
+      if (currentPost?.likes && currentPost?.likes?.includes(action?.userId)) {
+
+        const temp = currentPost?.likes?.filter(
           (userId) => userId !== action.userId
         );
 
