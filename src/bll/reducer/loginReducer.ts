@@ -29,7 +29,6 @@ export const loginReducer = (state = initState, action: ActionType) => {
   }
 };
 
-//AC
 const setUserDataAC = (data: InitStatePropsType) => {
   return {
     type: "APP/LOGIN",
@@ -55,7 +54,6 @@ export const setLoginUserTC =
       });
   };
 
-// Types
 type InitStatePropsType = {
   coverPicture: string;
   createdAt: string;
